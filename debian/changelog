@@ -1,0 +1,6 @@
+freerdp (0.7.0+debian-1) unstable; urgency=low
+
+  * Initial release.
+  * Rebuild upstream tarball without debian directory.
+
+ -- Otavio Salvador <otavio@debian.org>  Fri, 18 Jun 2010 15:09:19 -0300
