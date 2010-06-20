@@ -1,3 +1,9 @@
+freerdp (0.7.0+debian-2) UNRELEASED; urgency=low
+
+  * debian/copyright: add missing entries.
+
+ -- Otavio Salvador <otavio@ossystems.com.br>  Sun, 20 Jun 2010 13:46:44 -0300
+
 freerdp (0.7.0+debian-1) unstable; urgency=low
 
   * Initial release.
