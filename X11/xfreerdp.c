@@ -32,6 +32,7 @@
 #include <pthread.h>
 #include <freerdp/freerdp.h>
 #include <freerdp/chanman.h>
+#include <freerdp/kbd.h>
 #include "xf_types.h"
 #include "xf_win.h"
 #include "xf_keyboard.h"
@@ -70,6 +71,7 @@ static int
 process_params(xfInfo * xfi, int argc, char ** argv, int * pindex)
 {
 	rdpSet * settings;
+	rdpKeyboardLayout * layouts;
 	char * p;
 	RD_PLUGIN_DATA plugin_data[MAX_PLUGIN_DATA + 1];
 	int index;
@@ -82,7 +84,7 @@ process_params(xfInfo * xfi, int argc, char ** argv, int * pindex)
 	{
 		strncpy(settings->username, p, sizeof(settings->username) - 1);
 	}
-	printf("process_params\n");
+
 	if (argc < *pindex + 1)
 	{
 		if (*pindex == 1)
@@ -134,6 +136,39 @@ process_params(xfInfo * xfi, int argc, char ** argv, int * pindex)
 			}
 			strncpy(settings->domain, argv[*pindex], sizeof(settings->domain) - 1);
 			settings->domain[sizeof(settings->domain) - 1] = 0;
+		}
+		else if (strcmp("-k", argv[*pindex]) == 0)
+		{
+			*pindex = *pindex + 1;
+			if (*pindex == argc)
+			{
+				printf("missing keyboard layout ID\n");
+				return 1;
+			}
+			sscanf(argv[*pindex], "%X", &(xfi->keyboard_layout_id));
+			printf("keyboard layout ID: %X\n", xfi->keyboard_layout_id);
+		}
+		else if (strcmp("--kbd-list", argv[*pindex]) == 0)
+		{
+			layouts = freerdp_kbd_get_layouts(RDP_KEYBOARD_LAYOUT_TYPE_STANDARD);
+			printf("\nKeyboard Layouts\n");
+			for (i = 0; layouts[i].code; i++)
+				printf("0x%08X\t%s\n", layouts[i].code, layouts[i].name);
+			free(layouts);
+
+			layouts = freerdp_kbd_get_layouts(RDP_KEYBOARD_LAYOUT_TYPE_VARIANT);
+			printf("\nKeyboard Layout Variants\n");
+			for (i = 0; layouts[i].code; i++)
+				printf("0x%08X\t%s\n", layouts[i].code, layouts[i].name);
+			free(layouts);
+
+			layouts = freerdp_kbd_get_layouts(RDP_KEYBOARD_LAYOUT_TYPE_IME);
+			printf("\nKeyboard Input Method Editors (IMEs)\n");
+			for (i = 0; layouts[i].code; i++)
+				printf("0x%08X\t%s\n", layouts[i].code, layouts[i].name);
+			free(layouts);
+
+			exit(0);
 		}
 		else if (strcmp("-s", argv[*pindex]) == 0)
 		{
@@ -242,7 +277,7 @@ process_params(xfInfo * xfi, int argc, char ** argv, int * pindex)
 				settings->rdp5_performanceflags = strtol(argv[*pindex], 0, 16);
 			}
 		}
-		else if (strcmp("-plugin", argv[*pindex]) == 0)
+		else if (strcmp("--plugin", argv[*pindex]) == 0)
 		{
 			*pindex = *pindex + 1;
 			if (*pindex == argc)
@@ -252,7 +287,7 @@ process_params(xfInfo * xfi, int argc, char ** argv, int * pindex)
 			}
 			index = *pindex;
 			memset(plugin_data, 0, sizeof(plugin_data));
-			if (*pindex < argc - 1 && strcmp("-data", argv[*pindex + 1]) == 0)
+			if (*pindex < argc - 1 && strcmp("--data", argv[*pindex + 1]) == 0)
 			{
 				*pindex = *pindex + 2;
 				i = 0;
@@ -271,6 +306,37 @@ process_params(xfInfo * xfi, int argc, char ** argv, int * pindex)
 				}
 			}
 			freerdp_chanman_load_plugin(xfi->chan_man, settings, argv[index], plugin_data);
+		}
+		else if (strcmp("-h", argv[*pindex]) == 0)
+		{
+			char help[] =
+				"\n"
+				"FreeRDP - A Free Remote Desktop Protocol Client\n"
+				"See http://freerdp.sourceforge.net for more information\n"
+				"\n"
+				"Usage: xfreerdp [options] server:port\n"
+				"\t-a: color depth (16, 24 or 32)\n"
+				"\t-u: username\n"
+				"\t-p: password\n"
+				"\t-d: domain\n"
+				"\t-k: keyboard layout ID\n"
+				"\t--kbd-list: list all keyboard layout IDs\n"
+				"\t-s: shell\n"
+				"\t-c: directory\n"
+				"\t-g: geometry, using format WxH, default is 1024x768\n"
+				"\t-t: alternative port number (default is 3389)\n"
+				"\t-n: hostname\n"
+				"\t-o: console audio\n"
+				"\t-0: console session\n"
+				"\t-f: fullscreen mode\n"
+				"\t-z: enable bulk compression\n"
+				"\t-x: performance flags (m, b or l for modem, broadband or lan)\n"
+				"\t--plugin: load a virtual channel plugin\n"
+				"\t-h: show this help\n"
+				"\n";
+
+			printf(help);
+			exit(0);
 		}
 		else
 		{
@@ -322,7 +388,6 @@ run_xfreerdp(xfInfo * xfi)
 	fd_set rfds;
 	fd_set wfds;
 
-	printf("run_xfreerdp:\n");
 	/* create an instance of the library */
 	inst = freerdp_new(xfi->settings);
 	if (inst == NULL)
@@ -484,7 +549,6 @@ main(int argc, char ** argv)
 
 	setlocale(LC_CTYPE, "");
 	freerdp_chanman_init();
-	xf_kb_init();
 
 	while (1)
 	{
@@ -493,6 +557,8 @@ main(int argc, char ** argv)
 		xfi->settings = (rdpSet *) malloc(sizeof(rdpSet));
 		xfi->chan_man = freerdp_chanman_new();
 		rv = process_params(xfi, argc, argv, &index);
+		xf_kb_init(xfi->keyboard_layout_id);
+		
 		if (rv == 0)
 		{
 			g_thread_count++;
