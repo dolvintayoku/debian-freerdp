@@ -36,9 +36,9 @@ static int xf_kb_keyboard_layout = 0;
 static RD_BOOL pressed_keys[256] = { False };
 
 void
-xf_kb_init(void)
+xf_kb_init(unsigned int keyboard_layout_id)
 {
-	xf_kb_keyboard_layout = freerdp_kbd_init();
+	xf_kb_keyboard_layout = freerdp_kbd_init(keyboard_layout_id);
 	printf("freerdp_kbd_init: %X\n", xf_kb_keyboard_layout);
 }
 
@@ -72,7 +72,14 @@ xf_kb_send_key(xfInfo * xfi, int flags, uint8 keycode)
 	else
 	{
 		scancode = freerdp_kbd_get_scancode_by_keycode(keycode, &flags);
-		xfi->inst->rdp_send_input(xfi->inst, RDP_INPUT_SCANCODE, flags, scancode, 0);
+		if (scancode == 0)
+		{
+			printf("xf_kb_send_key: unable to get scancode (keycode=%d)\n", keycode);
+		}
+		else
+		{
+			xfi->inst->rdp_send_input(xfi->inst, RDP_INPUT_SCANCODE, flags, scancode, 0);
+		}
 	}
 }
 
