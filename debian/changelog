@@ -1,9 +1,9 @@
-freerdp (0.7.1-1) UNRELEASED; urgency=low
+freerdp (0.7.1-1) unstable; urgency=low
 
   * New upstream release.
   * debian/copyright: add missing entries.
 
- -- Otavio Salvador <otavio@ossystems.com.br>  Sun, 20 Jun 2010 13:46:44 -0300
+ -- Otavio Salvador <otavio@debian.org>  Wed, 23 Jun 2010 21:39:09 -0300
 
 freerdp (0.7.0+debian-1) unstable; urgency=low
 
