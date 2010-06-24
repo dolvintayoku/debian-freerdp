@@ -1,5 +1,6 @@
-freerdp (0.7.0+debian-2) UNRELEASED; urgency=low
+freerdp (0.7.1-1) UNRELEASED; urgency=low
 
+  * New upstream release.
   * debian/copyright: add missing entries.
 
  -- Otavio Salvador <otavio@ossystems.com.br>  Sun, 20 Jun 2010 13:46:44 -0300
