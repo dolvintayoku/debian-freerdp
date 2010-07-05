@@ -67,6 +67,7 @@ set_default_params(xfInfo * xfi)
 	return 0;
 }
 
+/* Returns "true" on errors or other reasons to not continue normal operation */
 static int
 process_params(xfInfo * xfi, int argc, char ** argv, int * pindex)
 {
@@ -168,7 +169,7 @@ process_params(xfInfo * xfi, int argc, char ** argv, int * pindex)
 				printf("0x%08X\t%s\n", layouts[i].code, layouts[i].name);
 			free(layouts);
 
-			exit(0);
+			return 1;
 		}
 		else if (strcmp("-s", argv[*pindex]) == 0)
 		{
@@ -307,7 +308,7 @@ process_params(xfInfo * xfi, int argc, char ** argv, int * pindex)
 			}
 			freerdp_chanman_load_plugin(xfi->chan_man, settings, argv[index], plugin_data);
 		}
-		else if (strcmp("-h", argv[*pindex]) == 0)
+		else if ((strcmp("-h", argv[*pindex]) == 0) || strcmp("--help", argv[*pindex]) == 0)
 		{
 			char help[] =
 				"\n"
@@ -336,12 +337,12 @@ process_params(xfInfo * xfi, int argc, char ** argv, int * pindex)
 				"\n";
 
 			printf(help);
-			exit(0);
+			return 1;
 		}
-		else
+		else if (argv[*pindex][0] != '-')
 		{
 			settings->server[sizeof(settings->server) - 1] = 0;
-			if (argv[*pindex][0] == '[' && (p = strchr(argv[*pindex], ']')) 
+			if (argv[*pindex][0] == '[' && (p = strchr(argv[*pindex], ']'))
 				&& (p[1] == 0 || (p[1] == ':' && !strchr(p + 2, ':'))))
 			{
 				/* Either "[...]" or "[...]:..." with at most one : after the brackets */
@@ -367,6 +368,11 @@ process_params(xfInfo * xfi, int argc, char ** argv, int * pindex)
 			   followed will be parsed for the next session. */
 			*pindex = *pindex + 1;
 			return 0;
+		}
+		else
+		{
+			printf("invalid option: %s\n", argv[*pindex]);
+			return 1;
 		}
 		*pindex = *pindex + 1;
 	}
@@ -557,22 +563,19 @@ main(int argc, char ** argv)
 		xfi->settings = (rdpSet *) malloc(sizeof(rdpSet));
 		xfi->chan_man = freerdp_chanman_new();
 		rv = process_params(xfi, argc, argv, &index);
-		xf_kb_init(xfi->keyboard_layout_id);
-		
-		if (rv == 0)
-		{
-			g_thread_count++;
-			printf("starting thread %d to %s:%d\n", g_thread_count,
-				xfi->settings->server, xfi->settings->tcp_port_rdp);
-			pthread_create(&thread, 0, thread_func, xfi);
-		}
-		else
+		if (rv)
 		{
 			free(xfi->settings);
 			freerdp_chanman_free(xfi->chan_man);
 			free(xfi);
 			break;
 		}
+
+		xf_kb_init(xfi->keyboard_layout_id);
+		g_thread_count++;
+		printf("starting thread %d to %s:%d\n", g_thread_count,
+			xfi->settings->server, xfi->settings->tcp_port_rdp);
+		pthread_create(&thread, 0, thread_func, xfi);
 	}
 
 	while (g_thread_count > 0)

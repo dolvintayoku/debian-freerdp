@@ -34,6 +34,7 @@
 #include <string.h>
 #include "dfb_win.h"
 #include "dfb_event.h"
+#include "dfb_colour.h"
 
 #define SPLIT32BGR(_alpha, _red, _green, _blue, _pixel) \
   _red = _pixel & 0xff; \
@@ -77,77 +78,36 @@
   (((_green & 0xff) >> 2) <<  5) | \
   (((_blue & 0xff) >> 3) <<  0)
 
-int
-dfb_colour(dfbInfo * dfbi, int in_colour, int in_bpp, int out_bpp)
+void
+dfb_colour_convert(dfbInfo * dfbi, int in_colour, PIXEL * pixel, int in_bpp, int out_bpp)
 {
-	int alpha;
-	int red;
-	int green;
-	int blue;
-	int rv;
-
-	alpha = 0xFF;
-	red = 0;
-	green = 0;
-	blue = 0;
-	rv = 0;
+	pixel->red = 0;
+	pixel->green = 0;
+	pixel->blue = 0;
+	pixel->alpha = 0xFF;
 	
 	switch (in_bpp)
 	{
 		case 32:
-			SPLIT32BGR(alpha, red, green, blue, in_colour);
+			SPLIT32BGR(pixel->alpha, pixel->red, pixel->green, pixel->blue, in_colour);
 			break;
 		case 24:
-			SPLIT24BGR(red, green, blue, in_colour);
+			SPLIT24BGR(pixel->red, pixel->green, pixel->blue, in_colour);
 			break;
 		case 16:
-			SPLIT16RGB(red, green, blue, in_colour);
+			SPLIT16RGB(pixel->red, pixel->green, pixel->blue, in_colour);
 			break;
 		case 15:
-			SPLIT15RGB(red, green, blue, in_colour);
+			SPLIT15RGB(pixel->red, pixel->green, pixel->blue, in_colour);
 			break;
 		case 8:
 			in_colour &= 0xFF;
-			SPLIT24RGB(red, green, blue, dfbi->colourmap[in_colour]);
-			break;
-		case 1:
-			if ((red != 0) || (green != 0) || (blue != 0))
-				rv = 1;
+			SPLIT24RGB(pixel->red, pixel->green, pixel->blue, dfbi->colourmap[in_colour]);
 			break;
 		default:
 			printf("dfb_colour: bad in_bpp %d\n", in_bpp);
 			break;
 	}
-	switch (out_bpp)
-	{
-		case 32:
-			rv = MAKE32RGB(alpha, red, green, blue);
-			break;
-		case 24:
-			rv = MAKE24RGB(red, green, blue);
-			break;
-		case 16:
-			rv = MAKE16RGB(red, green, blue);
-			break;
-		case 15:
-			rv = MAKE15RGB(red, green, blue);
-			break;
-		case 1:
-			if ((red != 0) || (green != 0) || (blue != 0))
-				rv = 1;
-			break;
-		default:
-			printf("dfb_colour: bad out_bpp %d\n", out_bpp);
-			break;
-	}
-	
-	return rv;
-}
-
-int
-dfb_colour_convert(dfbInfo * dfbi, rdpSet * settings, int colour)
-{
-	return dfb_colour(dfbi, colour, settings->server_depth, dfbi->bpp);
 }
 
 uint8 *
@@ -158,12 +118,18 @@ dfb_image_convert(dfbInfo * dfbi, rdpSet * settings, int width, int height, uint
 	int blue;
 	int index;
 	int pixel;
-	uint8 * out_data;
 	uint8 * src8;
 	uint16 * src16;
 	uint16 * dst16;
 	uint32 * dst32;
+	uint8 * out_data;
 
+	if (settings->server_depth == dfbi->bpp)
+	{
+		out_data = (uint8 *) malloc(width * height * 4);
+		memcpy(out_data, in_data, width * height * 4);
+		return out_data;
+	}
 	if ((settings->server_depth == 24) && (dfbi->bpp == 32))
 	{
 		out_data = (uint8 *) malloc(width * height * 4);
@@ -277,6 +243,7 @@ dfb_image_convert(dfbInfo * dfbi, rdpSet * settings, int width, int height, uint
 		}
 		return out_data;
 	}
+	
 	return in_data;
 }
 
@@ -324,7 +291,6 @@ int
 dfb_cursor_convert_mono(dfbInfo * dfbi, uint8 * src_data, uint8 * msk_data,
 	uint8 * xormask, uint8 * andmask, int width, int height, int bpp)
 {
-
 	return 0;
 }
 
@@ -333,6 +299,5 @@ int
 dfb_cursor_convert_alpha(dfbInfo * dfbi, uint8 * alpha_data,
 	uint8 * xormask, uint8 * andmask, int width, int height, int bpp)
 {
-
 	return 0;
 }

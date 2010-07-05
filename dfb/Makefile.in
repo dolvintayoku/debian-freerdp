@@ -50,8 +50,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_dfbfreerdp_OBJECTS = dfbfreerdp-dfb_colour.$(OBJEXT) \
-	dfbfreerdp-dfb_event.$(OBJEXT) \
+am_dfbfreerdp_OBJECTS = dfbfreerdp-dfb_gdi.$(OBJEXT) \
+	dfbfreerdp-dfb_colour.$(OBJEXT) dfbfreerdp-dfb_event.$(OBJEXT) \
 	dfbfreerdp-dfb_keyboard.$(OBJEXT) dfbfreerdp-dfb_win.$(OBJEXT) \
 	dfbfreerdp-dfbfreerdp.$(OBJEXT)
 dfbfreerdp_OBJECTS = $(am_dfbfreerdp_OBJECTS)
@@ -225,6 +225,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 dfbfreerdp_SOURCES = \
+	dfb_gdi.c  dfb_gdi.h \
 	dfb_colour.c dfb_colour.h \
 	dfb_event.c  dfb_event.h \
 	dfb_keyboard.c dfb_keyboard.h \
@@ -327,6 +328,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dfbfreerdp-dfb_colour.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dfbfreerdp-dfb_event.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dfbfreerdp-dfb_gdi.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dfbfreerdp-dfb_keyboard.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dfbfreerdp-dfb_win.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dfbfreerdp-dfbfreerdp.Po@am__quote@
@@ -351,6 +353,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
+
+dfbfreerdp-dfb_gdi.o: dfb_gdi.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_gdi.o -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_gdi.Tpo -c -o dfbfreerdp-dfb_gdi.o `test -f 'dfb_gdi.c' || echo '$(srcdir)/'`dfb_gdi.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_gdi.Tpo $(DEPDIR)/dfbfreerdp-dfb_gdi.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfb_gdi.c' object='dfbfreerdp-dfb_gdi.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfb_gdi.o `test -f 'dfb_gdi.c' || echo '$(srcdir)/'`dfb_gdi.c
+
+dfbfreerdp-dfb_gdi.obj: dfb_gdi.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_gdi.obj -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_gdi.Tpo -c -o dfbfreerdp-dfb_gdi.obj `if test -f 'dfb_gdi.c'; then $(CYGPATH_W) 'dfb_gdi.c'; else $(CYGPATH_W) '$(srcdir)/dfb_gdi.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_gdi.Tpo $(DEPDIR)/dfbfreerdp-dfb_gdi.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfb_gdi.c' object='dfbfreerdp-dfb_gdi.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfb_gdi.obj `if test -f 'dfb_gdi.c'; then $(CYGPATH_W) 'dfb_gdi.c'; else $(CYGPATH_W) '$(srcdir)/dfb_gdi.c'; fi`
 
 dfbfreerdp-dfb_colour.o: dfb_colour.c
 @am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_colour.o -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_colour.Tpo -c -o dfbfreerdp-dfb_colour.o `test -f 'dfb_colour.c' || echo '$(srcdir)/'`dfb_colour.c
