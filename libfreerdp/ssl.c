@@ -2536,9 +2536,9 @@ ssl_cert_free(SSL_CERT * cert)
 }
 
 /*****************************************************************************/
-/* returns newly allocated SSL_RKEY or NULL */
-SSL_RKEY *
-ssl_cert_to_rkey(SSL_CERT * cert, uint32 * key_len)
+/* returns newly allocated SSL_PUBLIC_KEY or NULL */
+SSL_PUBLIC_KEY *
+ssl_cert_get_public_key(SSL_CERT * cert, uint32 * key_len)
 {
 	return 0;
 }
@@ -2546,7 +2546,7 @@ ssl_cert_to_rkey(SSL_CERT * cert, uint32 * key_len)
 /*****************************************************************************/
 /* returns boolean */
 RD_BOOL
-ssl_certs_ok(SSL_CERT * server_cert, SSL_CERT * cacert)
+ssl_cert_verify(SSL_CERT * server_cert, SSL_CERT * cacert)
 {
 	return True;
 }
@@ -2560,25 +2560,16 @@ ssl_cert_print_fp(FILE * fp, SSL_CERT * cert)
 
 /*****************************************************************************/
 void
-ssl_rkey_free(SSL_RKEY * rkey)
+ssl_public_key_free(SSL_PUBLIC_KEY * public_key)
 {
-	l_free(rkey);
+	l_free(public_key);
 }
 
 /*****************************************************************************/
 /* returns error */
 int
-ssl_rkey_get_exp_mod(SSL_RKEY * rkey, uint8 * exponent, uint32 max_exp_len,
+ssl_public_key_get_exp_mod(SSL_PUBLIC_KEY * public_key, uint8 * exponent, uint32 max_exp_len,
 	uint8 * modulus, uint32 max_mod_len)
 {
 	return 0;
-}
-
-/*****************************************************************************/
-/* returns boolean */
-RD_BOOL
-ssl_sig_ok(uint8 * exponent, uint32 exp_len, uint8 * modulus, uint32 mod_len,
-	uint8 * signature, uint32 sig_len)
-{
-	return True;
 }

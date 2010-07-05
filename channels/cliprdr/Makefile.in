@@ -34,6 +34,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
+@WITH_X11_TRUE@am__append_1 = cliprdr_x11.c
+@WITH_X11_TRUE@am__append_2 = @X_CFLAGS@
+@WITH_X11_TRUE@am__append_3 = @X_LIBS@ @X_EXTRA_LIBS@
 subdir = channels/cliprdr
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -70,9 +73,12 @@ am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
 am__installdirs = "$(DESTDIR)$(cliprdrdir)"
 LTLIBRARIES = $(cliprdr_LTLIBRARIES)
-cliprdr_la_DEPENDENCIES = ../common/libcommon.la
-am_cliprdr_la_OBJECTS = cliprdr_la-cliprdr_main.lo \
-	cliprdr_la-cliprdr_x11.lo
+am__DEPENDENCIES_1 =
+cliprdr_la_DEPENDENCIES = ../common/libcommon.la $(am__DEPENDENCIES_1)
+am__cliprdr_la_SOURCES_DIST = cliprdr_main.h cliprdr_main.c \
+	cliprdr_x11.c
+@WITH_X11_TRUE@am__objects_1 = cliprdr_la-cliprdr_x11.lo
+am_cliprdr_la_OBJECTS = cliprdr_la-cliprdr_main.lo $(am__objects_1)
 cliprdr_la_OBJECTS = $(am_cliprdr_la_OBJECTS)
 cliprdr_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(cliprdr_la_CFLAGS) \
@@ -91,7 +97,7 @@ LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 SOURCES = $(cliprdr_la_SOURCES)
-DIST_SOURCES = $(cliprdr_la_SOURCES)
+DIST_SOURCES = $(am__cliprdr_la_SOURCES_DIST)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -244,13 +250,10 @@ top_srcdir = @top_srcdir@
 # cliprdr
 cliprdrdir = $(PLUGIN_PATH)
 cliprdr_LTLIBRARIES = cliprdr.la
-cliprdr_la_SOURCES = \
-	cliprdr_main.h cliprdr_main.c \
-	cliprdr_x11.c
-
-cliprdr_la_CFLAGS = -I../../include -I../common @X_CFLAGS@
+cliprdr_la_SOURCES = cliprdr_main.h cliprdr_main.c $(am__append_1)
+cliprdr_la_CFLAGS = -I../../include -I../common $(am__append_2)
 cliprdr_la_LDFLAGS = -avoid-version -module
-cliprdr_la_LIBADD = ../common/libcommon.la @X_LIBS@ @X_EXTRA_LIBS@
+cliprdr_la_LIBADD = ../common/libcommon.la $(am__append_3)
 
 # extra
 EXTRA_DIST = 

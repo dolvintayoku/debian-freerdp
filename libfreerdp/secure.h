@@ -41,7 +41,6 @@ struct rdp_sec
 	uint8 sec_decrypt_update_key[16];
 	uint8 sec_encrypt_update_key[16];
 	uint8 sec_crypted_random[SEC_MAX_MODULUS_SIZE];
-	uint16 server_rdp_version;
 	/* These values must be available to reset state - Session Directory */
 	int sec_encrypt_use_count;
 	int sec_decrypt_use_count;
@@ -76,8 +75,6 @@ buf_out_uint32(uint8 * buffer, uint32 value);
 void
 sec_sign(uint8 * signature, int siglen, uint8 * session_key, int keylen,
 	 uint8 * data, int datalen);
-void
-sec_decrypt(rdpSec * sec, uint8 * data, int length);
 STREAM
 sec_init(rdpSec * sec, uint32 flags, int maxlen);
 STREAM
@@ -98,8 +95,6 @@ RD_BOOL
 sec_reconnect(rdpSec * sec, char *server, int port);
 void
 sec_disconnect(rdpSec * sec);
-void
-sec_reset_state(rdpSec * sec);
 rdpSec *
 sec_new(struct rdp_rdp * rdp);
 void
