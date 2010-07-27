@@ -1,9 +1,10 @@
-freerdp (0.7.2-2) UNRELEASED; urgency=low
+freerdp (0.7.3-1) unstable; urgency=low
 
+  * New upstream release.
   * Fix section of libfreerdp0 to follow overrides.
   * Add a watch file so it is easier to track new releases.
 
- -- Otavio Salvador <otavio@ossystems.com.br>  Mon, 05 Jul 2010 14:22:36 -0300
+ -- Otavio Salvador <otavio@debian.org>  Tue, 27 Jul 2010 01:13:00 -0300
 
 freerdp (0.7.2-1) unstable; urgency=low
 
