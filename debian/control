@@ -5,7 +5,7 @@ Maintainer: Otavio Salvador <otavio@debian.org>
 Build-Depends:
  debhelper (>= 7.0.50~), autotools-dev, libasound2-dev, libcups2-dev,
  libssl-dev, libx11-dev, libxcursor-dev, pkg-config
-Standards-Version: 3.8.4
+Standards-Version: 3.9.0
 Homepage: http://freerdp.sourceforge.net/
 Vcs-Browser: http://git.debian.org/?p=collab-maint/freerdp.git
 Vcs-Git: git://git.debian.org/git/collab-maint/freerdp.git
