@@ -1,6 +1,7 @@
 freerdp (0.7.4-1) UNRELEASED; urgency=low
 
   * New upstream release.
+    - Fixes connection with VirtualBox RDP server. Closes: #592454.
   * Bump standards-version; no changes needed.
 
  -- Otavio Salvador <otavio@debian.org>  Tue, 27 Jul 2010 01:18:46 -0300
