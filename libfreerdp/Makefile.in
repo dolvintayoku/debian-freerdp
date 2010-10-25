@@ -34,7 +34,12 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@ENABLE_TLS_TRUE@am__append_1 = tls.c tls.h credssp.c credssp.h
+@CRYPTO_NSS_TRUE@am__append_1 = crypto_nss.c
+@CRYPTO_GNUTLS_TRUE@am__append_2 = crypto_gnutls.c
+@CRYPTO_OPENSSL_TRUE@am__append_3 = crypto_openssl.c
+@CRYPTO_POLARSSL_TRUE@am__append_4 = crypto_polarssl.c
+@CRYPTO_SIMPLE_TRUE@am__append_5 = crypto_simple.c ssl.c ssl.h
+@ENABLE_TLS_TRUE@am__append_6 = tls.c tls.h credssp.c credssp.h
 subdir = libfreerdp
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -79,10 +84,18 @@ am__libfreerdp_la_SOURCES_DIST = asn1.c asn1.h bitmap.c bitmap.h \
 	constants_rail.h constants_window.h freerdp.c iso.c iso.h \
 	licence.c licence.h mcs.c mcs.h mem.c mem.h mppc.c orders.c \
 	orders.h orderstypes.h stream.h pstcache.c pstcache.h rail.c \
-	rail.h rdp.c rdp.h rdp5.c secure.c secure.h ssl.c ssl.h \
-	crypto.c crypto.h tcp.c tcp.h types.h debug.h frdp.h tls.c \
-	tls.h credssp.c credssp.h
-@ENABLE_TLS_TRUE@am__objects_1 = libfreerdp_la-tls.lo \
+	rail.h rdp.c rdp.h rdp5.c secure.c secure.h crypto.h tcp.c \
+	tcp.h types.h debug.h frdp.h crypto_nss.c crypto_gnutls.c \
+	crypto_openssl.c crypto_polarssl.c crypto_simple.c ssl.c ssl.h \
+	tls.c tls.h credssp.c credssp.h
+@CRYPTO_NSS_TRUE@am__objects_1 = libfreerdp_la-crypto_nss.lo
+@CRYPTO_GNUTLS_TRUE@am__objects_2 = libfreerdp_la-crypto_gnutls.lo
+@CRYPTO_OPENSSL_TRUE@am__objects_3 = libfreerdp_la-crypto_openssl.lo
+@CRYPTO_POLARSSL_TRUE@am__objects_4 =  \
+@CRYPTO_POLARSSL_TRUE@	libfreerdp_la-crypto_polarssl.lo
+@CRYPTO_SIMPLE_TRUE@am__objects_5 = libfreerdp_la-crypto_simple.lo \
+@CRYPTO_SIMPLE_TRUE@	libfreerdp_la-ssl.lo
+@ENABLE_TLS_TRUE@am__objects_6 = libfreerdp_la-tls.lo \
 @ENABLE_TLS_TRUE@	libfreerdp_la-credssp.lo
 am_libfreerdp_la_OBJECTS = libfreerdp_la-asn1.lo \
 	libfreerdp_la-bitmap.lo libfreerdp_la-cache.lo \
@@ -93,10 +106,14 @@ am_libfreerdp_la_OBJECTS = libfreerdp_la-asn1.lo \
 	libfreerdp_la-orders.lo libfreerdp_la-pstcache.lo \
 	libfreerdp_la-rail.lo libfreerdp_la-rdp.lo \
 	libfreerdp_la-rdp5.lo libfreerdp_la-secure.lo \
-	libfreerdp_la-ssl.lo libfreerdp_la-crypto.lo \
-	libfreerdp_la-tcp.lo $(am__objects_1)
+	libfreerdp_la-tcp.lo $(am__objects_1) $(am__objects_2) \
+	$(am__objects_3) $(am__objects_4) $(am__objects_5) \
+	$(am__objects_6)
 libfreerdp_la_OBJECTS = $(am_libfreerdp_la_OBJECTS)
-libfreerdp_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+libfreerdp_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libfreerdp_la_CFLAGS) \
 	$(CFLAGS) $(libfreerdp_la_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -105,13 +122,26 @@ am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(libfreerdp_la_SOURCES)
 DIST_SOURCES = $(am__libfreerdp_la_SOURCES_DIST)
 ETAGS = etags
@@ -121,6 +151,7 @@ ACLOCAL = @ACLOCAL@
 ALSA_CFLAGS = @ALSA_CFLAGS@
 ALSA_LIBS = @ALSA_LIBS@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -159,9 +190,6 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 KEYMAP_PATH = @KEYMAP_PATH@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LDVNC = @LDVNC@
-LIBAO_CFLAGS = @LIBAO_CFLAGS@
-LIBAO_LIBS = @LIBAO_LIBS@
 LIBICONV = @LIBICONV@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -194,15 +222,12 @@ PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PLUGIN_PATH = @PLUGIN_PATH@
 RANLIB = @RANLIB@
-RDP2VNCTARGET = @RDP2VNCTARGET@
 SCARDOBJ = @SCARDOBJ@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
-VNCINC = @VNCINC@
-VNCLINK = @VNCLINK@
 XCURSOR_CFLAGS = @XCURSOR_CFLAGS@
 XCURSOR_LIBS = @XCURSOR_LIBS@
 XMKMF = @XMKMF@
@@ -273,9 +298,10 @@ libfreerdp_la_SOURCES = asn1.c asn1.h bitmap.c bitmap.h cache.c \
 	constants_rail.h constants_window.h freerdp.c iso.c iso.h \
 	licence.c licence.h mcs.c mcs.h mem.c mem.h mppc.c orders.c \
 	orders.h orderstypes.h stream.h pstcache.c pstcache.h rail.c \
-	rail.h rdp.c rdp.h rdp5.c secure.c secure.h ssl.c ssl.h \
-	crypto.c crypto.h tcp.c tcp.h types.h debug.h frdp.h \
-	$(am__append_1)
+	rail.h rdp.c rdp.h rdp5.c secure.c secure.h crypto.h tcp.c \
+	tcp.h types.h debug.h frdp.h $(am__append_1) $(am__append_2) \
+	$(am__append_3) $(am__append_4) $(am__append_5) \
+	$(am__append_6)
 libfreerdp_la_CFLAGS = -I$(top_srcdir) -I$(top_srcdir)/include -I$(top_srcdir)/include/freerdp \
 	-I$(top_srcdir)/asn1 @CRYPTO_CFLAGS@ -DFREERDP_EXPORTS
 
@@ -351,7 +377,7 @@ clean-libfreerdpLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libfreerdp.la: $(libfreerdp_la_OBJECTS) $(libfreerdp_la_DEPENDENCIES) 
-	$(libfreerdp_la_LINK) -rpath $(libfreerdpdir) $(libfreerdp_la_OBJECTS) $(libfreerdp_la_LIBADD) $(LIBS)
+	$(AM_V_CCLD)$(libfreerdp_la_LINK) -rpath $(libfreerdpdir) $(libfreerdp_la_OBJECTS) $(libfreerdp_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -365,7 +391,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libfreerdp_la-capabilities.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libfreerdp_la-chan.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libfreerdp_la-credssp.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libfreerdp_la-crypto.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libfreerdp_la-crypto_gnutls.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libfreerdp_la-crypto_nss.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libfreerdp_la-crypto_openssl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libfreerdp_la-crypto_polarssl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libfreerdp_la-crypto_simple.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libfreerdp_la-freerdp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libfreerdp_la-iso.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libfreerdp_la-licence.Plo@am__quote@
@@ -383,179 +413,236 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libfreerdp_la-tls.Plo@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
 libfreerdp_la-asn1.lo: asn1.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-asn1.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-asn1.Tpo -c -o libfreerdp_la-asn1.lo `test -f 'asn1.c' || echo '$(srcdir)/'`asn1.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-asn1.Tpo $(DEPDIR)/libfreerdp_la-asn1.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-asn1.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-asn1.Tpo -c -o libfreerdp_la-asn1.lo `test -f 'asn1.c' || echo '$(srcdir)/'`asn1.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-asn1.Tpo $(DEPDIR)/libfreerdp_la-asn1.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='asn1.c' object='libfreerdp_la-asn1.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-asn1.lo `test -f 'asn1.c' || echo '$(srcdir)/'`asn1.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-asn1.lo `test -f 'asn1.c' || echo '$(srcdir)/'`asn1.c
 
 libfreerdp_la-bitmap.lo: bitmap.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-bitmap.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-bitmap.Tpo -c -o libfreerdp_la-bitmap.lo `test -f 'bitmap.c' || echo '$(srcdir)/'`bitmap.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-bitmap.Tpo $(DEPDIR)/libfreerdp_la-bitmap.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-bitmap.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-bitmap.Tpo -c -o libfreerdp_la-bitmap.lo `test -f 'bitmap.c' || echo '$(srcdir)/'`bitmap.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-bitmap.Tpo $(DEPDIR)/libfreerdp_la-bitmap.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='bitmap.c' object='libfreerdp_la-bitmap.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-bitmap.lo `test -f 'bitmap.c' || echo '$(srcdir)/'`bitmap.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-bitmap.lo `test -f 'bitmap.c' || echo '$(srcdir)/'`bitmap.c
 
 libfreerdp_la-cache.lo: cache.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-cache.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-cache.Tpo -c -o libfreerdp_la-cache.lo `test -f 'cache.c' || echo '$(srcdir)/'`cache.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-cache.Tpo $(DEPDIR)/libfreerdp_la-cache.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-cache.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-cache.Tpo -c -o libfreerdp_la-cache.lo `test -f 'cache.c' || echo '$(srcdir)/'`cache.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-cache.Tpo $(DEPDIR)/libfreerdp_la-cache.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='cache.c' object='libfreerdp_la-cache.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-cache.lo `test -f 'cache.c' || echo '$(srcdir)/'`cache.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-cache.lo `test -f 'cache.c' || echo '$(srcdir)/'`cache.c
 
 libfreerdp_la-capabilities.lo: capabilities.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-capabilities.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-capabilities.Tpo -c -o libfreerdp_la-capabilities.lo `test -f 'capabilities.c' || echo '$(srcdir)/'`capabilities.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-capabilities.Tpo $(DEPDIR)/libfreerdp_la-capabilities.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-capabilities.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-capabilities.Tpo -c -o libfreerdp_la-capabilities.lo `test -f 'capabilities.c' || echo '$(srcdir)/'`capabilities.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-capabilities.Tpo $(DEPDIR)/libfreerdp_la-capabilities.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='capabilities.c' object='libfreerdp_la-capabilities.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-capabilities.lo `test -f 'capabilities.c' || echo '$(srcdir)/'`capabilities.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-capabilities.lo `test -f 'capabilities.c' || echo '$(srcdir)/'`capabilities.c
 
 libfreerdp_la-chan.lo: chan.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-chan.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-chan.Tpo -c -o libfreerdp_la-chan.lo `test -f 'chan.c' || echo '$(srcdir)/'`chan.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-chan.Tpo $(DEPDIR)/libfreerdp_la-chan.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-chan.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-chan.Tpo -c -o libfreerdp_la-chan.lo `test -f 'chan.c' || echo '$(srcdir)/'`chan.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-chan.Tpo $(DEPDIR)/libfreerdp_la-chan.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='chan.c' object='libfreerdp_la-chan.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-chan.lo `test -f 'chan.c' || echo '$(srcdir)/'`chan.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-chan.lo `test -f 'chan.c' || echo '$(srcdir)/'`chan.c
 
 libfreerdp_la-freerdp.lo: freerdp.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-freerdp.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-freerdp.Tpo -c -o libfreerdp_la-freerdp.lo `test -f 'freerdp.c' || echo '$(srcdir)/'`freerdp.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-freerdp.Tpo $(DEPDIR)/libfreerdp_la-freerdp.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-freerdp.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-freerdp.Tpo -c -o libfreerdp_la-freerdp.lo `test -f 'freerdp.c' || echo '$(srcdir)/'`freerdp.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-freerdp.Tpo $(DEPDIR)/libfreerdp_la-freerdp.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='freerdp.c' object='libfreerdp_la-freerdp.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-freerdp.lo `test -f 'freerdp.c' || echo '$(srcdir)/'`freerdp.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-freerdp.lo `test -f 'freerdp.c' || echo '$(srcdir)/'`freerdp.c
 
 libfreerdp_la-iso.lo: iso.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-iso.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-iso.Tpo -c -o libfreerdp_la-iso.lo `test -f 'iso.c' || echo '$(srcdir)/'`iso.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-iso.Tpo $(DEPDIR)/libfreerdp_la-iso.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-iso.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-iso.Tpo -c -o libfreerdp_la-iso.lo `test -f 'iso.c' || echo '$(srcdir)/'`iso.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-iso.Tpo $(DEPDIR)/libfreerdp_la-iso.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='iso.c' object='libfreerdp_la-iso.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-iso.lo `test -f 'iso.c' || echo '$(srcdir)/'`iso.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-iso.lo `test -f 'iso.c' || echo '$(srcdir)/'`iso.c
 
 libfreerdp_la-licence.lo: licence.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-licence.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-licence.Tpo -c -o libfreerdp_la-licence.lo `test -f 'licence.c' || echo '$(srcdir)/'`licence.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-licence.Tpo $(DEPDIR)/libfreerdp_la-licence.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-licence.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-licence.Tpo -c -o libfreerdp_la-licence.lo `test -f 'licence.c' || echo '$(srcdir)/'`licence.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-licence.Tpo $(DEPDIR)/libfreerdp_la-licence.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='licence.c' object='libfreerdp_la-licence.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-licence.lo `test -f 'licence.c' || echo '$(srcdir)/'`licence.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-licence.lo `test -f 'licence.c' || echo '$(srcdir)/'`licence.c
 
 libfreerdp_la-mcs.lo: mcs.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-mcs.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-mcs.Tpo -c -o libfreerdp_la-mcs.lo `test -f 'mcs.c' || echo '$(srcdir)/'`mcs.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-mcs.Tpo $(DEPDIR)/libfreerdp_la-mcs.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-mcs.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-mcs.Tpo -c -o libfreerdp_la-mcs.lo `test -f 'mcs.c' || echo '$(srcdir)/'`mcs.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-mcs.Tpo $(DEPDIR)/libfreerdp_la-mcs.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcs.c' object='libfreerdp_la-mcs.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-mcs.lo `test -f 'mcs.c' || echo '$(srcdir)/'`mcs.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-mcs.lo `test -f 'mcs.c' || echo '$(srcdir)/'`mcs.c
 
 libfreerdp_la-mem.lo: mem.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-mem.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-mem.Tpo -c -o libfreerdp_la-mem.lo `test -f 'mem.c' || echo '$(srcdir)/'`mem.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-mem.Tpo $(DEPDIR)/libfreerdp_la-mem.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-mem.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-mem.Tpo -c -o libfreerdp_la-mem.lo `test -f 'mem.c' || echo '$(srcdir)/'`mem.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-mem.Tpo $(DEPDIR)/libfreerdp_la-mem.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mem.c' object='libfreerdp_la-mem.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-mem.lo `test -f 'mem.c' || echo '$(srcdir)/'`mem.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-mem.lo `test -f 'mem.c' || echo '$(srcdir)/'`mem.c
 
 libfreerdp_la-mppc.lo: mppc.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-mppc.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-mppc.Tpo -c -o libfreerdp_la-mppc.lo `test -f 'mppc.c' || echo '$(srcdir)/'`mppc.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-mppc.Tpo $(DEPDIR)/libfreerdp_la-mppc.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-mppc.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-mppc.Tpo -c -o libfreerdp_la-mppc.lo `test -f 'mppc.c' || echo '$(srcdir)/'`mppc.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-mppc.Tpo $(DEPDIR)/libfreerdp_la-mppc.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mppc.c' object='libfreerdp_la-mppc.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-mppc.lo `test -f 'mppc.c' || echo '$(srcdir)/'`mppc.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-mppc.lo `test -f 'mppc.c' || echo '$(srcdir)/'`mppc.c
 
 libfreerdp_la-orders.lo: orders.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-orders.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-orders.Tpo -c -o libfreerdp_la-orders.lo `test -f 'orders.c' || echo '$(srcdir)/'`orders.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-orders.Tpo $(DEPDIR)/libfreerdp_la-orders.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-orders.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-orders.Tpo -c -o libfreerdp_la-orders.lo `test -f 'orders.c' || echo '$(srcdir)/'`orders.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-orders.Tpo $(DEPDIR)/libfreerdp_la-orders.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='orders.c' object='libfreerdp_la-orders.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-orders.lo `test -f 'orders.c' || echo '$(srcdir)/'`orders.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-orders.lo `test -f 'orders.c' || echo '$(srcdir)/'`orders.c
 
 libfreerdp_la-pstcache.lo: pstcache.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-pstcache.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-pstcache.Tpo -c -o libfreerdp_la-pstcache.lo `test -f 'pstcache.c' || echo '$(srcdir)/'`pstcache.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-pstcache.Tpo $(DEPDIR)/libfreerdp_la-pstcache.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-pstcache.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-pstcache.Tpo -c -o libfreerdp_la-pstcache.lo `test -f 'pstcache.c' || echo '$(srcdir)/'`pstcache.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-pstcache.Tpo $(DEPDIR)/libfreerdp_la-pstcache.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='pstcache.c' object='libfreerdp_la-pstcache.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-pstcache.lo `test -f 'pstcache.c' || echo '$(srcdir)/'`pstcache.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-pstcache.lo `test -f 'pstcache.c' || echo '$(srcdir)/'`pstcache.c
 
 libfreerdp_la-rail.lo: rail.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-rail.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-rail.Tpo -c -o libfreerdp_la-rail.lo `test -f 'rail.c' || echo '$(srcdir)/'`rail.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-rail.Tpo $(DEPDIR)/libfreerdp_la-rail.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-rail.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-rail.Tpo -c -o libfreerdp_la-rail.lo `test -f 'rail.c' || echo '$(srcdir)/'`rail.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-rail.Tpo $(DEPDIR)/libfreerdp_la-rail.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='rail.c' object='libfreerdp_la-rail.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-rail.lo `test -f 'rail.c' || echo '$(srcdir)/'`rail.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-rail.lo `test -f 'rail.c' || echo '$(srcdir)/'`rail.c
 
 libfreerdp_la-rdp.lo: rdp.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-rdp.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-rdp.Tpo -c -o libfreerdp_la-rdp.lo `test -f 'rdp.c' || echo '$(srcdir)/'`rdp.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-rdp.Tpo $(DEPDIR)/libfreerdp_la-rdp.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-rdp.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-rdp.Tpo -c -o libfreerdp_la-rdp.lo `test -f 'rdp.c' || echo '$(srcdir)/'`rdp.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-rdp.Tpo $(DEPDIR)/libfreerdp_la-rdp.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='rdp.c' object='libfreerdp_la-rdp.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-rdp.lo `test -f 'rdp.c' || echo '$(srcdir)/'`rdp.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-rdp.lo `test -f 'rdp.c' || echo '$(srcdir)/'`rdp.c
 
 libfreerdp_la-rdp5.lo: rdp5.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-rdp5.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-rdp5.Tpo -c -o libfreerdp_la-rdp5.lo `test -f 'rdp5.c' || echo '$(srcdir)/'`rdp5.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-rdp5.Tpo $(DEPDIR)/libfreerdp_la-rdp5.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-rdp5.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-rdp5.Tpo -c -o libfreerdp_la-rdp5.lo `test -f 'rdp5.c' || echo '$(srcdir)/'`rdp5.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-rdp5.Tpo $(DEPDIR)/libfreerdp_la-rdp5.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='rdp5.c' object='libfreerdp_la-rdp5.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-rdp5.lo `test -f 'rdp5.c' || echo '$(srcdir)/'`rdp5.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-rdp5.lo `test -f 'rdp5.c' || echo '$(srcdir)/'`rdp5.c
 
 libfreerdp_la-secure.lo: secure.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-secure.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-secure.Tpo -c -o libfreerdp_la-secure.lo `test -f 'secure.c' || echo '$(srcdir)/'`secure.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-secure.Tpo $(DEPDIR)/libfreerdp_la-secure.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-secure.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-secure.Tpo -c -o libfreerdp_la-secure.lo `test -f 'secure.c' || echo '$(srcdir)/'`secure.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-secure.Tpo $(DEPDIR)/libfreerdp_la-secure.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='secure.c' object='libfreerdp_la-secure.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-secure.lo `test -f 'secure.c' || echo '$(srcdir)/'`secure.c
-
-libfreerdp_la-ssl.lo: ssl.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-ssl.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-ssl.Tpo -c -o libfreerdp_la-ssl.lo `test -f 'ssl.c' || echo '$(srcdir)/'`ssl.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-ssl.Tpo $(DEPDIR)/libfreerdp_la-ssl.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ssl.c' object='libfreerdp_la-ssl.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-ssl.lo `test -f 'ssl.c' || echo '$(srcdir)/'`ssl.c
-
-libfreerdp_la-crypto.lo: crypto.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-crypto.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-crypto.Tpo -c -o libfreerdp_la-crypto.lo `test -f 'crypto.c' || echo '$(srcdir)/'`crypto.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-crypto.Tpo $(DEPDIR)/libfreerdp_la-crypto.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='crypto.c' object='libfreerdp_la-crypto.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-crypto.lo `test -f 'crypto.c' || echo '$(srcdir)/'`crypto.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-secure.lo `test -f 'secure.c' || echo '$(srcdir)/'`secure.c
 
 libfreerdp_la-tcp.lo: tcp.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-tcp.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-tcp.Tpo -c -o libfreerdp_la-tcp.lo `test -f 'tcp.c' || echo '$(srcdir)/'`tcp.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-tcp.Tpo $(DEPDIR)/libfreerdp_la-tcp.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-tcp.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-tcp.Tpo -c -o libfreerdp_la-tcp.lo `test -f 'tcp.c' || echo '$(srcdir)/'`tcp.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-tcp.Tpo $(DEPDIR)/libfreerdp_la-tcp.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='tcp.c' object='libfreerdp_la-tcp.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-tcp.lo `test -f 'tcp.c' || echo '$(srcdir)/'`tcp.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-tcp.lo `test -f 'tcp.c' || echo '$(srcdir)/'`tcp.c
+
+libfreerdp_la-crypto_nss.lo: crypto_nss.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-crypto_nss.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-crypto_nss.Tpo -c -o libfreerdp_la-crypto_nss.lo `test -f 'crypto_nss.c' || echo '$(srcdir)/'`crypto_nss.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-crypto_nss.Tpo $(DEPDIR)/libfreerdp_la-crypto_nss.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='crypto_nss.c' object='libfreerdp_la-crypto_nss.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-crypto_nss.lo `test -f 'crypto_nss.c' || echo '$(srcdir)/'`crypto_nss.c
+
+libfreerdp_la-crypto_gnutls.lo: crypto_gnutls.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-crypto_gnutls.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-crypto_gnutls.Tpo -c -o libfreerdp_la-crypto_gnutls.lo `test -f 'crypto_gnutls.c' || echo '$(srcdir)/'`crypto_gnutls.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-crypto_gnutls.Tpo $(DEPDIR)/libfreerdp_la-crypto_gnutls.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='crypto_gnutls.c' object='libfreerdp_la-crypto_gnutls.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-crypto_gnutls.lo `test -f 'crypto_gnutls.c' || echo '$(srcdir)/'`crypto_gnutls.c
+
+libfreerdp_la-crypto_openssl.lo: crypto_openssl.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-crypto_openssl.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-crypto_openssl.Tpo -c -o libfreerdp_la-crypto_openssl.lo `test -f 'crypto_openssl.c' || echo '$(srcdir)/'`crypto_openssl.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-crypto_openssl.Tpo $(DEPDIR)/libfreerdp_la-crypto_openssl.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='crypto_openssl.c' object='libfreerdp_la-crypto_openssl.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-crypto_openssl.lo `test -f 'crypto_openssl.c' || echo '$(srcdir)/'`crypto_openssl.c
+
+libfreerdp_la-crypto_polarssl.lo: crypto_polarssl.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-crypto_polarssl.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-crypto_polarssl.Tpo -c -o libfreerdp_la-crypto_polarssl.lo `test -f 'crypto_polarssl.c' || echo '$(srcdir)/'`crypto_polarssl.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-crypto_polarssl.Tpo $(DEPDIR)/libfreerdp_la-crypto_polarssl.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='crypto_polarssl.c' object='libfreerdp_la-crypto_polarssl.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-crypto_polarssl.lo `test -f 'crypto_polarssl.c' || echo '$(srcdir)/'`crypto_polarssl.c
+
+libfreerdp_la-crypto_simple.lo: crypto_simple.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-crypto_simple.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-crypto_simple.Tpo -c -o libfreerdp_la-crypto_simple.lo `test -f 'crypto_simple.c' || echo '$(srcdir)/'`crypto_simple.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-crypto_simple.Tpo $(DEPDIR)/libfreerdp_la-crypto_simple.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='crypto_simple.c' object='libfreerdp_la-crypto_simple.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-crypto_simple.lo `test -f 'crypto_simple.c' || echo '$(srcdir)/'`crypto_simple.c
+
+libfreerdp_la-ssl.lo: ssl.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-ssl.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-ssl.Tpo -c -o libfreerdp_la-ssl.lo `test -f 'ssl.c' || echo '$(srcdir)/'`ssl.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-ssl.Tpo $(DEPDIR)/libfreerdp_la-ssl.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ssl.c' object='libfreerdp_la-ssl.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-ssl.lo `test -f 'ssl.c' || echo '$(srcdir)/'`ssl.c
 
 libfreerdp_la-tls.lo: tls.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-tls.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-tls.Tpo -c -o libfreerdp_la-tls.lo `test -f 'tls.c' || echo '$(srcdir)/'`tls.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-tls.Tpo $(DEPDIR)/libfreerdp_la-tls.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-tls.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-tls.Tpo -c -o libfreerdp_la-tls.lo `test -f 'tls.c' || echo '$(srcdir)/'`tls.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-tls.Tpo $(DEPDIR)/libfreerdp_la-tls.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='tls.c' object='libfreerdp_la-tls.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-tls.lo `test -f 'tls.c' || echo '$(srcdir)/'`tls.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-tls.lo `test -f 'tls.c' || echo '$(srcdir)/'`tls.c
 
 libfreerdp_la-credssp.lo: credssp.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-credssp.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-credssp.Tpo -c -o libfreerdp_la-credssp.lo `test -f 'credssp.c' || echo '$(srcdir)/'`credssp.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libfreerdp_la-credssp.Tpo $(DEPDIR)/libfreerdp_la-credssp.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -MT libfreerdp_la-credssp.lo -MD -MP -MF $(DEPDIR)/libfreerdp_la-credssp.Tpo -c -o libfreerdp_la-credssp.lo `test -f 'credssp.c' || echo '$(srcdir)/'`credssp.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libfreerdp_la-credssp.Tpo $(DEPDIR)/libfreerdp_la-credssp.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='credssp.c' object='libfreerdp_la-credssp.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-credssp.lo `test -f 'credssp.c' || echo '$(srcdir)/'`credssp.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreerdp_la_CFLAGS) $(CFLAGS) -c -o libfreerdp_la-credssp.lo `test -f 'credssp.c' || echo '$(srcdir)/'`credssp.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

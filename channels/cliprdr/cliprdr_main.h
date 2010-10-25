@@ -59,7 +59,7 @@
 #define CB_FILECLIP_NO_FILE_PATHS    8
 #define CB_CAN_LOCK_CLIPDATA        16
 
-/* Clipboard constants, "borrowed" from GCC system headers in 
+/* Clipboard constants, "borrowed" from GCC system headers in
    the w32 cross compiler
    this is the CF_ set when WINVER is 0x0400 */
 
@@ -73,7 +73,7 @@
 #define CFSTR_JPEG      "JFIF"
 #define CFSTR_GIF       "GIF"
 
-#ifndef WIN32
+#ifndef _WIN32
 
 #ifndef CF_TEXT
 #define CF_TEXT         1

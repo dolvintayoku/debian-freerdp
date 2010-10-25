@@ -234,9 +234,6 @@
 #undef WITH_DEBUG_CHANNEL
 
 /* Turn on debugging messages */
-#undef WITH_DEBUG_CLIPBOARD
-
-/* Turn on debugging messages */
 #undef WITH_DEBUG_KBD
 
 /* Turn on debugging messages */
@@ -244,9 +241,6 @@
 
 /* Turn on debugging messages */
 #undef WITH_DEBUG_SCARD
-
-/* Turn on debugging messages */
-#undef WITH_DEBUG_SEAMLESS
 
 /* Turn on debugging messages */
 #undef WITH_DEBUG_SERIAL

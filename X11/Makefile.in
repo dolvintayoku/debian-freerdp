@@ -50,29 +50,45 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_xfreerdp_OBJECTS = xfreerdp-xf_colour.$(OBJEXT) \
+am_xfreerdp_OBJECTS = xfreerdp-xf_color.$(OBJEXT) \
 	xfreerdp-xf_event.$(OBJEXT) xfreerdp-xf_keyboard.$(OBJEXT) \
 	xfreerdp-xf_win.$(OBJEXT) xfreerdp-xfreerdp.$(OBJEXT)
 xfreerdp_OBJECTS = $(am_xfreerdp_OBJECTS)
 xfreerdp_DEPENDENCIES = ../libfreerdp/libfreerdp.la \
 	../libfreerdpkbd/libfreerdpkbd.la \
 	../libfreerdpchanman/libfreerdpchanman.la
-xfreerdp_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(xfreerdp_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+xfreerdp_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(xfreerdp_CFLAGS) \
+	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(xfreerdp_SOURCES)
 DIST_SOURCES = $(xfreerdp_SOURCES)
 ETAGS = etags
@@ -82,6 +98,7 @@ ACLOCAL = @ACLOCAL@
 ALSA_CFLAGS = @ALSA_CFLAGS@
 ALSA_LIBS = @ALSA_LIBS@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -120,9 +137,6 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 KEYMAP_PATH = @KEYMAP_PATH@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LDVNC = @LDVNC@
-LIBAO_CFLAGS = @LIBAO_CFLAGS@
-LIBAO_LIBS = @LIBAO_LIBS@
 LIBICONV = @LIBICONV@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -155,15 +169,12 @@ PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PLUGIN_PATH = @PLUGIN_PATH@
 RANLIB = @RANLIB@
-RDP2VNCTARGET = @RDP2VNCTARGET@
 SCARDOBJ = @SCARDOBJ@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
-VNCINC = @VNCINC@
-VNCLINK = @VNCLINK@
 XCURSOR_CFLAGS = @XCURSOR_CFLAGS@
 XCURSOR_LIBS = @XCURSOR_LIBS@
 XMKMF = @XMKMF@
@@ -224,7 +235,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 xfreerdp_SOURCES = \
-	xf_colour.c xf_colour.h \
+	xf_color.c xf_color.h \
 	xf_event.c  xf_event.h \
 	xf_keyboard.c xf_keyboard.h \
 	xf_types.h \
@@ -318,7 +329,7 @@ clean-binPROGRAMS:
 	rm -f $$list
 xfreerdp$(EXEEXT): $(xfreerdp_OBJECTS) $(xfreerdp_DEPENDENCIES) 
 	@rm -f xfreerdp$(EXEEXT)
-	$(xfreerdp_LINK) $(xfreerdp_OBJECTS) $(xfreerdp_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(xfreerdp_LINK) $(xfreerdp_OBJECTS) $(xfreerdp_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -326,99 +337,112 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfreerdp-xf_colour.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfreerdp-xf_color.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfreerdp-xf_event.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfreerdp-xf_keyboard.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfreerdp-xf_win.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfreerdp-xfreerdp.Po@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
-xfreerdp-xf_colour.o: xf_colour.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_colour.o -MD -MP -MF $(DEPDIR)/xfreerdp-xf_colour.Tpo -c -o xfreerdp-xf_colour.o `test -f 'xf_colour.c' || echo '$(srcdir)/'`xf_colour.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/xfreerdp-xf_colour.Tpo $(DEPDIR)/xfreerdp-xf_colour.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xf_colour.c' object='xfreerdp-xf_colour.o' libtool=no @AMDEPBACKSLASH@
+xfreerdp-xf_color.o: xf_color.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_color.o -MD -MP -MF $(DEPDIR)/xfreerdp-xf_color.Tpo -c -o xfreerdp-xf_color.o `test -f 'xf_color.c' || echo '$(srcdir)/'`xf_color.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfreerdp-xf_color.Tpo $(DEPDIR)/xfreerdp-xf_color.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xf_color.c' object='xfreerdp-xf_color.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -c -o xfreerdp-xf_colour.o `test -f 'xf_colour.c' || echo '$(srcdir)/'`xf_colour.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -c -o xfreerdp-xf_color.o `test -f 'xf_color.c' || echo '$(srcdir)/'`xf_color.c
 
-xfreerdp-xf_colour.obj: xf_colour.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_colour.obj -MD -MP -MF $(DEPDIR)/xfreerdp-xf_colour.Tpo -c -o xfreerdp-xf_colour.obj `if test -f 'xf_colour.c'; then $(CYGPATH_W) 'xf_colour.c'; else $(CYGPATH_W) '$(srcdir)/xf_colour.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/xfreerdp-xf_colour.Tpo $(DEPDIR)/xfreerdp-xf_colour.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xf_colour.c' object='xfreerdp-xf_colour.obj' libtool=no @AMDEPBACKSLASH@
+xfreerdp-xf_color.obj: xf_color.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_color.obj -MD -MP -MF $(DEPDIR)/xfreerdp-xf_color.Tpo -c -o xfreerdp-xf_color.obj `if test -f 'xf_color.c'; then $(CYGPATH_W) 'xf_color.c'; else $(CYGPATH_W) '$(srcdir)/xf_color.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfreerdp-xf_color.Tpo $(DEPDIR)/xfreerdp-xf_color.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xf_color.c' object='xfreerdp-xf_color.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -c -o xfreerdp-xf_colour.obj `if test -f 'xf_colour.c'; then $(CYGPATH_W) 'xf_colour.c'; else $(CYGPATH_W) '$(srcdir)/xf_colour.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -c -o xfreerdp-xf_color.obj `if test -f 'xf_color.c'; then $(CYGPATH_W) 'xf_color.c'; else $(CYGPATH_W) '$(srcdir)/xf_color.c'; fi`
 
 xfreerdp-xf_event.o: xf_event.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_event.o -MD -MP -MF $(DEPDIR)/xfreerdp-xf_event.Tpo -c -o xfreerdp-xf_event.o `test -f 'xf_event.c' || echo '$(srcdir)/'`xf_event.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/xfreerdp-xf_event.Tpo $(DEPDIR)/xfreerdp-xf_event.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_event.o -MD -MP -MF $(DEPDIR)/xfreerdp-xf_event.Tpo -c -o xfreerdp-xf_event.o `test -f 'xf_event.c' || echo '$(srcdir)/'`xf_event.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfreerdp-xf_event.Tpo $(DEPDIR)/xfreerdp-xf_event.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xf_event.c' object='xfreerdp-xf_event.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -c -o xfreerdp-xf_event.o `test -f 'xf_event.c' || echo '$(srcdir)/'`xf_event.c
 
 xfreerdp-xf_event.obj: xf_event.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_event.obj -MD -MP -MF $(DEPDIR)/xfreerdp-xf_event.Tpo -c -o xfreerdp-xf_event.obj `if test -f 'xf_event.c'; then $(CYGPATH_W) 'xf_event.c'; else $(CYGPATH_W) '$(srcdir)/xf_event.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/xfreerdp-xf_event.Tpo $(DEPDIR)/xfreerdp-xf_event.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_event.obj -MD -MP -MF $(DEPDIR)/xfreerdp-xf_event.Tpo -c -o xfreerdp-xf_event.obj `if test -f 'xf_event.c'; then $(CYGPATH_W) 'xf_event.c'; else $(CYGPATH_W) '$(srcdir)/xf_event.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfreerdp-xf_event.Tpo $(DEPDIR)/xfreerdp-xf_event.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xf_event.c' object='xfreerdp-xf_event.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -c -o xfreerdp-xf_event.obj `if test -f 'xf_event.c'; then $(CYGPATH_W) 'xf_event.c'; else $(CYGPATH_W) '$(srcdir)/xf_event.c'; fi`
 
 xfreerdp-xf_keyboard.o: xf_keyboard.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_keyboard.o -MD -MP -MF $(DEPDIR)/xfreerdp-xf_keyboard.Tpo -c -o xfreerdp-xf_keyboard.o `test -f 'xf_keyboard.c' || echo '$(srcdir)/'`xf_keyboard.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/xfreerdp-xf_keyboard.Tpo $(DEPDIR)/xfreerdp-xf_keyboard.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_keyboard.o -MD -MP -MF $(DEPDIR)/xfreerdp-xf_keyboard.Tpo -c -o xfreerdp-xf_keyboard.o `test -f 'xf_keyboard.c' || echo '$(srcdir)/'`xf_keyboard.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfreerdp-xf_keyboard.Tpo $(DEPDIR)/xfreerdp-xf_keyboard.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xf_keyboard.c' object='xfreerdp-xf_keyboard.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -c -o xfreerdp-xf_keyboard.o `test -f 'xf_keyboard.c' || echo '$(srcdir)/'`xf_keyboard.c
 
 xfreerdp-xf_keyboard.obj: xf_keyboard.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_keyboard.obj -MD -MP -MF $(DEPDIR)/xfreerdp-xf_keyboard.Tpo -c -o xfreerdp-xf_keyboard.obj `if test -f 'xf_keyboard.c'; then $(CYGPATH_W) 'xf_keyboard.c'; else $(CYGPATH_W) '$(srcdir)/xf_keyboard.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/xfreerdp-xf_keyboard.Tpo $(DEPDIR)/xfreerdp-xf_keyboard.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_keyboard.obj -MD -MP -MF $(DEPDIR)/xfreerdp-xf_keyboard.Tpo -c -o xfreerdp-xf_keyboard.obj `if test -f 'xf_keyboard.c'; then $(CYGPATH_W) 'xf_keyboard.c'; else $(CYGPATH_W) '$(srcdir)/xf_keyboard.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfreerdp-xf_keyboard.Tpo $(DEPDIR)/xfreerdp-xf_keyboard.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xf_keyboard.c' object='xfreerdp-xf_keyboard.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -c -o xfreerdp-xf_keyboard.obj `if test -f 'xf_keyboard.c'; then $(CYGPATH_W) 'xf_keyboard.c'; else $(CYGPATH_W) '$(srcdir)/xf_keyboard.c'; fi`
 
 xfreerdp-xf_win.o: xf_win.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_win.o -MD -MP -MF $(DEPDIR)/xfreerdp-xf_win.Tpo -c -o xfreerdp-xf_win.o `test -f 'xf_win.c' || echo '$(srcdir)/'`xf_win.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/xfreerdp-xf_win.Tpo $(DEPDIR)/xfreerdp-xf_win.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_win.o -MD -MP -MF $(DEPDIR)/xfreerdp-xf_win.Tpo -c -o xfreerdp-xf_win.o `test -f 'xf_win.c' || echo '$(srcdir)/'`xf_win.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfreerdp-xf_win.Tpo $(DEPDIR)/xfreerdp-xf_win.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xf_win.c' object='xfreerdp-xf_win.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -c -o xfreerdp-xf_win.o `test -f 'xf_win.c' || echo '$(srcdir)/'`xf_win.c
 
 xfreerdp-xf_win.obj: xf_win.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_win.obj -MD -MP -MF $(DEPDIR)/xfreerdp-xf_win.Tpo -c -o xfreerdp-xf_win.obj `if test -f 'xf_win.c'; then $(CYGPATH_W) 'xf_win.c'; else $(CYGPATH_W) '$(srcdir)/xf_win.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/xfreerdp-xf_win.Tpo $(DEPDIR)/xfreerdp-xf_win.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xf_win.obj -MD -MP -MF $(DEPDIR)/xfreerdp-xf_win.Tpo -c -o xfreerdp-xf_win.obj `if test -f 'xf_win.c'; then $(CYGPATH_W) 'xf_win.c'; else $(CYGPATH_W) '$(srcdir)/xf_win.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfreerdp-xf_win.Tpo $(DEPDIR)/xfreerdp-xf_win.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xf_win.c' object='xfreerdp-xf_win.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -c -o xfreerdp-xf_win.obj `if test -f 'xf_win.c'; then $(CYGPATH_W) 'xf_win.c'; else $(CYGPATH_W) '$(srcdir)/xf_win.c'; fi`
 
 xfreerdp-xfreerdp.o: xfreerdp.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xfreerdp.o -MD -MP -MF $(DEPDIR)/xfreerdp-xfreerdp.Tpo -c -o xfreerdp-xfreerdp.o `test -f 'xfreerdp.c' || echo '$(srcdir)/'`xfreerdp.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/xfreerdp-xfreerdp.Tpo $(DEPDIR)/xfreerdp-xfreerdp.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xfreerdp.o -MD -MP -MF $(DEPDIR)/xfreerdp-xfreerdp.Tpo -c -o xfreerdp-xfreerdp.o `test -f 'xfreerdp.c' || echo '$(srcdir)/'`xfreerdp.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfreerdp-xfreerdp.Tpo $(DEPDIR)/xfreerdp-xfreerdp.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfreerdp.c' object='xfreerdp-xfreerdp.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -c -o xfreerdp-xfreerdp.o `test -f 'xfreerdp.c' || echo '$(srcdir)/'`xfreerdp.c
 
 xfreerdp-xfreerdp.obj: xfreerdp.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xfreerdp.obj -MD -MP -MF $(DEPDIR)/xfreerdp-xfreerdp.Tpo -c -o xfreerdp-xfreerdp.obj `if test -f 'xfreerdp.c'; then $(CYGPATH_W) 'xfreerdp.c'; else $(CYGPATH_W) '$(srcdir)/xfreerdp.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/xfreerdp-xfreerdp.Tpo $(DEPDIR)/xfreerdp-xfreerdp.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -MT xfreerdp-xfreerdp.obj -MD -MP -MF $(DEPDIR)/xfreerdp-xfreerdp.Tpo -c -o xfreerdp-xfreerdp.obj `if test -f 'xfreerdp.c'; then $(CYGPATH_W) 'xfreerdp.c'; else $(CYGPATH_W) '$(srcdir)/xfreerdp.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfreerdp-xfreerdp.Tpo $(DEPDIR)/xfreerdp-xfreerdp.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xfreerdp.c' object='xfreerdp-xfreerdp.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfreerdp_CFLAGS) $(CFLAGS) -c -o xfreerdp-xfreerdp.obj `if test -f 'xfreerdp.c'; then $(CYGPATH_W) 'xfreerdp.c'; else $(CYGPATH_W) '$(srcdir)/xfreerdp.c'; fi`

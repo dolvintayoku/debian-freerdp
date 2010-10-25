@@ -1,23 +1,22 @@
-/*
-   Copyright (c) 2009 Jay Sorg
+/* -*- c-basic-offset: 8 -*-
+   FreeRDP: A Remote Desktop Protocol client.
+   DirectFB UI
 
-   Permission is hereby granted, free of charge, to any person obtaining a
-   copy of this software and associated documentation files (the "Software"),
-   to deal in the Software without restriction, including without limitation
-   the rights to use, copy, modify, merge, publish, distribute, sublicense,
-   and/or sell copies of the Software, and to permit persons to whom the
-   Software is furnished to do so, subject to the following conditions:
+   Copyright (C) Marc-Andre Moreau <marcandre.moreau@gmail.com> 2010
 
-   The above copyright notice and this permission notice shall be included
-   in all copies or substantial portions of the Software.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
 
-   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-   DEALINGS IN THE SOFTWARE.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 
 #include <stdio.h>
@@ -32,6 +31,7 @@
 #include <pthread.h>
 #include <freerdp/freerdp.h>
 #include <freerdp/chanman.h>
+#include "dfbfreerdp.h"
 #include "dfb_win.h"
 #include "dfb_keyboard.h"
 
@@ -52,7 +52,7 @@ set_default_params(rdpSet * settings)
 	settings->bitmap_cache = 1;
 	settings->bitmap_compression = 1;
 	settings->desktop_save = 0;
-	settings->rdp5_performanceflags = RDP5_NO_FULLWINDOWDRAG | RDP5_NO_MENUANIMATIONS;
+	settings->performanceflags = PERF_DISABLE_FULLWINDOWDRAG | PERF_DISABLE_MENUANIMATIONS | PERF_DISABLE_WALLPAPER;
 	settings->off_screen_bitmaps = 1;
 	settings->triblt = 0;
 	settings->new_cursors = 1;
@@ -216,21 +216,21 @@ process_params(rdpSet * settings, rdpChanMan * chan_man, int argc, char ** argv,
 			}
 			if (strncmp("m", argv[*pindex], 1) == 0) /* modem */
 			{
-				settings->rdp5_performanceflags = RDP5_NO_WALLPAPER |
-					RDP5_NO_FULLWINDOWDRAG |  RDP5_NO_MENUANIMATIONS |
-					RDP5_NO_THEMING;
+				settings->performanceflags = PERF_DISABLE_WALLPAPER |
+					PERF_DISABLE_FULLWINDOWDRAG | PERF_DISABLE_MENUANIMATIONS |
+					PERF_DISABLE_THEMING;
 			}
 			else if (strncmp("b", argv[*pindex], 1) == 0) /* broadband */
 			{
-				settings->rdp5_performanceflags = RDP5_NO_WALLPAPER;
+				settings->performanceflags = PERF_DISABLE_WALLPAPER;
 			}
 			else if (strncmp("l", argv[*pindex], 1) == 0) /* lan */
 			{
-				settings->rdp5_performanceflags = RDP5_DISABLE_NOTHING;
+				settings->performanceflags = PERF_FLAG_NONE;
 			}
 			else
 			{
-				settings->rdp5_performanceflags = strtol(argv[*pindex], 0, 16);
+				settings->performanceflags = strtol(argv[*pindex], 0, 16);
 			}
 		}
 		else if (strcmp("-plugin", argv[*pindex]) == 0)
@@ -299,6 +299,9 @@ run_dfbfreerdp(rdpSet * settings, rdpChanMan * chan_man)
 	fd_set rfds;
 	fd_set wfds;
 
+	memset(read_fds, 0, sizeof(read_fds));
+	memset(write_fds, 0, sizeof(write_fds));
+
 	printf("run_dfbfreerdp:\n");
 	/* create an instance of the library */
 	inst = freerdp_new(settings);
@@ -343,6 +346,7 @@ run_dfbfreerdp(rdpSet * settings, rdpChanMan * chan_man)
 		printf("run_dfbfreerdp: dfb_post_connect failed\n");
 		return 1;
 	}
+	
 	/* program main loop */
 	while (1)
 	{
@@ -354,7 +358,7 @@ run_dfbfreerdp(rdpSet * settings, rdpChanMan * chan_man)
 			printf("run_dfbfreerdp: inst->rdp_get_fds failed\n");
 			break;
 		}
-		/* get x fds */
+		/* get DirectFB fds */
 		if (dfb_get_fds(inst, read_fds, &read_count, write_fds, &write_count) != 0)
 		{
 			printf("run_dfbfreerdp: dfb_get_fds failed\n");
@@ -410,8 +414,8 @@ run_dfbfreerdp(rdpSet * settings, rdpChanMan * chan_man)
 			printf("run_dfbfreerdp: inst->rdp_check_fds failed\n");
 			break;
 		}
-		/* check x fds */
-		if (dfb_check_fds(inst) != 0)
+		/* check DirectFB fds */
+		if (dfb_check_fds(inst, &rfds) != 0)
 		{
 			printf("run_dfbfreerdp: dfb_check_fds failed\n");
 			break;
@@ -435,6 +439,7 @@ static int g_thread_count = 0;
 
 struct thread_data
 {
+	rdpInst * inst;
 	rdpSet * settings;
 	rdpChanMan * chan_man;
 };
@@ -443,9 +448,10 @@ static void *
 thread_func(void * arg)
 {
 	struct thread_data * data;
-
 	data = (struct thread_data *) arg;
+	
 	run_dfbfreerdp(data->settings, data->chan_man);
+	
 	free(data->settings);
 	freerdp_chanman_free(data->chan_man);
 	free(data);

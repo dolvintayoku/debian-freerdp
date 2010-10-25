@@ -50,15 +50,18 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_dfbfreerdp_OBJECTS = dfbfreerdp-dfb_gdi.$(OBJEXT) \
-	dfbfreerdp-dfb_colour.$(OBJEXT) dfbfreerdp-dfb_event.$(OBJEXT) \
+am_dfbfreerdp_OBJECTS = dfbfreerdp-dfb_event.$(OBJEXT) \
 	dfbfreerdp-dfb_keyboard.$(OBJEXT) dfbfreerdp-dfb_win.$(OBJEXT) \
 	dfbfreerdp-dfbfreerdp.$(OBJEXT)
 dfbfreerdp_OBJECTS = $(am_dfbfreerdp_OBJECTS)
 dfbfreerdp_DEPENDENCIES = ../libfreerdp/libfreerdp.la \
 	../libfreerdpkbd/libfreerdpkbd.la \
+	../libfreerdpgdi/libfreerdpgdi.la \
 	../libfreerdpchanman/libfreerdpchanman.la
-dfbfreerdp_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+dfbfreerdp_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(dfbfreerdp_CFLAGS) \
 	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -67,13 +70,26 @@ am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(dfbfreerdp_SOURCES)
 DIST_SOURCES = $(dfbfreerdp_SOURCES)
 ETAGS = etags
@@ -83,6 +99,7 @@ ACLOCAL = @ACLOCAL@
 ALSA_CFLAGS = @ALSA_CFLAGS@
 ALSA_LIBS = @ALSA_LIBS@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -121,9 +138,6 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 KEYMAP_PATH = @KEYMAP_PATH@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LDVNC = @LDVNC@
-LIBAO_CFLAGS = @LIBAO_CFLAGS@
-LIBAO_LIBS = @LIBAO_LIBS@
 LIBICONV = @LIBICONV@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -156,15 +170,12 @@ PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PLUGIN_PATH = @PLUGIN_PATH@
 RANLIB = @RANLIB@
-RDP2VNCTARGET = @RDP2VNCTARGET@
 SCARDOBJ = @SCARDOBJ@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
-VNCINC = @VNCINC@
-VNCLINK = @VNCLINK@
 XCURSOR_CFLAGS = @XCURSOR_CFLAGS@
 XCURSOR_LIBS = @XCURSOR_LIBS@
 XMKMF = @XMKMF@
@@ -225,17 +236,16 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 dfbfreerdp_SOURCES = \
-	dfb_gdi.c  dfb_gdi.h \
-	dfb_colour.c dfb_colour.h \
 	dfb_event.c  dfb_event.h \
 	dfb_keyboard.c dfb_keyboard.h \
 	dfb_win.h dfb_win.c \
 	dfbfreerdp.c
 
-dfbfreerdp_CFLAGS = -I$(top_srcdir) -I$(top_srcdir)/include @DFB_CFLAGS@
+dfbfreerdp_CFLAGS = -I$(top_srcdir) -I$(top_srcdir)/include -I$(top_srcdir)/libfreerdpgdi @DFB_CFLAGS@
 dfbfreerdp_LDADD = \
 	../libfreerdp/libfreerdp.la \
 	../libfreerdpkbd/libfreerdpkbd.la \
+	../libfreerdpgdi/libfreerdpgdi.la \
 	../libfreerdpchanman/libfreerdpchanman.la \
 	@DFB_LIBS@ -lfusion -ldirect -lz -lpthread
 
@@ -318,7 +328,7 @@ clean-binPROGRAMS:
 	rm -f $$list
 dfbfreerdp$(EXEEXT): $(dfbfreerdp_OBJECTS) $(dfbfreerdp_DEPENDENCIES) 
 	@rm -f dfbfreerdp$(EXEEXT)
-	$(dfbfreerdp_LINK) $(dfbfreerdp_OBJECTS) $(dfbfreerdp_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(dfbfreerdp_LINK) $(dfbfreerdp_OBJECTS) $(dfbfreerdp_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -326,114 +336,95 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dfbfreerdp-dfb_colour.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dfbfreerdp-dfb_event.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dfbfreerdp-dfb_gdi.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dfbfreerdp-dfb_keyboard.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dfbfreerdp-dfb_win.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dfbfreerdp-dfbfreerdp.Po@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
-dfbfreerdp-dfb_gdi.o: dfb_gdi.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_gdi.o -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_gdi.Tpo -c -o dfbfreerdp-dfb_gdi.o `test -f 'dfb_gdi.c' || echo '$(srcdir)/'`dfb_gdi.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_gdi.Tpo $(DEPDIR)/dfbfreerdp-dfb_gdi.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfb_gdi.c' object='dfbfreerdp-dfb_gdi.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfb_gdi.o `test -f 'dfb_gdi.c' || echo '$(srcdir)/'`dfb_gdi.c
-
-dfbfreerdp-dfb_gdi.obj: dfb_gdi.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_gdi.obj -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_gdi.Tpo -c -o dfbfreerdp-dfb_gdi.obj `if test -f 'dfb_gdi.c'; then $(CYGPATH_W) 'dfb_gdi.c'; else $(CYGPATH_W) '$(srcdir)/dfb_gdi.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_gdi.Tpo $(DEPDIR)/dfbfreerdp-dfb_gdi.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfb_gdi.c' object='dfbfreerdp-dfb_gdi.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfb_gdi.obj `if test -f 'dfb_gdi.c'; then $(CYGPATH_W) 'dfb_gdi.c'; else $(CYGPATH_W) '$(srcdir)/dfb_gdi.c'; fi`
-
-dfbfreerdp-dfb_colour.o: dfb_colour.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_colour.o -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_colour.Tpo -c -o dfbfreerdp-dfb_colour.o `test -f 'dfb_colour.c' || echo '$(srcdir)/'`dfb_colour.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_colour.Tpo $(DEPDIR)/dfbfreerdp-dfb_colour.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfb_colour.c' object='dfbfreerdp-dfb_colour.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfb_colour.o `test -f 'dfb_colour.c' || echo '$(srcdir)/'`dfb_colour.c
-
-dfbfreerdp-dfb_colour.obj: dfb_colour.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_colour.obj -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_colour.Tpo -c -o dfbfreerdp-dfb_colour.obj `if test -f 'dfb_colour.c'; then $(CYGPATH_W) 'dfb_colour.c'; else $(CYGPATH_W) '$(srcdir)/dfb_colour.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_colour.Tpo $(DEPDIR)/dfbfreerdp-dfb_colour.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfb_colour.c' object='dfbfreerdp-dfb_colour.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfb_colour.obj `if test -f 'dfb_colour.c'; then $(CYGPATH_W) 'dfb_colour.c'; else $(CYGPATH_W) '$(srcdir)/dfb_colour.c'; fi`
-
 dfbfreerdp-dfb_event.o: dfb_event.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_event.o -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_event.Tpo -c -o dfbfreerdp-dfb_event.o `test -f 'dfb_event.c' || echo '$(srcdir)/'`dfb_event.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_event.Tpo $(DEPDIR)/dfbfreerdp-dfb_event.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_event.o -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_event.Tpo -c -o dfbfreerdp-dfb_event.o `test -f 'dfb_event.c' || echo '$(srcdir)/'`dfb_event.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_event.Tpo $(DEPDIR)/dfbfreerdp-dfb_event.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfb_event.c' object='dfbfreerdp-dfb_event.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfb_event.o `test -f 'dfb_event.c' || echo '$(srcdir)/'`dfb_event.c
 
 dfbfreerdp-dfb_event.obj: dfb_event.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_event.obj -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_event.Tpo -c -o dfbfreerdp-dfb_event.obj `if test -f 'dfb_event.c'; then $(CYGPATH_W) 'dfb_event.c'; else $(CYGPATH_W) '$(srcdir)/dfb_event.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_event.Tpo $(DEPDIR)/dfbfreerdp-dfb_event.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_event.obj -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_event.Tpo -c -o dfbfreerdp-dfb_event.obj `if test -f 'dfb_event.c'; then $(CYGPATH_W) 'dfb_event.c'; else $(CYGPATH_W) '$(srcdir)/dfb_event.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_event.Tpo $(DEPDIR)/dfbfreerdp-dfb_event.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfb_event.c' object='dfbfreerdp-dfb_event.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfb_event.obj `if test -f 'dfb_event.c'; then $(CYGPATH_W) 'dfb_event.c'; else $(CYGPATH_W) '$(srcdir)/dfb_event.c'; fi`
 
 dfbfreerdp-dfb_keyboard.o: dfb_keyboard.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_keyboard.o -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_keyboard.Tpo -c -o dfbfreerdp-dfb_keyboard.o `test -f 'dfb_keyboard.c' || echo '$(srcdir)/'`dfb_keyboard.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_keyboard.Tpo $(DEPDIR)/dfbfreerdp-dfb_keyboard.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_keyboard.o -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_keyboard.Tpo -c -o dfbfreerdp-dfb_keyboard.o `test -f 'dfb_keyboard.c' || echo '$(srcdir)/'`dfb_keyboard.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_keyboard.Tpo $(DEPDIR)/dfbfreerdp-dfb_keyboard.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfb_keyboard.c' object='dfbfreerdp-dfb_keyboard.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfb_keyboard.o `test -f 'dfb_keyboard.c' || echo '$(srcdir)/'`dfb_keyboard.c
 
 dfbfreerdp-dfb_keyboard.obj: dfb_keyboard.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_keyboard.obj -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_keyboard.Tpo -c -o dfbfreerdp-dfb_keyboard.obj `if test -f 'dfb_keyboard.c'; then $(CYGPATH_W) 'dfb_keyboard.c'; else $(CYGPATH_W) '$(srcdir)/dfb_keyboard.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_keyboard.Tpo $(DEPDIR)/dfbfreerdp-dfb_keyboard.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_keyboard.obj -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_keyboard.Tpo -c -o dfbfreerdp-dfb_keyboard.obj `if test -f 'dfb_keyboard.c'; then $(CYGPATH_W) 'dfb_keyboard.c'; else $(CYGPATH_W) '$(srcdir)/dfb_keyboard.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_keyboard.Tpo $(DEPDIR)/dfbfreerdp-dfb_keyboard.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfb_keyboard.c' object='dfbfreerdp-dfb_keyboard.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfb_keyboard.obj `if test -f 'dfb_keyboard.c'; then $(CYGPATH_W) 'dfb_keyboard.c'; else $(CYGPATH_W) '$(srcdir)/dfb_keyboard.c'; fi`
 
 dfbfreerdp-dfb_win.o: dfb_win.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_win.o -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_win.Tpo -c -o dfbfreerdp-dfb_win.o `test -f 'dfb_win.c' || echo '$(srcdir)/'`dfb_win.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_win.Tpo $(DEPDIR)/dfbfreerdp-dfb_win.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_win.o -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_win.Tpo -c -o dfbfreerdp-dfb_win.o `test -f 'dfb_win.c' || echo '$(srcdir)/'`dfb_win.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_win.Tpo $(DEPDIR)/dfbfreerdp-dfb_win.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfb_win.c' object='dfbfreerdp-dfb_win.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfb_win.o `test -f 'dfb_win.c' || echo '$(srcdir)/'`dfb_win.c
 
 dfbfreerdp-dfb_win.obj: dfb_win.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_win.obj -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_win.Tpo -c -o dfbfreerdp-dfb_win.obj `if test -f 'dfb_win.c'; then $(CYGPATH_W) 'dfb_win.c'; else $(CYGPATH_W) '$(srcdir)/dfb_win.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_win.Tpo $(DEPDIR)/dfbfreerdp-dfb_win.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfb_win.obj -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfb_win.Tpo -c -o dfbfreerdp-dfb_win.obj `if test -f 'dfb_win.c'; then $(CYGPATH_W) 'dfb_win.c'; else $(CYGPATH_W) '$(srcdir)/dfb_win.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/dfbfreerdp-dfb_win.Tpo $(DEPDIR)/dfbfreerdp-dfb_win.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfb_win.c' object='dfbfreerdp-dfb_win.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfb_win.obj `if test -f 'dfb_win.c'; then $(CYGPATH_W) 'dfb_win.c'; else $(CYGPATH_W) '$(srcdir)/dfb_win.c'; fi`
 
 dfbfreerdp-dfbfreerdp.o: dfbfreerdp.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfbfreerdp.o -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfbfreerdp.Tpo -c -o dfbfreerdp-dfbfreerdp.o `test -f 'dfbfreerdp.c' || echo '$(srcdir)/'`dfbfreerdp.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfbfreerdp.Tpo $(DEPDIR)/dfbfreerdp-dfbfreerdp.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfbfreerdp.o -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfbfreerdp.Tpo -c -o dfbfreerdp-dfbfreerdp.o `test -f 'dfbfreerdp.c' || echo '$(srcdir)/'`dfbfreerdp.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/dfbfreerdp-dfbfreerdp.Tpo $(DEPDIR)/dfbfreerdp-dfbfreerdp.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfbfreerdp.c' object='dfbfreerdp-dfbfreerdp.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfbfreerdp.o `test -f 'dfbfreerdp.c' || echo '$(srcdir)/'`dfbfreerdp.c
 
 dfbfreerdp-dfbfreerdp.obj: dfbfreerdp.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfbfreerdp.obj -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfbfreerdp.Tpo -c -o dfbfreerdp-dfbfreerdp.obj `if test -f 'dfbfreerdp.c'; then $(CYGPATH_W) 'dfbfreerdp.c'; else $(CYGPATH_W) '$(srcdir)/dfbfreerdp.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/dfbfreerdp-dfbfreerdp.Tpo $(DEPDIR)/dfbfreerdp-dfbfreerdp.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -MT dfbfreerdp-dfbfreerdp.obj -MD -MP -MF $(DEPDIR)/dfbfreerdp-dfbfreerdp.Tpo -c -o dfbfreerdp-dfbfreerdp.obj `if test -f 'dfbfreerdp.c'; then $(CYGPATH_W) 'dfbfreerdp.c'; else $(CYGPATH_W) '$(srcdir)/dfbfreerdp.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/dfbfreerdp-dfbfreerdp.Tpo $(DEPDIR)/dfbfreerdp-dfbfreerdp.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dfbfreerdp.c' object='dfbfreerdp-dfbfreerdp.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dfbfreerdp_CFLAGS) $(CFLAGS) -c -o dfbfreerdp-dfbfreerdp.obj `if test -f 'dfbfreerdp.c'; then $(CYGPATH_W) 'dfbfreerdp.c'; else $(CYGPATH_W) '$(srcdir)/dfbfreerdp.c'; fi`
