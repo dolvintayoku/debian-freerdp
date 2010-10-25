@@ -49,30 +49,36 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libasn1_la_DEPENDENCIES =
-am_libasn1_la_OBJECTS = libasn1_la-asn_codecs_prim.lo \
+am__objects_1 = libasn1_la-asn_codecs_prim.lo \
 	libasn1_la-asn_SEQUENCE_OF.lo libasn1_la-asn_SET_OF.lo \
 	libasn1_la-ber_decoder.lo libasn1_la-ber_tlv_length.lo \
 	libasn1_la-ber_tlv_tag.lo libasn1_la-BIT_STRING.lo \
-	libasn1_la-constraints.lo libasn1_la-constr_CHOICE.lo \
-	libasn1_la-constr_SEQUENCE.lo libasn1_la-constr_SEQUENCE_OF.lo \
-	libasn1_la-constr_SET_OF.lo libasn1_la-constr_TYPE.lo \
-	libasn1_la-ContextFlags.lo libasn1_la-der_encoder.lo \
+	libasn1_la-BOOLEAN.lo libasn1_la-constraints.lo \
+	libasn1_la-constr_CHOICE.lo libasn1_la-constr_SEQUENCE.lo \
+	libasn1_la-constr_SEQUENCE_OF.lo libasn1_la-constr_SET_OF.lo \
+	libasn1_la-constr_TYPE.lo libasn1_la-der_encoder.lo \
 	libasn1_la-GeneralString.lo libasn1_la-INTEGER.lo \
-	libasn1_la-MechType.lo libasn1_la-MechTypeList.lo \
 	libasn1_la-NativeEnumerated.lo libasn1_la-NativeInteger.lo \
-	libasn1_la-NegHints.lo libasn1_la-NegoData.lo \
-	libasn1_la-NegoDataItem.lo libasn1_la-NegotiationToken.lo \
-	libasn1_la-NegTokenInit2.lo libasn1_la-NegTokenInit.lo \
-	libasn1_la-NegTokenResp.lo libasn1_la-OBJECT_IDENTIFIER.lo \
+	libasn1_la-NULL.lo libasn1_la-OBJECT_IDENTIFIER.lo \
 	libasn1_la-OCTET_STRING.lo libasn1_la-per_decoder.lo \
 	libasn1_la-per_encoder.lo libasn1_la-per_opentype.lo \
-	libasn1_la-per_support.lo libasn1_la-TSCredentials.lo \
-	libasn1_la-TSCspDataDetail.lo libasn1_la-TSPasswordCreds.lo \
-	libasn1_la-TSRequest.lo libasn1_la-TSSmartCardCreds.lo \
-	libasn1_la-xer_decoder.lo libasn1_la-xer_encoder.lo \
-	libasn1_la-xer_support.lo
+	libasn1_la-per_support.lo libasn1_la-xer_decoder.lo \
+	libasn1_la-xer_encoder.lo libasn1_la-xer_support.lo
+am__objects_2 = libasn1_la-NegoData.lo libasn1_la-NegoDataItem.lo \
+	libasn1_la-TSCredentials.lo libasn1_la-TSCspDataDetail.lo \
+	libasn1_la-TSPasswordCreds.lo libasn1_la-TSRequest.lo \
+	libasn1_la-TSSmartCardCreds.lo
+am__objects_3 = libasn1_la-ContextFlags.lo libasn1_la-MechType.lo \
+	libasn1_la-MechTypeList.lo libasn1_la-NegHints.lo \
+	libasn1_la-NegotiationToken.lo libasn1_la-NegTokenInit2.lo \
+	libasn1_la-NegTokenInit.lo libasn1_la-NegTokenResp.lo
+am_libasn1_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
+	$(am__objects_3)
 libasn1_la_OBJECTS = $(am_libasn1_la_OBJECTS)
-libasn1_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+libasn1_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libasn1_la_CFLAGS) \
 	$(CFLAGS) $(libasn1_la_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -81,13 +87,26 @@ am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(libasn1_la_SOURCES)
 DIST_SOURCES = $(libasn1_la_SOURCES)
 ETAGS = etags
@@ -97,6 +116,7 @@ ACLOCAL = @ACLOCAL@
 ALSA_CFLAGS = @ALSA_CFLAGS@
 ALSA_LIBS = @ALSA_LIBS@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -135,9 +155,6 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 KEYMAP_PATH = @KEYMAP_PATH@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LDVNC = @LDVNC@
-LIBAO_CFLAGS = @LIBAO_CFLAGS@
-LIBAO_LIBS = @LIBAO_LIBS@
 LIBICONV = @LIBICONV@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -170,15 +187,12 @@ PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PLUGIN_PATH = @PLUGIN_PATH@
 RANLIB = @RANLIB@
-RDP2VNCTARGET = @RDP2VNCTARGET@
 SCARDOBJ = @SCARDOBJ@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
-VNCINC = @VNCINC@
-VNCLINK = @VNCLINK@
 XCURSOR_CFLAGS = @XCURSOR_CFLAGS@
 XCURSOR_LIBS = @XCURSOR_LIBS@
 XMKMF = @XMKMF@
@@ -239,7 +253,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_LTLIBRARIES = libasn1.la
-libasn1_la_SOURCES = \
+shared_sources = \
 	asn_application.h \
 	asn_codecs.h \
 	asn_codecs_prim.c \
@@ -258,6 +272,8 @@ libasn1_la_SOURCES = \
 	ber_tlv_tag.h \
 	BIT_STRING.c \
 	BIT_STRING.h \
+	BOOLEAN.c \
+	BOOLEAN.h \
 	constraints.c \
 	constraints.h \
 	constr_CHOICE.c \
@@ -270,36 +286,18 @@ libasn1_la_SOURCES = \
 	constr_SET_OF.h \
 	constr_TYPE.c \
 	constr_TYPE.h \
-	ContextFlags.c \
-	ContextFlags.h \
 	der_encoder.c \
 	der_encoder.h \
 	GeneralString.c \
 	GeneralString.h \
 	INTEGER.c \
 	INTEGER.h \
-	MechType.c \
-	MechType.h \
-	MechTypeList.c \
-	MechTypeList.h \
 	NativeEnumerated.c \
 	NativeEnumerated.h \
 	NativeInteger.c \
 	NativeInteger.h \
-	NegHints.c \
-	NegHints.h \
-	NegoData.c \
-	NegoData.h \
-	NegoDataItem.c \
-	NegoDataItem.h \
-	NegotiationToken.c \
-	NegotiationToken.h \
-	NegTokenInit2.c \
-	NegTokenInit2.h \
-	NegTokenInit.c \
-	NegTokenInit.h \
-	NegTokenResp.c \
-	NegTokenResp.h \
+	NULL.c \
+	NULL.h \
 	OBJECT_IDENTIFIER.c \
 	OBJECT_IDENTIFIER.h \
 	OCTET_STRING.c \
@@ -312,6 +310,18 @@ libasn1_la_SOURCES = \
 	per_opentype.h \
 	per_support.c \
 	per_support.h \
+	xer_decoder.c \
+	xer_decoder.h \
+	xer_encoder.c \
+	xer_encoder.h \
+	xer_support.c \
+	xer_support.h
+
+credssp_sources = \
+	NegoData.c \
+	NegoData.h \
+	NegoDataItem.c \
+	NegoDataItem.h \
 	TSCredentials.c \
 	TSCredentials.h \
 	TSCspDataDetail.c \
@@ -321,22 +331,194 @@ libasn1_la_SOURCES = \
 	TSRequest.c \
 	TSRequest.h \
 	TSSmartCardCreds.c \
-	TSSmartCardCreds.h \
-	xer_decoder.c \
-	xer_decoder.h \
-	xer_encoder.c \
-	xer_encoder.h \
-	xer_support.c \
-	xer_support.h
+	TSSmartCardCreds.h
 
+spnego_sources = \
+	ContextFlags.c \
+	ContextFlags.h \
+	MechType.c \
+	MechType.h \
+	MechTypeList.c \
+	MechTypeList.h \
+	NegHints.c \
+	NegHints.h \
+	NegotiationToken.c \
+	NegotiationToken.h \
+	NegTokenInit2.c \
+	NegTokenInit2.h \
+	NegTokenInit.c \
+	NegTokenInit.h \
+	NegTokenResp.c \
+	NegTokenResp.h
+
+mcs_sources = \
+	AssignedChannelId.c \
+	AssignedChannelId.h \
+	AttachUserConfirm.c \
+	AttachUserConfirm.h \
+	AttachUserRequest.c \
+	AttachUserRequest.h \
+	CapabilitiesNotificationIndication.c \
+	CapabilitiesNotificationIndication.h \
+	CapabilitiesNotificationRequest.c \
+	CapabilitiesNotificationRequest.h \
+	CapabilityClass.c \
+	CapabilityClass.h \
+	CapabilityID.c \
+	CapabilityID.h \
+	ChannelAdmitIndication.c \
+	ChannelAdmitIndication.h \
+	ChannelAdmitRequest.c \
+	ChannelAdmitRequest.h \
+	ChannelAttributes.c \
+	ChannelAttributes.h \
+	ChannelConveneConfirm.c \
+	ChannelConveneConfirm.h \
+	ChannelConveneRequest.c \
+	ChannelConveneRequest.h \
+	ChannelDisbandIndication.c \
+	ChannelDisbandIndication.h \
+	ChannelDisbandRequest.c \
+	ChannelDisbandRequest.h \
+	ChannelExpelIndication.c \
+	ChannelExpelIndication.h \
+	ChannelExpelRequest.c \
+	ChannelExpelRequest.h \
+	ChannelId.c \
+	ChannelId.h \
+	ChannelJoinConfirm.c \
+	ChannelJoinConfirm.h \
+	ChannelJoinRequest.c \
+	ChannelJoinRequest.h \
+	ChannelLeaveRequest.c \
+	ChannelLeaveRequest.h \
+	DataPriority.c \
+	DataPriority.h \
+	DetachUserIndication.c \
+	DetachUserIndication.h \
+	DetachUserRequest.c \
+	DetachUserRequest.h \
+	Diagnostic.c \
+	Diagnostic.h \
+	DisconnectProviderUltimatum.c \
+	DisconnectProviderUltimatum.h \
+	DomainMCSPDU.c \
+	DomainMCSPDU.h \
+	DynamicChannelId.c \
+	DynamicChannelId.h \
+	ErectDomainRequest.c \
+	ErectDomainRequest.h \
+	ExtendedParameterAccept.c \
+	ExtendedParameterAccept.h \
+	ExtendedParameterMCSPDU.c \
+	ExtendedParameterMCSPDU.h \
+	ExtendedParameterPropose.c \
+	ExtendedParameterPropose.h \
+	ExtendedParameters.c \
+	ExtendedParameters.h \
+	H221NonStandardIdentifier.c \
+	H221NonStandardIdentifier.h \
+	IndicationCapability.c \
+	IndicationCapability.h \
+	Key.c \
+	Key.h \
+	MergeChannelsConfirm.c \
+	MergeChannelsConfirm.h \
+	MergeChannelsRequest.c \
+	MergeChannelsRequest.h \
+	MergeTokensConfirm.c \
+	MergeTokensConfirm.h \
+	MergeTokensRequest.c \
+	MergeTokensRequest.h \
+	NonStandardParameter.c \
+	NonStandardParameter.h \
+	NonStandardPDU.c \
+	NonStandardPDU.h \
+	ParticipationIndicator.c \
+	ParticipationIndicator.h \
+	PlumbDomainIndication.c \
+	PlumbDomainIndication.h \
+	PrivateChannelId.c \
+	PrivateChannelId.h \
+	PurgeChannelsIndication.c \
+	PurgeChannelsIndication.h \
+	PurgeTokensIndication.c \
+	PurgeTokensIndication.h \
+	Reason.c \
+	Reason.h \
+	RejectMCSPDUUltimatum.c \
+	RejectMCSPDUUltimatum.h \
+	RequestCapability.c \
+	RequestCapability.h \
+	Result.c \
+	Result.h \
+	Segmentation.c \
+	Segmentation.h \
+	SendDataIndication.c \
+	SendDataIndication.h \
+	SendDataRequest.c \
+	SendDataRequest.h \
+	SeqOfIndicationCapabilities.c \
+	SeqOfIndicationCapabilities.h \
+	SeqOfRequestCapabilities.c \
+	SeqOfRequestCapabilities.h \
+	StaticChannelId.c \
+	StaticChannelId.h \
+	TokenAttributes.c \
+	TokenAttributes.h \
+	TokenGiveConfirm.c \
+	TokenGiveConfirm.h \
+	TokenGiveIndication.c \
+	TokenGiveIndication.h \
+	TokenGiveRequest.c \
+	TokenGiveRequest.h \
+	TokenGiveResponse.c \
+	TokenGiveResponse.h \
+	TokenGrabConfirm.c \
+	TokenGrabConfirm.h \
+	TokenGrabRequest.c \
+	TokenGrabRequest.h \
+	TokenId.c \
+	TokenId.h \
+	TokenInhibitConfirm.c \
+	TokenInhibitConfirm.h \
+	TokenInhibitRequest.c \
+	TokenInhibitRequest.h \
+	TokenPleaseIndication.c \
+	TokenPleaseIndication.h \
+	TokenPleaseRequest.c \
+	TokenPleaseRequest.h \
+	TokenReleaseConfirm.c \
+	TokenReleaseConfirm.h \
+	TokenReleaseRequest.c \
+	TokenReleaseRequest.h \
+	TokenStatus.c \
+	TokenStatus.h \
+	TokenTestConfirm.c \
+	TokenTestConfirm.h \
+	TokenTestRequest.c \
+	TokenTestRequest.h \
+	UniformSendDataIndication.c \
+	UniformSendDataIndication.h \
+	UniformSendDataRequest.c \
+	UniformSendDataRequest.h \
+	UserId.c \
+	UserId.h
+
+libasn1_la_SOURCES = \
+	$(shared_sources) \
+	$(credssp_sources) \
+	$(spnego_sources)
+
+#	$(mcs_sources)
 libasn1_la_CFLAGS = -O2 -w -I.
 libasn1_la_LDFLAGS = -avoid-version -module
 libasn1_la_LIBADD = 
-
-# extra
-EXTRA_DIST = 
+ASN1_MODULES_BER = credssp.asn1 spnego.asn1
+ASN1_MODULES_PER = mcs.asn1
+ASN1_MODULES = $(ASN1_MODULES_BER) $(ASN1_MODULES_PER)
+EXTRA_DIST = $(ASN1_MODULES)
 DISTCLEANFILES = 
-ASN1_MODULES = credssp.asn1 spnego.asn1
 all: all-am
 
 .SUFFIXES:
@@ -381,7 +563,7 @@ clean-noinstLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libasn1.la: $(libasn1_la_OBJECTS) $(libasn1_la_DEPENDENCIES) 
-	$(libasn1_la_LINK)  $(libasn1_la_OBJECTS) $(libasn1_la_LIBADD) $(LIBS)
+	$(AM_V_CCLD)$(libasn1_la_LINK)  $(libasn1_la_OBJECTS) $(libasn1_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -390,11 +572,13 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libasn1_la-BIT_STRING.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libasn1_la-BOOLEAN.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libasn1_la-ContextFlags.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libasn1_la-GeneralString.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libasn1_la-INTEGER.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libasn1_la-MechType.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libasn1_la-MechTypeList.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libasn1_la-NULL.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libasn1_la-NativeEnumerated.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libasn1_la-NativeInteger.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libasn1_la-NegHints.Plo@am__quote@
@@ -433,319 +617,380 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libasn1_la-xer_support.Plo@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
 libasn1_la-asn_codecs_prim.lo: asn_codecs_prim.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-asn_codecs_prim.lo -MD -MP -MF $(DEPDIR)/libasn1_la-asn_codecs_prim.Tpo -c -o libasn1_la-asn_codecs_prim.lo `test -f 'asn_codecs_prim.c' || echo '$(srcdir)/'`asn_codecs_prim.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-asn_codecs_prim.Tpo $(DEPDIR)/libasn1_la-asn_codecs_prim.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-asn_codecs_prim.lo -MD -MP -MF $(DEPDIR)/libasn1_la-asn_codecs_prim.Tpo -c -o libasn1_la-asn_codecs_prim.lo `test -f 'asn_codecs_prim.c' || echo '$(srcdir)/'`asn_codecs_prim.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-asn_codecs_prim.Tpo $(DEPDIR)/libasn1_la-asn_codecs_prim.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='asn_codecs_prim.c' object='libasn1_la-asn_codecs_prim.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-asn_codecs_prim.lo `test -f 'asn_codecs_prim.c' || echo '$(srcdir)/'`asn_codecs_prim.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-asn_codecs_prim.lo `test -f 'asn_codecs_prim.c' || echo '$(srcdir)/'`asn_codecs_prim.c
 
 libasn1_la-asn_SEQUENCE_OF.lo: asn_SEQUENCE_OF.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-asn_SEQUENCE_OF.lo -MD -MP -MF $(DEPDIR)/libasn1_la-asn_SEQUENCE_OF.Tpo -c -o libasn1_la-asn_SEQUENCE_OF.lo `test -f 'asn_SEQUENCE_OF.c' || echo '$(srcdir)/'`asn_SEQUENCE_OF.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-asn_SEQUENCE_OF.Tpo $(DEPDIR)/libasn1_la-asn_SEQUENCE_OF.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-asn_SEQUENCE_OF.lo -MD -MP -MF $(DEPDIR)/libasn1_la-asn_SEQUENCE_OF.Tpo -c -o libasn1_la-asn_SEQUENCE_OF.lo `test -f 'asn_SEQUENCE_OF.c' || echo '$(srcdir)/'`asn_SEQUENCE_OF.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-asn_SEQUENCE_OF.Tpo $(DEPDIR)/libasn1_la-asn_SEQUENCE_OF.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='asn_SEQUENCE_OF.c' object='libasn1_la-asn_SEQUENCE_OF.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-asn_SEQUENCE_OF.lo `test -f 'asn_SEQUENCE_OF.c' || echo '$(srcdir)/'`asn_SEQUENCE_OF.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-asn_SEQUENCE_OF.lo `test -f 'asn_SEQUENCE_OF.c' || echo '$(srcdir)/'`asn_SEQUENCE_OF.c
 
 libasn1_la-asn_SET_OF.lo: asn_SET_OF.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-asn_SET_OF.lo -MD -MP -MF $(DEPDIR)/libasn1_la-asn_SET_OF.Tpo -c -o libasn1_la-asn_SET_OF.lo `test -f 'asn_SET_OF.c' || echo '$(srcdir)/'`asn_SET_OF.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-asn_SET_OF.Tpo $(DEPDIR)/libasn1_la-asn_SET_OF.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-asn_SET_OF.lo -MD -MP -MF $(DEPDIR)/libasn1_la-asn_SET_OF.Tpo -c -o libasn1_la-asn_SET_OF.lo `test -f 'asn_SET_OF.c' || echo '$(srcdir)/'`asn_SET_OF.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-asn_SET_OF.Tpo $(DEPDIR)/libasn1_la-asn_SET_OF.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='asn_SET_OF.c' object='libasn1_la-asn_SET_OF.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-asn_SET_OF.lo `test -f 'asn_SET_OF.c' || echo '$(srcdir)/'`asn_SET_OF.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-asn_SET_OF.lo `test -f 'asn_SET_OF.c' || echo '$(srcdir)/'`asn_SET_OF.c
 
 libasn1_la-ber_decoder.lo: ber_decoder.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-ber_decoder.lo -MD -MP -MF $(DEPDIR)/libasn1_la-ber_decoder.Tpo -c -o libasn1_la-ber_decoder.lo `test -f 'ber_decoder.c' || echo '$(srcdir)/'`ber_decoder.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-ber_decoder.Tpo $(DEPDIR)/libasn1_la-ber_decoder.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-ber_decoder.lo -MD -MP -MF $(DEPDIR)/libasn1_la-ber_decoder.Tpo -c -o libasn1_la-ber_decoder.lo `test -f 'ber_decoder.c' || echo '$(srcdir)/'`ber_decoder.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-ber_decoder.Tpo $(DEPDIR)/libasn1_la-ber_decoder.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ber_decoder.c' object='libasn1_la-ber_decoder.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-ber_decoder.lo `test -f 'ber_decoder.c' || echo '$(srcdir)/'`ber_decoder.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-ber_decoder.lo `test -f 'ber_decoder.c' || echo '$(srcdir)/'`ber_decoder.c
 
 libasn1_la-ber_tlv_length.lo: ber_tlv_length.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-ber_tlv_length.lo -MD -MP -MF $(DEPDIR)/libasn1_la-ber_tlv_length.Tpo -c -o libasn1_la-ber_tlv_length.lo `test -f 'ber_tlv_length.c' || echo '$(srcdir)/'`ber_tlv_length.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-ber_tlv_length.Tpo $(DEPDIR)/libasn1_la-ber_tlv_length.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-ber_tlv_length.lo -MD -MP -MF $(DEPDIR)/libasn1_la-ber_tlv_length.Tpo -c -o libasn1_la-ber_tlv_length.lo `test -f 'ber_tlv_length.c' || echo '$(srcdir)/'`ber_tlv_length.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-ber_tlv_length.Tpo $(DEPDIR)/libasn1_la-ber_tlv_length.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ber_tlv_length.c' object='libasn1_la-ber_tlv_length.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-ber_tlv_length.lo `test -f 'ber_tlv_length.c' || echo '$(srcdir)/'`ber_tlv_length.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-ber_tlv_length.lo `test -f 'ber_tlv_length.c' || echo '$(srcdir)/'`ber_tlv_length.c
 
 libasn1_la-ber_tlv_tag.lo: ber_tlv_tag.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-ber_tlv_tag.lo -MD -MP -MF $(DEPDIR)/libasn1_la-ber_tlv_tag.Tpo -c -o libasn1_la-ber_tlv_tag.lo `test -f 'ber_tlv_tag.c' || echo '$(srcdir)/'`ber_tlv_tag.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-ber_tlv_tag.Tpo $(DEPDIR)/libasn1_la-ber_tlv_tag.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-ber_tlv_tag.lo -MD -MP -MF $(DEPDIR)/libasn1_la-ber_tlv_tag.Tpo -c -o libasn1_la-ber_tlv_tag.lo `test -f 'ber_tlv_tag.c' || echo '$(srcdir)/'`ber_tlv_tag.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-ber_tlv_tag.Tpo $(DEPDIR)/libasn1_la-ber_tlv_tag.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ber_tlv_tag.c' object='libasn1_la-ber_tlv_tag.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-ber_tlv_tag.lo `test -f 'ber_tlv_tag.c' || echo '$(srcdir)/'`ber_tlv_tag.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-ber_tlv_tag.lo `test -f 'ber_tlv_tag.c' || echo '$(srcdir)/'`ber_tlv_tag.c
 
 libasn1_la-BIT_STRING.lo: BIT_STRING.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-BIT_STRING.lo -MD -MP -MF $(DEPDIR)/libasn1_la-BIT_STRING.Tpo -c -o libasn1_la-BIT_STRING.lo `test -f 'BIT_STRING.c' || echo '$(srcdir)/'`BIT_STRING.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-BIT_STRING.Tpo $(DEPDIR)/libasn1_la-BIT_STRING.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-BIT_STRING.lo -MD -MP -MF $(DEPDIR)/libasn1_la-BIT_STRING.Tpo -c -o libasn1_la-BIT_STRING.lo `test -f 'BIT_STRING.c' || echo '$(srcdir)/'`BIT_STRING.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-BIT_STRING.Tpo $(DEPDIR)/libasn1_la-BIT_STRING.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='BIT_STRING.c' object='libasn1_la-BIT_STRING.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-BIT_STRING.lo `test -f 'BIT_STRING.c' || echo '$(srcdir)/'`BIT_STRING.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-BIT_STRING.lo `test -f 'BIT_STRING.c' || echo '$(srcdir)/'`BIT_STRING.c
+
+libasn1_la-BOOLEAN.lo: BOOLEAN.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-BOOLEAN.lo -MD -MP -MF $(DEPDIR)/libasn1_la-BOOLEAN.Tpo -c -o libasn1_la-BOOLEAN.lo `test -f 'BOOLEAN.c' || echo '$(srcdir)/'`BOOLEAN.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-BOOLEAN.Tpo $(DEPDIR)/libasn1_la-BOOLEAN.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='BOOLEAN.c' object='libasn1_la-BOOLEAN.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-BOOLEAN.lo `test -f 'BOOLEAN.c' || echo '$(srcdir)/'`BOOLEAN.c
 
 libasn1_la-constraints.lo: constraints.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-constraints.lo -MD -MP -MF $(DEPDIR)/libasn1_la-constraints.Tpo -c -o libasn1_la-constraints.lo `test -f 'constraints.c' || echo '$(srcdir)/'`constraints.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-constraints.Tpo $(DEPDIR)/libasn1_la-constraints.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-constraints.lo -MD -MP -MF $(DEPDIR)/libasn1_la-constraints.Tpo -c -o libasn1_la-constraints.lo `test -f 'constraints.c' || echo '$(srcdir)/'`constraints.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-constraints.Tpo $(DEPDIR)/libasn1_la-constraints.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='constraints.c' object='libasn1_la-constraints.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-constraints.lo `test -f 'constraints.c' || echo '$(srcdir)/'`constraints.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-constraints.lo `test -f 'constraints.c' || echo '$(srcdir)/'`constraints.c
 
 libasn1_la-constr_CHOICE.lo: constr_CHOICE.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-constr_CHOICE.lo -MD -MP -MF $(DEPDIR)/libasn1_la-constr_CHOICE.Tpo -c -o libasn1_la-constr_CHOICE.lo `test -f 'constr_CHOICE.c' || echo '$(srcdir)/'`constr_CHOICE.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-constr_CHOICE.Tpo $(DEPDIR)/libasn1_la-constr_CHOICE.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-constr_CHOICE.lo -MD -MP -MF $(DEPDIR)/libasn1_la-constr_CHOICE.Tpo -c -o libasn1_la-constr_CHOICE.lo `test -f 'constr_CHOICE.c' || echo '$(srcdir)/'`constr_CHOICE.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-constr_CHOICE.Tpo $(DEPDIR)/libasn1_la-constr_CHOICE.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='constr_CHOICE.c' object='libasn1_la-constr_CHOICE.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-constr_CHOICE.lo `test -f 'constr_CHOICE.c' || echo '$(srcdir)/'`constr_CHOICE.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-constr_CHOICE.lo `test -f 'constr_CHOICE.c' || echo '$(srcdir)/'`constr_CHOICE.c
 
 libasn1_la-constr_SEQUENCE.lo: constr_SEQUENCE.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-constr_SEQUENCE.lo -MD -MP -MF $(DEPDIR)/libasn1_la-constr_SEQUENCE.Tpo -c -o libasn1_la-constr_SEQUENCE.lo `test -f 'constr_SEQUENCE.c' || echo '$(srcdir)/'`constr_SEQUENCE.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-constr_SEQUENCE.Tpo $(DEPDIR)/libasn1_la-constr_SEQUENCE.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-constr_SEQUENCE.lo -MD -MP -MF $(DEPDIR)/libasn1_la-constr_SEQUENCE.Tpo -c -o libasn1_la-constr_SEQUENCE.lo `test -f 'constr_SEQUENCE.c' || echo '$(srcdir)/'`constr_SEQUENCE.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-constr_SEQUENCE.Tpo $(DEPDIR)/libasn1_la-constr_SEQUENCE.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='constr_SEQUENCE.c' object='libasn1_la-constr_SEQUENCE.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-constr_SEQUENCE.lo `test -f 'constr_SEQUENCE.c' || echo '$(srcdir)/'`constr_SEQUENCE.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-constr_SEQUENCE.lo `test -f 'constr_SEQUENCE.c' || echo '$(srcdir)/'`constr_SEQUENCE.c
 
 libasn1_la-constr_SEQUENCE_OF.lo: constr_SEQUENCE_OF.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-constr_SEQUENCE_OF.lo -MD -MP -MF $(DEPDIR)/libasn1_la-constr_SEQUENCE_OF.Tpo -c -o libasn1_la-constr_SEQUENCE_OF.lo `test -f 'constr_SEQUENCE_OF.c' || echo '$(srcdir)/'`constr_SEQUENCE_OF.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-constr_SEQUENCE_OF.Tpo $(DEPDIR)/libasn1_la-constr_SEQUENCE_OF.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-constr_SEQUENCE_OF.lo -MD -MP -MF $(DEPDIR)/libasn1_la-constr_SEQUENCE_OF.Tpo -c -o libasn1_la-constr_SEQUENCE_OF.lo `test -f 'constr_SEQUENCE_OF.c' || echo '$(srcdir)/'`constr_SEQUENCE_OF.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-constr_SEQUENCE_OF.Tpo $(DEPDIR)/libasn1_la-constr_SEQUENCE_OF.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='constr_SEQUENCE_OF.c' object='libasn1_la-constr_SEQUENCE_OF.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-constr_SEQUENCE_OF.lo `test -f 'constr_SEQUENCE_OF.c' || echo '$(srcdir)/'`constr_SEQUENCE_OF.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-constr_SEQUENCE_OF.lo `test -f 'constr_SEQUENCE_OF.c' || echo '$(srcdir)/'`constr_SEQUENCE_OF.c
 
 libasn1_la-constr_SET_OF.lo: constr_SET_OF.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-constr_SET_OF.lo -MD -MP -MF $(DEPDIR)/libasn1_la-constr_SET_OF.Tpo -c -o libasn1_la-constr_SET_OF.lo `test -f 'constr_SET_OF.c' || echo '$(srcdir)/'`constr_SET_OF.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-constr_SET_OF.Tpo $(DEPDIR)/libasn1_la-constr_SET_OF.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-constr_SET_OF.lo -MD -MP -MF $(DEPDIR)/libasn1_la-constr_SET_OF.Tpo -c -o libasn1_la-constr_SET_OF.lo `test -f 'constr_SET_OF.c' || echo '$(srcdir)/'`constr_SET_OF.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-constr_SET_OF.Tpo $(DEPDIR)/libasn1_la-constr_SET_OF.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='constr_SET_OF.c' object='libasn1_la-constr_SET_OF.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-constr_SET_OF.lo `test -f 'constr_SET_OF.c' || echo '$(srcdir)/'`constr_SET_OF.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-constr_SET_OF.lo `test -f 'constr_SET_OF.c' || echo '$(srcdir)/'`constr_SET_OF.c
 
 libasn1_la-constr_TYPE.lo: constr_TYPE.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-constr_TYPE.lo -MD -MP -MF $(DEPDIR)/libasn1_la-constr_TYPE.Tpo -c -o libasn1_la-constr_TYPE.lo `test -f 'constr_TYPE.c' || echo '$(srcdir)/'`constr_TYPE.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-constr_TYPE.Tpo $(DEPDIR)/libasn1_la-constr_TYPE.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-constr_TYPE.lo -MD -MP -MF $(DEPDIR)/libasn1_la-constr_TYPE.Tpo -c -o libasn1_la-constr_TYPE.lo `test -f 'constr_TYPE.c' || echo '$(srcdir)/'`constr_TYPE.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-constr_TYPE.Tpo $(DEPDIR)/libasn1_la-constr_TYPE.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='constr_TYPE.c' object='libasn1_la-constr_TYPE.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-constr_TYPE.lo `test -f 'constr_TYPE.c' || echo '$(srcdir)/'`constr_TYPE.c
-
-libasn1_la-ContextFlags.lo: ContextFlags.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-ContextFlags.lo -MD -MP -MF $(DEPDIR)/libasn1_la-ContextFlags.Tpo -c -o libasn1_la-ContextFlags.lo `test -f 'ContextFlags.c' || echo '$(srcdir)/'`ContextFlags.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-ContextFlags.Tpo $(DEPDIR)/libasn1_la-ContextFlags.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ContextFlags.c' object='libasn1_la-ContextFlags.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-ContextFlags.lo `test -f 'ContextFlags.c' || echo '$(srcdir)/'`ContextFlags.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-constr_TYPE.lo `test -f 'constr_TYPE.c' || echo '$(srcdir)/'`constr_TYPE.c
 
 libasn1_la-der_encoder.lo: der_encoder.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-der_encoder.lo -MD -MP -MF $(DEPDIR)/libasn1_la-der_encoder.Tpo -c -o libasn1_la-der_encoder.lo `test -f 'der_encoder.c' || echo '$(srcdir)/'`der_encoder.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-der_encoder.Tpo $(DEPDIR)/libasn1_la-der_encoder.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-der_encoder.lo -MD -MP -MF $(DEPDIR)/libasn1_la-der_encoder.Tpo -c -o libasn1_la-der_encoder.lo `test -f 'der_encoder.c' || echo '$(srcdir)/'`der_encoder.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-der_encoder.Tpo $(DEPDIR)/libasn1_la-der_encoder.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='der_encoder.c' object='libasn1_la-der_encoder.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-der_encoder.lo `test -f 'der_encoder.c' || echo '$(srcdir)/'`der_encoder.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-der_encoder.lo `test -f 'der_encoder.c' || echo '$(srcdir)/'`der_encoder.c
 
 libasn1_la-GeneralString.lo: GeneralString.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-GeneralString.lo -MD -MP -MF $(DEPDIR)/libasn1_la-GeneralString.Tpo -c -o libasn1_la-GeneralString.lo `test -f 'GeneralString.c' || echo '$(srcdir)/'`GeneralString.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-GeneralString.Tpo $(DEPDIR)/libasn1_la-GeneralString.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-GeneralString.lo -MD -MP -MF $(DEPDIR)/libasn1_la-GeneralString.Tpo -c -o libasn1_la-GeneralString.lo `test -f 'GeneralString.c' || echo '$(srcdir)/'`GeneralString.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-GeneralString.Tpo $(DEPDIR)/libasn1_la-GeneralString.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='GeneralString.c' object='libasn1_la-GeneralString.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-GeneralString.lo `test -f 'GeneralString.c' || echo '$(srcdir)/'`GeneralString.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-GeneralString.lo `test -f 'GeneralString.c' || echo '$(srcdir)/'`GeneralString.c
 
 libasn1_la-INTEGER.lo: INTEGER.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-INTEGER.lo -MD -MP -MF $(DEPDIR)/libasn1_la-INTEGER.Tpo -c -o libasn1_la-INTEGER.lo `test -f 'INTEGER.c' || echo '$(srcdir)/'`INTEGER.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-INTEGER.Tpo $(DEPDIR)/libasn1_la-INTEGER.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-INTEGER.lo -MD -MP -MF $(DEPDIR)/libasn1_la-INTEGER.Tpo -c -o libasn1_la-INTEGER.lo `test -f 'INTEGER.c' || echo '$(srcdir)/'`INTEGER.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-INTEGER.Tpo $(DEPDIR)/libasn1_la-INTEGER.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='INTEGER.c' object='libasn1_la-INTEGER.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-INTEGER.lo `test -f 'INTEGER.c' || echo '$(srcdir)/'`INTEGER.c
-
-libasn1_la-MechType.lo: MechType.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-MechType.lo -MD -MP -MF $(DEPDIR)/libasn1_la-MechType.Tpo -c -o libasn1_la-MechType.lo `test -f 'MechType.c' || echo '$(srcdir)/'`MechType.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-MechType.Tpo $(DEPDIR)/libasn1_la-MechType.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='MechType.c' object='libasn1_la-MechType.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-MechType.lo `test -f 'MechType.c' || echo '$(srcdir)/'`MechType.c
-
-libasn1_la-MechTypeList.lo: MechTypeList.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-MechTypeList.lo -MD -MP -MF $(DEPDIR)/libasn1_la-MechTypeList.Tpo -c -o libasn1_la-MechTypeList.lo `test -f 'MechTypeList.c' || echo '$(srcdir)/'`MechTypeList.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-MechTypeList.Tpo $(DEPDIR)/libasn1_la-MechTypeList.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='MechTypeList.c' object='libasn1_la-MechTypeList.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-MechTypeList.lo `test -f 'MechTypeList.c' || echo '$(srcdir)/'`MechTypeList.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-INTEGER.lo `test -f 'INTEGER.c' || echo '$(srcdir)/'`INTEGER.c
 
 libasn1_la-NativeEnumerated.lo: NativeEnumerated.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NativeEnumerated.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NativeEnumerated.Tpo -c -o libasn1_la-NativeEnumerated.lo `test -f 'NativeEnumerated.c' || echo '$(srcdir)/'`NativeEnumerated.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-NativeEnumerated.Tpo $(DEPDIR)/libasn1_la-NativeEnumerated.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NativeEnumerated.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NativeEnumerated.Tpo -c -o libasn1_la-NativeEnumerated.lo `test -f 'NativeEnumerated.c' || echo '$(srcdir)/'`NativeEnumerated.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-NativeEnumerated.Tpo $(DEPDIR)/libasn1_la-NativeEnumerated.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NativeEnumerated.c' object='libasn1_la-NativeEnumerated.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NativeEnumerated.lo `test -f 'NativeEnumerated.c' || echo '$(srcdir)/'`NativeEnumerated.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NativeEnumerated.lo `test -f 'NativeEnumerated.c' || echo '$(srcdir)/'`NativeEnumerated.c
 
 libasn1_la-NativeInteger.lo: NativeInteger.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NativeInteger.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NativeInteger.Tpo -c -o libasn1_la-NativeInteger.lo `test -f 'NativeInteger.c' || echo '$(srcdir)/'`NativeInteger.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-NativeInteger.Tpo $(DEPDIR)/libasn1_la-NativeInteger.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NativeInteger.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NativeInteger.Tpo -c -o libasn1_la-NativeInteger.lo `test -f 'NativeInteger.c' || echo '$(srcdir)/'`NativeInteger.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-NativeInteger.Tpo $(DEPDIR)/libasn1_la-NativeInteger.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NativeInteger.c' object='libasn1_la-NativeInteger.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NativeInteger.lo `test -f 'NativeInteger.c' || echo '$(srcdir)/'`NativeInteger.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NativeInteger.lo `test -f 'NativeInteger.c' || echo '$(srcdir)/'`NativeInteger.c
 
-libasn1_la-NegHints.lo: NegHints.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegHints.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegHints.Tpo -c -o libasn1_la-NegHints.lo `test -f 'NegHints.c' || echo '$(srcdir)/'`NegHints.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-NegHints.Tpo $(DEPDIR)/libasn1_la-NegHints.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegHints.c' object='libasn1_la-NegHints.lo' libtool=yes @AMDEPBACKSLASH@
+libasn1_la-NULL.lo: NULL.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NULL.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NULL.Tpo -c -o libasn1_la-NULL.lo `test -f 'NULL.c' || echo '$(srcdir)/'`NULL.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-NULL.Tpo $(DEPDIR)/libasn1_la-NULL.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NULL.c' object='libasn1_la-NULL.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegHints.lo `test -f 'NegHints.c' || echo '$(srcdir)/'`NegHints.c
-
-libasn1_la-NegoData.lo: NegoData.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegoData.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegoData.Tpo -c -o libasn1_la-NegoData.lo `test -f 'NegoData.c' || echo '$(srcdir)/'`NegoData.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-NegoData.Tpo $(DEPDIR)/libasn1_la-NegoData.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegoData.c' object='libasn1_la-NegoData.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegoData.lo `test -f 'NegoData.c' || echo '$(srcdir)/'`NegoData.c
-
-libasn1_la-NegoDataItem.lo: NegoDataItem.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegoDataItem.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegoDataItem.Tpo -c -o libasn1_la-NegoDataItem.lo `test -f 'NegoDataItem.c' || echo '$(srcdir)/'`NegoDataItem.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-NegoDataItem.Tpo $(DEPDIR)/libasn1_la-NegoDataItem.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegoDataItem.c' object='libasn1_la-NegoDataItem.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegoDataItem.lo `test -f 'NegoDataItem.c' || echo '$(srcdir)/'`NegoDataItem.c
-
-libasn1_la-NegotiationToken.lo: NegotiationToken.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegotiationToken.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegotiationToken.Tpo -c -o libasn1_la-NegotiationToken.lo `test -f 'NegotiationToken.c' || echo '$(srcdir)/'`NegotiationToken.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-NegotiationToken.Tpo $(DEPDIR)/libasn1_la-NegotiationToken.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegotiationToken.c' object='libasn1_la-NegotiationToken.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegotiationToken.lo `test -f 'NegotiationToken.c' || echo '$(srcdir)/'`NegotiationToken.c
-
-libasn1_la-NegTokenInit2.lo: NegTokenInit2.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegTokenInit2.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegTokenInit2.Tpo -c -o libasn1_la-NegTokenInit2.lo `test -f 'NegTokenInit2.c' || echo '$(srcdir)/'`NegTokenInit2.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-NegTokenInit2.Tpo $(DEPDIR)/libasn1_la-NegTokenInit2.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegTokenInit2.c' object='libasn1_la-NegTokenInit2.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegTokenInit2.lo `test -f 'NegTokenInit2.c' || echo '$(srcdir)/'`NegTokenInit2.c
-
-libasn1_la-NegTokenInit.lo: NegTokenInit.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegTokenInit.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegTokenInit.Tpo -c -o libasn1_la-NegTokenInit.lo `test -f 'NegTokenInit.c' || echo '$(srcdir)/'`NegTokenInit.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-NegTokenInit.Tpo $(DEPDIR)/libasn1_la-NegTokenInit.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegTokenInit.c' object='libasn1_la-NegTokenInit.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegTokenInit.lo `test -f 'NegTokenInit.c' || echo '$(srcdir)/'`NegTokenInit.c
-
-libasn1_la-NegTokenResp.lo: NegTokenResp.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegTokenResp.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegTokenResp.Tpo -c -o libasn1_la-NegTokenResp.lo `test -f 'NegTokenResp.c' || echo '$(srcdir)/'`NegTokenResp.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-NegTokenResp.Tpo $(DEPDIR)/libasn1_la-NegTokenResp.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegTokenResp.c' object='libasn1_la-NegTokenResp.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegTokenResp.lo `test -f 'NegTokenResp.c' || echo '$(srcdir)/'`NegTokenResp.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NULL.lo `test -f 'NULL.c' || echo '$(srcdir)/'`NULL.c
 
 libasn1_la-OBJECT_IDENTIFIER.lo: OBJECT_IDENTIFIER.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-OBJECT_IDENTIFIER.lo -MD -MP -MF $(DEPDIR)/libasn1_la-OBJECT_IDENTIFIER.Tpo -c -o libasn1_la-OBJECT_IDENTIFIER.lo `test -f 'OBJECT_IDENTIFIER.c' || echo '$(srcdir)/'`OBJECT_IDENTIFIER.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-OBJECT_IDENTIFIER.Tpo $(DEPDIR)/libasn1_la-OBJECT_IDENTIFIER.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-OBJECT_IDENTIFIER.lo -MD -MP -MF $(DEPDIR)/libasn1_la-OBJECT_IDENTIFIER.Tpo -c -o libasn1_la-OBJECT_IDENTIFIER.lo `test -f 'OBJECT_IDENTIFIER.c' || echo '$(srcdir)/'`OBJECT_IDENTIFIER.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-OBJECT_IDENTIFIER.Tpo $(DEPDIR)/libasn1_la-OBJECT_IDENTIFIER.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='OBJECT_IDENTIFIER.c' object='libasn1_la-OBJECT_IDENTIFIER.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-OBJECT_IDENTIFIER.lo `test -f 'OBJECT_IDENTIFIER.c' || echo '$(srcdir)/'`OBJECT_IDENTIFIER.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-OBJECT_IDENTIFIER.lo `test -f 'OBJECT_IDENTIFIER.c' || echo '$(srcdir)/'`OBJECT_IDENTIFIER.c
 
 libasn1_la-OCTET_STRING.lo: OCTET_STRING.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-OCTET_STRING.lo -MD -MP -MF $(DEPDIR)/libasn1_la-OCTET_STRING.Tpo -c -o libasn1_la-OCTET_STRING.lo `test -f 'OCTET_STRING.c' || echo '$(srcdir)/'`OCTET_STRING.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-OCTET_STRING.Tpo $(DEPDIR)/libasn1_la-OCTET_STRING.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-OCTET_STRING.lo -MD -MP -MF $(DEPDIR)/libasn1_la-OCTET_STRING.Tpo -c -o libasn1_la-OCTET_STRING.lo `test -f 'OCTET_STRING.c' || echo '$(srcdir)/'`OCTET_STRING.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-OCTET_STRING.Tpo $(DEPDIR)/libasn1_la-OCTET_STRING.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='OCTET_STRING.c' object='libasn1_la-OCTET_STRING.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-OCTET_STRING.lo `test -f 'OCTET_STRING.c' || echo '$(srcdir)/'`OCTET_STRING.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-OCTET_STRING.lo `test -f 'OCTET_STRING.c' || echo '$(srcdir)/'`OCTET_STRING.c
 
 libasn1_la-per_decoder.lo: per_decoder.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-per_decoder.lo -MD -MP -MF $(DEPDIR)/libasn1_la-per_decoder.Tpo -c -o libasn1_la-per_decoder.lo `test -f 'per_decoder.c' || echo '$(srcdir)/'`per_decoder.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-per_decoder.Tpo $(DEPDIR)/libasn1_la-per_decoder.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-per_decoder.lo -MD -MP -MF $(DEPDIR)/libasn1_la-per_decoder.Tpo -c -o libasn1_la-per_decoder.lo `test -f 'per_decoder.c' || echo '$(srcdir)/'`per_decoder.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-per_decoder.Tpo $(DEPDIR)/libasn1_la-per_decoder.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='per_decoder.c' object='libasn1_la-per_decoder.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-per_decoder.lo `test -f 'per_decoder.c' || echo '$(srcdir)/'`per_decoder.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-per_decoder.lo `test -f 'per_decoder.c' || echo '$(srcdir)/'`per_decoder.c
 
 libasn1_la-per_encoder.lo: per_encoder.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-per_encoder.lo -MD -MP -MF $(DEPDIR)/libasn1_la-per_encoder.Tpo -c -o libasn1_la-per_encoder.lo `test -f 'per_encoder.c' || echo '$(srcdir)/'`per_encoder.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-per_encoder.Tpo $(DEPDIR)/libasn1_la-per_encoder.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-per_encoder.lo -MD -MP -MF $(DEPDIR)/libasn1_la-per_encoder.Tpo -c -o libasn1_la-per_encoder.lo `test -f 'per_encoder.c' || echo '$(srcdir)/'`per_encoder.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-per_encoder.Tpo $(DEPDIR)/libasn1_la-per_encoder.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='per_encoder.c' object='libasn1_la-per_encoder.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-per_encoder.lo `test -f 'per_encoder.c' || echo '$(srcdir)/'`per_encoder.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-per_encoder.lo `test -f 'per_encoder.c' || echo '$(srcdir)/'`per_encoder.c
 
 libasn1_la-per_opentype.lo: per_opentype.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-per_opentype.lo -MD -MP -MF $(DEPDIR)/libasn1_la-per_opentype.Tpo -c -o libasn1_la-per_opentype.lo `test -f 'per_opentype.c' || echo '$(srcdir)/'`per_opentype.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-per_opentype.Tpo $(DEPDIR)/libasn1_la-per_opentype.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-per_opentype.lo -MD -MP -MF $(DEPDIR)/libasn1_la-per_opentype.Tpo -c -o libasn1_la-per_opentype.lo `test -f 'per_opentype.c' || echo '$(srcdir)/'`per_opentype.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-per_opentype.Tpo $(DEPDIR)/libasn1_la-per_opentype.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='per_opentype.c' object='libasn1_la-per_opentype.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-per_opentype.lo `test -f 'per_opentype.c' || echo '$(srcdir)/'`per_opentype.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-per_opentype.lo `test -f 'per_opentype.c' || echo '$(srcdir)/'`per_opentype.c
 
 libasn1_la-per_support.lo: per_support.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-per_support.lo -MD -MP -MF $(DEPDIR)/libasn1_la-per_support.Tpo -c -o libasn1_la-per_support.lo `test -f 'per_support.c' || echo '$(srcdir)/'`per_support.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-per_support.Tpo $(DEPDIR)/libasn1_la-per_support.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-per_support.lo -MD -MP -MF $(DEPDIR)/libasn1_la-per_support.Tpo -c -o libasn1_la-per_support.lo `test -f 'per_support.c' || echo '$(srcdir)/'`per_support.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-per_support.Tpo $(DEPDIR)/libasn1_la-per_support.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='per_support.c' object='libasn1_la-per_support.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-per_support.lo `test -f 'per_support.c' || echo '$(srcdir)/'`per_support.c
-
-libasn1_la-TSCredentials.lo: TSCredentials.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-TSCredentials.lo -MD -MP -MF $(DEPDIR)/libasn1_la-TSCredentials.Tpo -c -o libasn1_la-TSCredentials.lo `test -f 'TSCredentials.c' || echo '$(srcdir)/'`TSCredentials.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-TSCredentials.Tpo $(DEPDIR)/libasn1_la-TSCredentials.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='TSCredentials.c' object='libasn1_la-TSCredentials.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-TSCredentials.lo `test -f 'TSCredentials.c' || echo '$(srcdir)/'`TSCredentials.c
-
-libasn1_la-TSCspDataDetail.lo: TSCspDataDetail.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-TSCspDataDetail.lo -MD -MP -MF $(DEPDIR)/libasn1_la-TSCspDataDetail.Tpo -c -o libasn1_la-TSCspDataDetail.lo `test -f 'TSCspDataDetail.c' || echo '$(srcdir)/'`TSCspDataDetail.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-TSCspDataDetail.Tpo $(DEPDIR)/libasn1_la-TSCspDataDetail.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='TSCspDataDetail.c' object='libasn1_la-TSCspDataDetail.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-TSCspDataDetail.lo `test -f 'TSCspDataDetail.c' || echo '$(srcdir)/'`TSCspDataDetail.c
-
-libasn1_la-TSPasswordCreds.lo: TSPasswordCreds.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-TSPasswordCreds.lo -MD -MP -MF $(DEPDIR)/libasn1_la-TSPasswordCreds.Tpo -c -o libasn1_la-TSPasswordCreds.lo `test -f 'TSPasswordCreds.c' || echo '$(srcdir)/'`TSPasswordCreds.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-TSPasswordCreds.Tpo $(DEPDIR)/libasn1_la-TSPasswordCreds.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='TSPasswordCreds.c' object='libasn1_la-TSPasswordCreds.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-TSPasswordCreds.lo `test -f 'TSPasswordCreds.c' || echo '$(srcdir)/'`TSPasswordCreds.c
-
-libasn1_la-TSRequest.lo: TSRequest.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-TSRequest.lo -MD -MP -MF $(DEPDIR)/libasn1_la-TSRequest.Tpo -c -o libasn1_la-TSRequest.lo `test -f 'TSRequest.c' || echo '$(srcdir)/'`TSRequest.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-TSRequest.Tpo $(DEPDIR)/libasn1_la-TSRequest.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='TSRequest.c' object='libasn1_la-TSRequest.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-TSRequest.lo `test -f 'TSRequest.c' || echo '$(srcdir)/'`TSRequest.c
-
-libasn1_la-TSSmartCardCreds.lo: TSSmartCardCreds.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-TSSmartCardCreds.lo -MD -MP -MF $(DEPDIR)/libasn1_la-TSSmartCardCreds.Tpo -c -o libasn1_la-TSSmartCardCreds.lo `test -f 'TSSmartCardCreds.c' || echo '$(srcdir)/'`TSSmartCardCreds.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-TSSmartCardCreds.Tpo $(DEPDIR)/libasn1_la-TSSmartCardCreds.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='TSSmartCardCreds.c' object='libasn1_la-TSSmartCardCreds.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-TSSmartCardCreds.lo `test -f 'TSSmartCardCreds.c' || echo '$(srcdir)/'`TSSmartCardCreds.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-per_support.lo `test -f 'per_support.c' || echo '$(srcdir)/'`per_support.c
 
 libasn1_la-xer_decoder.lo: xer_decoder.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-xer_decoder.lo -MD -MP -MF $(DEPDIR)/libasn1_la-xer_decoder.Tpo -c -o libasn1_la-xer_decoder.lo `test -f 'xer_decoder.c' || echo '$(srcdir)/'`xer_decoder.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-xer_decoder.Tpo $(DEPDIR)/libasn1_la-xer_decoder.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-xer_decoder.lo -MD -MP -MF $(DEPDIR)/libasn1_la-xer_decoder.Tpo -c -o libasn1_la-xer_decoder.lo `test -f 'xer_decoder.c' || echo '$(srcdir)/'`xer_decoder.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-xer_decoder.Tpo $(DEPDIR)/libasn1_la-xer_decoder.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xer_decoder.c' object='libasn1_la-xer_decoder.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-xer_decoder.lo `test -f 'xer_decoder.c' || echo '$(srcdir)/'`xer_decoder.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-xer_decoder.lo `test -f 'xer_decoder.c' || echo '$(srcdir)/'`xer_decoder.c
 
 libasn1_la-xer_encoder.lo: xer_encoder.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-xer_encoder.lo -MD -MP -MF $(DEPDIR)/libasn1_la-xer_encoder.Tpo -c -o libasn1_la-xer_encoder.lo `test -f 'xer_encoder.c' || echo '$(srcdir)/'`xer_encoder.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-xer_encoder.Tpo $(DEPDIR)/libasn1_la-xer_encoder.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-xer_encoder.lo -MD -MP -MF $(DEPDIR)/libasn1_la-xer_encoder.Tpo -c -o libasn1_la-xer_encoder.lo `test -f 'xer_encoder.c' || echo '$(srcdir)/'`xer_encoder.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-xer_encoder.Tpo $(DEPDIR)/libasn1_la-xer_encoder.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xer_encoder.c' object='libasn1_la-xer_encoder.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-xer_encoder.lo `test -f 'xer_encoder.c' || echo '$(srcdir)/'`xer_encoder.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-xer_encoder.lo `test -f 'xer_encoder.c' || echo '$(srcdir)/'`xer_encoder.c
 
 libasn1_la-xer_support.lo: xer_support.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-xer_support.lo -MD -MP -MF $(DEPDIR)/libasn1_la-xer_support.Tpo -c -o libasn1_la-xer_support.lo `test -f 'xer_support.c' || echo '$(srcdir)/'`xer_support.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libasn1_la-xer_support.Tpo $(DEPDIR)/libasn1_la-xer_support.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-xer_support.lo -MD -MP -MF $(DEPDIR)/libasn1_la-xer_support.Tpo -c -o libasn1_la-xer_support.lo `test -f 'xer_support.c' || echo '$(srcdir)/'`xer_support.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-xer_support.Tpo $(DEPDIR)/libasn1_la-xer_support.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='xer_support.c' object='libasn1_la-xer_support.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-xer_support.lo `test -f 'xer_support.c' || echo '$(srcdir)/'`xer_support.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-xer_support.lo `test -f 'xer_support.c' || echo '$(srcdir)/'`xer_support.c
+
+libasn1_la-NegoData.lo: NegoData.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegoData.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegoData.Tpo -c -o libasn1_la-NegoData.lo `test -f 'NegoData.c' || echo '$(srcdir)/'`NegoData.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-NegoData.Tpo $(DEPDIR)/libasn1_la-NegoData.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegoData.c' object='libasn1_la-NegoData.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegoData.lo `test -f 'NegoData.c' || echo '$(srcdir)/'`NegoData.c
+
+libasn1_la-NegoDataItem.lo: NegoDataItem.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegoDataItem.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegoDataItem.Tpo -c -o libasn1_la-NegoDataItem.lo `test -f 'NegoDataItem.c' || echo '$(srcdir)/'`NegoDataItem.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-NegoDataItem.Tpo $(DEPDIR)/libasn1_la-NegoDataItem.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegoDataItem.c' object='libasn1_la-NegoDataItem.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegoDataItem.lo `test -f 'NegoDataItem.c' || echo '$(srcdir)/'`NegoDataItem.c
+
+libasn1_la-TSCredentials.lo: TSCredentials.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-TSCredentials.lo -MD -MP -MF $(DEPDIR)/libasn1_la-TSCredentials.Tpo -c -o libasn1_la-TSCredentials.lo `test -f 'TSCredentials.c' || echo '$(srcdir)/'`TSCredentials.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-TSCredentials.Tpo $(DEPDIR)/libasn1_la-TSCredentials.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='TSCredentials.c' object='libasn1_la-TSCredentials.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-TSCredentials.lo `test -f 'TSCredentials.c' || echo '$(srcdir)/'`TSCredentials.c
+
+libasn1_la-TSCspDataDetail.lo: TSCspDataDetail.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-TSCspDataDetail.lo -MD -MP -MF $(DEPDIR)/libasn1_la-TSCspDataDetail.Tpo -c -o libasn1_la-TSCspDataDetail.lo `test -f 'TSCspDataDetail.c' || echo '$(srcdir)/'`TSCspDataDetail.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-TSCspDataDetail.Tpo $(DEPDIR)/libasn1_la-TSCspDataDetail.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='TSCspDataDetail.c' object='libasn1_la-TSCspDataDetail.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-TSCspDataDetail.lo `test -f 'TSCspDataDetail.c' || echo '$(srcdir)/'`TSCspDataDetail.c
+
+libasn1_la-TSPasswordCreds.lo: TSPasswordCreds.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-TSPasswordCreds.lo -MD -MP -MF $(DEPDIR)/libasn1_la-TSPasswordCreds.Tpo -c -o libasn1_la-TSPasswordCreds.lo `test -f 'TSPasswordCreds.c' || echo '$(srcdir)/'`TSPasswordCreds.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-TSPasswordCreds.Tpo $(DEPDIR)/libasn1_la-TSPasswordCreds.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='TSPasswordCreds.c' object='libasn1_la-TSPasswordCreds.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-TSPasswordCreds.lo `test -f 'TSPasswordCreds.c' || echo '$(srcdir)/'`TSPasswordCreds.c
+
+libasn1_la-TSRequest.lo: TSRequest.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-TSRequest.lo -MD -MP -MF $(DEPDIR)/libasn1_la-TSRequest.Tpo -c -o libasn1_la-TSRequest.lo `test -f 'TSRequest.c' || echo '$(srcdir)/'`TSRequest.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-TSRequest.Tpo $(DEPDIR)/libasn1_la-TSRequest.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='TSRequest.c' object='libasn1_la-TSRequest.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-TSRequest.lo `test -f 'TSRequest.c' || echo '$(srcdir)/'`TSRequest.c
+
+libasn1_la-TSSmartCardCreds.lo: TSSmartCardCreds.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-TSSmartCardCreds.lo -MD -MP -MF $(DEPDIR)/libasn1_la-TSSmartCardCreds.Tpo -c -o libasn1_la-TSSmartCardCreds.lo `test -f 'TSSmartCardCreds.c' || echo '$(srcdir)/'`TSSmartCardCreds.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-TSSmartCardCreds.Tpo $(DEPDIR)/libasn1_la-TSSmartCardCreds.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='TSSmartCardCreds.c' object='libasn1_la-TSSmartCardCreds.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-TSSmartCardCreds.lo `test -f 'TSSmartCardCreds.c' || echo '$(srcdir)/'`TSSmartCardCreds.c
+
+libasn1_la-ContextFlags.lo: ContextFlags.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-ContextFlags.lo -MD -MP -MF $(DEPDIR)/libasn1_la-ContextFlags.Tpo -c -o libasn1_la-ContextFlags.lo `test -f 'ContextFlags.c' || echo '$(srcdir)/'`ContextFlags.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-ContextFlags.Tpo $(DEPDIR)/libasn1_la-ContextFlags.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='ContextFlags.c' object='libasn1_la-ContextFlags.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-ContextFlags.lo `test -f 'ContextFlags.c' || echo '$(srcdir)/'`ContextFlags.c
+
+libasn1_la-MechType.lo: MechType.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-MechType.lo -MD -MP -MF $(DEPDIR)/libasn1_la-MechType.Tpo -c -o libasn1_la-MechType.lo `test -f 'MechType.c' || echo '$(srcdir)/'`MechType.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-MechType.Tpo $(DEPDIR)/libasn1_la-MechType.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='MechType.c' object='libasn1_la-MechType.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-MechType.lo `test -f 'MechType.c' || echo '$(srcdir)/'`MechType.c
+
+libasn1_la-MechTypeList.lo: MechTypeList.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-MechTypeList.lo -MD -MP -MF $(DEPDIR)/libasn1_la-MechTypeList.Tpo -c -o libasn1_la-MechTypeList.lo `test -f 'MechTypeList.c' || echo '$(srcdir)/'`MechTypeList.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-MechTypeList.Tpo $(DEPDIR)/libasn1_la-MechTypeList.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='MechTypeList.c' object='libasn1_la-MechTypeList.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-MechTypeList.lo `test -f 'MechTypeList.c' || echo '$(srcdir)/'`MechTypeList.c
+
+libasn1_la-NegHints.lo: NegHints.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegHints.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegHints.Tpo -c -o libasn1_la-NegHints.lo `test -f 'NegHints.c' || echo '$(srcdir)/'`NegHints.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-NegHints.Tpo $(DEPDIR)/libasn1_la-NegHints.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegHints.c' object='libasn1_la-NegHints.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegHints.lo `test -f 'NegHints.c' || echo '$(srcdir)/'`NegHints.c
+
+libasn1_la-NegotiationToken.lo: NegotiationToken.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegotiationToken.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegotiationToken.Tpo -c -o libasn1_la-NegotiationToken.lo `test -f 'NegotiationToken.c' || echo '$(srcdir)/'`NegotiationToken.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-NegotiationToken.Tpo $(DEPDIR)/libasn1_la-NegotiationToken.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegotiationToken.c' object='libasn1_la-NegotiationToken.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegotiationToken.lo `test -f 'NegotiationToken.c' || echo '$(srcdir)/'`NegotiationToken.c
+
+libasn1_la-NegTokenInit2.lo: NegTokenInit2.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegTokenInit2.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegTokenInit2.Tpo -c -o libasn1_la-NegTokenInit2.lo `test -f 'NegTokenInit2.c' || echo '$(srcdir)/'`NegTokenInit2.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-NegTokenInit2.Tpo $(DEPDIR)/libasn1_la-NegTokenInit2.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegTokenInit2.c' object='libasn1_la-NegTokenInit2.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegTokenInit2.lo `test -f 'NegTokenInit2.c' || echo '$(srcdir)/'`NegTokenInit2.c
+
+libasn1_la-NegTokenInit.lo: NegTokenInit.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegTokenInit.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegTokenInit.Tpo -c -o libasn1_la-NegTokenInit.lo `test -f 'NegTokenInit.c' || echo '$(srcdir)/'`NegTokenInit.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-NegTokenInit.Tpo $(DEPDIR)/libasn1_la-NegTokenInit.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegTokenInit.c' object='libasn1_la-NegTokenInit.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegTokenInit.lo `test -f 'NegTokenInit.c' || echo '$(srcdir)/'`NegTokenInit.c
+
+libasn1_la-NegTokenResp.lo: NegTokenResp.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -MT libasn1_la-NegTokenResp.lo -MD -MP -MF $(DEPDIR)/libasn1_la-NegTokenResp.Tpo -c -o libasn1_la-NegTokenResp.lo `test -f 'NegTokenResp.c' || echo '$(srcdir)/'`NegTokenResp.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libasn1_la-NegTokenResp.Tpo $(DEPDIR)/libasn1_la-NegTokenResp.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='NegTokenResp.c' object='libasn1_la-NegTokenResp.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libasn1_la_CFLAGS) $(CFLAGS) -c -o libasn1_la-NegTokenResp.lo `test -f 'NegTokenResp.c' || echo '$(srcdir)/'`NegTokenResp.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -954,7 +1199,9 @@ uninstall-am:
 
 asn1_modules:
 	rm -f *.c *.h
-	asn1c -fnative-types -fskeletons-copy -gen-PER $(ASN1_MODULES)
+# Note: extra redundant parameter given to asn1c because it forgets one
+	asn1c -fnative-types -fskeletons-copy -fcompound-names -fskeletons-copy $(ASN1_MODULES_BER)
+	asn1c -fnative-types -fskeletons-copy -fcompound-names -gen-PER -fskeletons-copy $(ASN1_MODULES_PER)
 	rm converter-sample.c Makefile.am.sample
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

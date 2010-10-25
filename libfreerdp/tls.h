@@ -22,6 +22,7 @@
 #ifndef __TLS_H
 #define	__TLS_H
 
+#include "tcp.h"
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #include <openssl/rc4.h>
@@ -37,8 +38,8 @@ tls_connect(SSL_CTX *ctx, int sockfd, char *server);
 void
 tls_disconnect(SSL *ssl);
 int
-tls_write(SSL *ssl, char* b, int size);
+tls_write(SSL *ssl, char* b, int length);
 int
-tls_read(SSL *ssl, char* b, int size);
+tls_read(SSL *ssl, char* b, int length);
 
 #endif	// __TLS_H

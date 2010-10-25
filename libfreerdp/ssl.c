@@ -941,7 +941,7 @@ s_mp_lshd(mp_int * mp, mp_size p)
 	for (ix = pos - p; ix >= 0; ix--)
 		dp[ix + p] = dp[ix];
 	/* Fill the bottom digits with zeroes */
-	for (ix = 0; ix < p; ix++)
+	for (ix = 0; ix < ((int) p); ix++)
 		dp[ix] = 0;
 	return MP_OKAY;
 } /* end s_mp_lshd() */
@@ -972,7 +972,7 @@ s_mp_mul_2d(mp_int * mp, mp_digit d)
 {
 	mp_err res;
 	mp_digit save, next, mask, *dp;
-	mp_size  used;
+	mp_size used;
 	int ix;
 
 	if ((res = s_mp_lshd(mp, d / DIGIT_BIT)) != MP_OKAY)
@@ -990,7 +990,7 @@ s_mp_mul_2d(mp_int * mp, mp_digit d)
 	}
 	/* Do the shifting... */
 	save = 0;
-	for (ix = 0; ix < used; ix++)
+	for (ix = 0; ix < ((int) used); ix++)
 	{
 		next = (dp[ix] >> (DIGIT_BIT - d)) & mask;
 		dp[ix] = (dp[ix] << d) | save;
@@ -1618,7 +1618,7 @@ s_mp_div(mp_int * a, mp_int * b)
 			break;
 		/* Compute a guess for the next quotient digit       */
 		q = DIGIT(&rem, USED(&rem) - 1);
-		if (q <= DIGIT(b, USED(b) - 1) && USED(&rem) > 1)
+		if (q <= ((mp_word) (DIGIT(b, USED(b) - 1))) && USED(&rem) > 1)
 			q = (q << DIGIT_BIT) | DIGIT(&rem, USED(&rem) - 2);
 		q /= DIGIT(b, USED(b) - 1);
 		/* The guess can be as much as RADIX + 1 */
@@ -2305,7 +2305,7 @@ mp_exptmod(mp_int * a, mp_int * b, mp_int * m, mp_int * c)
 	if ((res = mp_div(&mu, m, &mu, NULL)) != MP_OKAY)
 		goto CLEANUP;
 	/* Loop over digits of b in ascending order, except highest order */
-	for (dig = 0; dig < (ub - 1); dig++)
+	for (dig = 0; dig < ((int) (ub - 1)); dig++)
 	{
 		d = *db++;
 		/* Loop over the bits of the lower-order digits */
@@ -2425,24 +2425,6 @@ mp_to_unsigned_bin(mp_int * mp, unsigned char * str)
 } /* end mp_to_unsigned_bin() */
 
 /*****************************************************************************/
-static void
-ssl_reverse_it(char * p, int len)
-{
-	int i;
-	int j;
-	char temp;
-
-	i = 0;
-	j = len - 1;
-	while (i < j)
-	{
-		temp = p[i];
-		p[i] = p[j];
-		p[j] = temp;
-		i++;
-		j--;
-	}
-}
 
 #define PAR_MAX 1024
 
@@ -2483,18 +2465,14 @@ ssl_mod_exp(char * out, int out_len, char * in, int in_len,
 	mp_init(&lmod);
 	mp_init(&lexp);
 	memcpy(jin, in, in_len);
-	ssl_reverse_it(jin, in_len);
 	memcpy(jmod, mod, mod_len);
-	ssl_reverse_it(jmod, mod_len);
 	memcpy(jexp, exp, exp_len);
-	ssl_reverse_it(jexp, exp_len);
 	mp_read_unsigned_bin(&lin, (uint8 *) jin, in_len);
 	mp_read_unsigned_bin(&lmod, (uint8 *) jmod, mod_len);
 	mp_read_unsigned_bin(&lexp, (uint8 *) jexp, exp_len);
 	mp_exptmod(&lin, &lexp, &lmod, &lout);
 	sout = mp_unsigned_bin_size(&lout);
 	mp_to_unsigned_bin(&lout, (uint8 *) llout);
-	ssl_reverse_it(llout, sout);
 	memcpy(out, llout, out_len);
 	mp_clear(&lout);
 	mp_clear(&lin);
@@ -2536,14 +2514,6 @@ ssl_cert_free(SSL_CERT * cert)
 }
 
 /*****************************************************************************/
-/* returns newly allocated SSL_PUBLIC_KEY or NULL */
-SSL_PUBLIC_KEY *
-ssl_cert_get_public_key(SSL_CERT * cert, uint32 * key_len)
-{
-	return 0;
-}
-
-/*****************************************************************************/
 /* returns boolean */
 RD_BOOL
 ssl_cert_verify(SSL_CERT * server_cert, SSL_CERT * cacert)
@@ -2554,22 +2524,6 @@ ssl_cert_verify(SSL_CERT * server_cert, SSL_CERT * cacert)
 /*****************************************************************************/
 int
 ssl_cert_print_fp(FILE * fp, SSL_CERT * cert)
-{
-	return 0;
-}
-
-/*****************************************************************************/
-void
-ssl_public_key_free(SSL_PUBLIC_KEY * public_key)
-{
-	l_free(public_key);
-}
-
-/*****************************************************************************/
-/* returns error */
-int
-ssl_public_key_get_exp_mod(SSL_PUBLIC_KEY * public_key, uint8 * exponent, uint32 max_exp_len,
-	uint8 * modulus, uint32 max_mod_len)
 {
 	return 0;
 }

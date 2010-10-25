@@ -3,19 +3,28 @@ REQUIRED_SUBDIRS = \
 	asn1 \
 	libfreerdp \
 	doc \
+	contrib \
 	include \
 	libfreerdpkbd \
 	keymaps \
+	libfreerdpgdi \
 	libfreerdpchanman \
 	channels/common \
 	channels/rdpsnd \
+	channels/drdynvc \
+	channels/drdynvc/pnpdr \
+	channels/drdynvc/audin \
 	channels/cliprdr \
 	channels/rdpdr \
 	channels/rdpdr/disk \
-	channels/rdpdr/printer
+	channels/rdpdr/printer \
+	channels/rdpdr/serial \
+	channels/rdpdr/parallel
 
 OPTIONAL_SUBDIRS = \
+	cunit \
 	X11 \
+	win \
 	dfb
 
 SUBDIRS = $(REQUIRED_SUBDIRS) $(EXTRA_SUBDIRS)

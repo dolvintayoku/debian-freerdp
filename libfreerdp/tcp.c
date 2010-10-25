@@ -146,26 +146,39 @@ tcp_init(rdpTcp * tcp, uint32 minsize)
 void
 tcp_send(rdpTcp * tcp, STREAM s)
 {
+	int sent = 0;
+	int total = 0;
 	int length = s->end - s->data;
-	int sent, total = 0;
 
-	while (total < length)
+#ifndef DISABLE_TLS
+	if (tcp->iso->mcs->sec->tls_connected)
 	{
-		sent = send(tcp->sock, s->data + total, length - total, MSG_NOSIGNAL);
-		if (sent <= 0)
+		tls_write(tcp->iso->mcs->sec->ssl, (char*) s->data, length);
+	}
+	else
+#endif
+	{
+		while (total < length)
 		{
-			if (sent == -1 && TCP_BLOCKS)
+			while (total < length)
 			{
-				tcp_can_send(tcp->sock, 100);
-				sent = 0;
-			}
-			else
-			{
-				ui_error(tcp->iso->mcs->sec->rdp->inst, "send: %s\n", TCP_STRERROR);
-				return;
+				sent = send(tcp->sock, s->data + total, length - total, MSG_NOSIGNAL);
+				if (sent <= 0)
+				{
+					if (sent == -1 && TCP_BLOCKS)
+					{
+						tcp_can_send(tcp->sock, 100);
+						sent = 0;
+					}
+					else
+					{
+						ui_error(tcp->iso->mcs->sec->rdp->inst, "send: %s\n", TCP_STRERROR);
+						return;
+					}
+				}
+				total += sent;
 			}
 		}
-		total += sent;
 	}
 }
 
@@ -176,8 +189,10 @@ tcp_send(rdpTcp * tcp, STREAM s)
 STREAM
 tcp_recv(rdpTcp * tcp, STREAM s, uint32 length)
 {
-	uint32 new_length, end_offset, p_offset;
 	int rcvd = 0;
+	uint32 p_offset;
+	uint32 new_length;
+	uint32 end_offset;
 
 	if (s == NULL)
 	{
@@ -187,6 +202,7 @@ tcp_recv(rdpTcp * tcp, STREAM s, uint32 length)
 			tcp->in.data = (uint8 *) xrealloc(tcp->in.data, length);
 			tcp->in.size = length;
 		}
+
 		tcp->in.end = tcp->in.p = tcp->in.data;
 		s = &(tcp->in);
 	}
@@ -207,33 +223,35 @@ tcp_recv(rdpTcp * tcp, STREAM s, uint32 length)
 
 	while (length > 0)
 	{
-		if (!ui_select(tcp->iso->mcs->sec->rdp->inst, tcp->sock))
-			/* User quit */
-			return NULL;
+#ifndef DISABLE_TLS
+		if (tcp->iso->mcs->sec->tls_connected)
+		{
+			rcvd = tls_read(tcp->iso->mcs->sec->ssl, (char*) s->end, length);
 
-		rcvd = recv(tcp->sock, s->end, length, 0);
-		if (rcvd < 0)
-		{
-			if (rcvd == -1 && TCP_BLOCKS)
-			{
-				tcp_can_recv(tcp->sock, 1);
-				rcvd = 0;
-			}
-			else
-			{
-				ui_error(tcp->iso->mcs->sec->rdp->inst, "recv: %s\n", TCP_STRERROR);
+			if (rcvd < 0)
 				return NULL;
-			}
 		}
-		else if (rcvd == 0)
+		else
+#endif
 		{
-			if (tcp->iso->mcs->sec->negotiation_state < 2)
+			if (!ui_select(tcp->iso->mcs->sec->rdp->inst, tcp->sock))
+				return NULL; /* user quit */
+
+			rcvd = recv(tcp->sock, s->end, length, 0);
+			if (rcvd < 0)
 			{
-				/* Disconnection is due to an encryption negotiation failure */
-				tcp->iso->mcs->sec->negotiation_state = -1;	/* failure */
-				return NULL;
+				if (rcvd == -1 && TCP_BLOCKS)
+				{
+					tcp_can_recv(tcp->sock, 1);
+					rcvd = 0;
+				}
+				else
+				{
+					ui_error(tcp->iso->mcs->sec->rdp->inst, "recv: %s\n", TCP_STRERROR);
+					return NULL;
+				}
 			}
-			else
+			else if (rcvd == 0)
 			{
 				ui_error(tcp->iso->mcs->sec->rdp->inst, "Connection closed\n");
 				return NULL;
@@ -251,15 +269,17 @@ tcp_recv(rdpTcp * tcp, STREAM s, uint32 length)
 RD_BOOL
 tcp_connect(rdpTcp * tcp, char * server, int port)
 {
-	socklen_t option_len;
-	uint32 option_value;
 	int sock;
+	uint32 option_value;
+	socklen_t option_len;
 
 #ifdef IPv6
 
 	int n;
 	struct addrinfo hints, *res, *ressave;
 	char tcp_port_rdp_s[10];
+
+	printf("connecting to %s:%d\n", server, port);
 
 	snprintf(tcp_port_rdp_s, 10, "%d", port);
 
@@ -299,6 +319,8 @@ tcp_connect(rdpTcp * tcp, char * server, int port)
 
 	struct hostent *nslookup;
 	struct sockaddr_in servaddr;
+
+	printf("connecting to %s:%d\n", server, port);
 
 	if ((nslookup = gethostbyname(server)) != NULL)
 	{
