@@ -916,7 +916,7 @@ sec_recv(rdpSec * sec, secRecvType * type)
 			}
 			return s;
 		}
-		if (sec->rdp->settings->encryption || (!(sec->licence->licence_issued) && !(sec->tls_connected)))
+		if (sec->rdp->settings->encryption || !sec->licence->licence_issued)
 		{
 			/* basicSecurityHeader: */
 			in_uint32_le(s, sec_flags);
@@ -1019,6 +1019,12 @@ void
 sec_disconnect(rdpSec * sec)
 {
 	mcs_disconnect(sec->mcs);
+
+#ifndef DISABLE_TLS
+	if (sec->ctx)
+		tls_destroy_context(sec->ctx);
+	sec->ctx = NULL;
+#endif
 
 	if (sec->rc4_decrypt_key)
 		crypto_rc4_free(sec->rc4_decrypt_key);
