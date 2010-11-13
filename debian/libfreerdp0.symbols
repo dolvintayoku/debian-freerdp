@@ -366,6 +366,7 @@ libfreerdp.so.0 libfreerdp0 #MINVER#
  tcp_send@Base 0.8.1
  tls_connect@Base 0.8.1
  tls_create_context@Base 0.8.1
+ tls_destroy_context@Base 0.8.2
  tls_disconnect@Base 0.8.1
  tls_read@Base 0.8.1
  tls_write@Base 0.8.1
