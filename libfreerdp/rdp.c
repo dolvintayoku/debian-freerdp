@@ -115,17 +115,27 @@ rdp_recv(rdpRdp * rdp, uint8 * type, uint16 * source)
 	/* Undocumented!(?): 32k packets are keepalive packages of length 8: */
 	if (totalLength == 0x8000)
 	{
+		DEBUG("keepalive\n");
 		rdp->next_packet += 8;
 		return rdp->rdp_s;
 	}
 
 	in_uint16_le(rdp->rdp_s, pduType); /* pduType */
-	pduType &= 0xF; /* type is in 4 lower bits */
-	*type = pduType; /* version in high bits */
+	if ((pduType >> 8 != 0) || (((pduType >> 4) & 0xF) != 1))
+	{
+		ui_error(rdp->inst, "pduType version must be 0 and 1 but is %d and %d\n", pduType >> 8, (pduType >> 4) & 0xF);
+		if (rdp->sec->tls_connected)
+		{
+			ui_error(rdp->inst, "- known bug for TLS mode - skipping rest of PDU\n");
+			rdp->next_packet += totalLength;
+			return rdp->rdp_s;
+		}
+	}
+	*type = pduType & 0xF; /* type is in 4 lower bits, version in high bits */
 	in_uint16_le(rdp->rdp_s, *source);	/* PDUSource */
 
 #if WITH_DEBUG
-	DEBUG("RDP packet #%d, (type %x)\n", ++(rdp->packetno), *type);
+	DEBUG("Share Control Data PDU #%d, (type %x)\n", ++(rdp->packetno), *type);
 	hexdump(rdp->next_packet, totalLength);
 #endif
 
@@ -206,7 +216,7 @@ xstrdup_out_unistr(rdpRdp * rdp, char *str, size_t *pout_len)
 	if (iconv(rdp->out_iconv_h, (ICONV_CONST char **) &pin, &ibl, &pout, &obl) == (size_t) - 1)
 	{
 		ui_error(rdp->inst, "xmalloc_out_unistr: iconv failure, errno %d\n", errno);
-		return 0;
+		return NULL;
 	}
 #else
 	while ((ibl > 0) && (obl > 0))
@@ -332,7 +342,9 @@ rdp_out_client_timezone_info(rdpRdp * rdp, STREAM s)
 		}
 
 		strftime(standardName, 32, "%Z, Standard Time", localTime);
+		standardName[31] = 0;
 		strftime(daylightName, 32, "%Z, Summer Time", localTime);
+		daylightName[31] = 0;
 
 		memset((void*)&standardDate, '\0', sizeof(systemTime));
 		memset((void*)&daylightDate, '\0', sizeof(systemTime));
@@ -1098,7 +1110,7 @@ void
 process_bitmap_updates(rdpRdp * rdp, STREAM s)
 {
 	int i;
-	int buffer_size;
+	size_t buffer_size;
 	uint16 num_updates;
 	uint16 left, top, right, bottom, width, height;
 	uint16 cx, cy, bpp, Bpp, compress, bufsize, size;
@@ -1184,7 +1196,7 @@ void
 process_palette(rdpRdp * rdp, STREAM s)
 {
 	int i;
-	int size;
+	size_t size;
 	RD_COLORENTRY *entry;
 	RD_PALETTE map;
 	RD_HPALETTE hmap;
@@ -1523,7 +1535,7 @@ rdp_reconnect(rdpRdp * rdp)
 		return False;
 
 	domain = rdp->redirect_domain ? rdp->redirect_domain : rdp->settings->domain;
-	
+
 	if (rdp->redirect_password)
 	{
 		password = rdp->redirect_password;
