@@ -28,6 +28,7 @@ Package: freerdp-x11
 Section: x11
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Recommends: libfreerdp-plugins-standard
 Provides: freerdp
 Description: RDP client for Windows Terminal Services
  FreeRDP is a client for Windows Terminal Services implementing the Remote
