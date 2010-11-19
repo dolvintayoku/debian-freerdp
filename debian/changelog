@@ -1,9 +1,9 @@
-freerdp (0.8.2-2) UNRELEASED; urgency=low
+freerdp (0.8.2-2) unstable; urgency=low
 
   * freerdp-x11: recommends libfreerdp-plugins-standard. Closes:
     #603462.
 
- -- Otavio Salvador <otavio@debian.org>  Fri, 19 Nov 2010 19:26:42 -0200
+ -- Otavio Salvador <otavio@debian.org>  Fri, 19 Nov 2010 19:27:45 -0200
 
 freerdp (0.8.2-1) unstable; urgency=low
 
