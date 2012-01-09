@@ -1,307 +1,335 @@
-/* -*- c-basic-offset: 8 -*-
-   FreeRDP: A Remote Desktop Protocol client.
-   Redirected Parallel Port Device Service
-
-   Copyright (C) Eduardo Fiss Beloni <beloni@ossystems.com.br> 2010
-
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-*/
+/**
+ * FreeRDP: A Remote Desktop Protocol client.
+ * Redirected Parallel Port Device Service
+ *
+ * Copyright 2010 O.S. Systems Software Ltda.
+ * Copyright 2010 Eduardo Fiss Beloni <beloni@ossystems.com.br>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include <unistd.h>
 #include <fcntl.h>
 #include <termios.h>
 #include <errno.h>
 #include <strings.h>
 #include <sys/ioctl.h>
+#ifdef __LINUX__
+#include <linux/ppdev.h>
+#include <linux/parport.h>
+#endif
 
-#include "rdpdr_types.h"
+#include <freerdp/types.h>
+#include <freerdp/constants.h>
+#include <freerdp/utils/list.h>
+#include <freerdp/utils/thread.h>
+#include <freerdp/utils/memory.h>
+#include <freerdp/utils/stream.h>
+#include <freerdp/utils/svc_plugin.h>
+
 #include "rdpdr_constants.h"
-#include "devman.h"
+#include "rdpdr_types.h"
 
-#define	MAX_PARALLEL_DEVICES               1
-#define FILE_DEVICE_PARALLEL               0x22
-
-#define IOCTL_PAR_QUERY_INFORMATION        0x00160004
-#define IOCTL_PAR_SET_INFORMATION          0x00160008
-#define IOCTL_PAR_QUERY_DEVICE_ID          0x0016000C
-#define IOCTL_PAR_QUERY_DEVICE_ID_SIZE     0x00160010
-#define IOCTL_PAR_SET_WRITE_ADDRESS        0x0016001C
-#define IOCTL_PAR_SET_READ_ADDRESS         0x00160020
-#define IOCTL_PAR_GET_DEVICE_CAPS          0x00160024
-#define IOCTL_PAR_GET_DEFAULT_MODES        0x00160028
-#define IOCTL_PAR_QUERY_RAW_DEVICE_ID      0x00160030
-#define IOCTL_PAR_IS_PORT_FREE             0x00160054
-
-
-struct _PARALLEL_DEVICE_INFO
+struct _PARALLEL_DEVICE
 {
-	PDEVMAN devman;
-
-	PDEVMAN_REGISTER_SERVICE DevmanRegisterService;
-	PDEVMAN_UNREGISTER_SERVICE DevmanUnregisterService;
-	PDEVMAN_REGISTER_DEVICE DevmanRegisterDevice;
-	PDEVMAN_UNREGISTER_DEVICE DevmanUnregisterDevice;
+	DEVICE device;
 
 	int file;
-	char * path;
+	char* path;
+	uint32 id;
 
-/*	char *driver, *printer;*/
-/*	uint32 queue_in_size,*/
-/*		queue_out_size,*/
-/*		wait_mask,*/
-/*		read_interval_timeout,*/
-/*		read_total_timeout_multiplier,*/
-/*		read_total_timeout_constant,*/
-/*		write_total_timeout_multiplier,*/
-/*		write_total_timeout_constant, posix_wait_mask, bloblen;*/
-/*	uint8 *blob;*/
+	LIST* irp_list;
+	freerdp_thread* thread;
 };
-typedef struct _PARALLEL_DEVICE_INFO PARALLEL_DEVICE_INFO;
+typedef struct _PARALLEL_DEVICE PARALLEL_DEVICE;
 
-static int
-get_error_status(void)
+static void parallel_process_irp_create(PARALLEL_DEVICE* parallel, IRP* irp)
 {
-	switch (errno)
+	uint32 PathLength;
+	char* path;
+	UNICONV* uniconv;
+
+	stream_seek(irp->input, 28);
+	/* DesiredAccess(4) AllocationSize(8), FileAttributes(4) */
+	/* SharedAccess(4) CreateDisposition(4), CreateOptions(4) */
+	stream_read_uint32(irp->input, PathLength);
+
+	uniconv = freerdp_uniconv_new();
+	path = freerdp_uniconv_in(uniconv, stream_get_tail(irp->input), PathLength);
+	freerdp_uniconv_free(uniconv);
+
+	parallel->id = irp->devman->id_sequence++;
+	parallel->file = open(parallel->path, O_RDWR);
+	if (parallel->file < 0)
 	{
-		case EAGAIN:
-			return RD_STATUS_DEVICE_OFF_LINE;
-		case ENOSPC:
-			return RD_STATUS_DEVICE_PAPER_EMPTY;
-		case EIO:
-			return RD_STATUS_DEVICE_OFF_LINE;
-		default:
-			return RD_STATUS_DEVICE_POWERED_OFF;
-	}
-}
+		irp->IoStatus = STATUS_ACCESS_DENIED;
+		parallel->id = 0;
 
-static int
-parallel_get_fd(IRP * irp)
-{
-	return 	((PARALLEL_DEVICE_INFO *) irp->dev->info)->file;
-}
-
-static uint32
-parallel_control(IRP * irp)
-{
-	int size = 0, ret = RD_STATUS_SUCCESS;
-	char *outbuf = NULL;
-
-	LLOGLN(10, ("parallel_control: id=%d io=%X", irp->fileID, irp->ioControlCode));
-
-	switch (irp->ioControlCode)
-	{
-		case IOCTL_PAR_QUERY_INFORMATION:
-
-		case IOCTL_PAR_SET_INFORMATION:
-
-		case IOCTL_PAR_QUERY_DEVICE_ID:
-
-		case IOCTL_PAR_QUERY_DEVICE_ID_SIZE:
-
-		case IOCTL_PAR_SET_WRITE_ADDRESS:
-
-		case IOCTL_PAR_SET_READ_ADDRESS:
-
-		case IOCTL_PAR_GET_DEVICE_CAPS:
-
-		case IOCTL_PAR_GET_DEFAULT_MODES:
-
-		case IOCTL_PAR_QUERY_RAW_DEVICE_ID:
-
-		case IOCTL_PAR_IS_PORT_FREE:
-
-		default:
-			LLOGLN(10, ("NOT FOUND IoControlCode PARALLEL IOCTL %d", irp->ioControlCode));
-			return RD_STATUS_INVALID_PARAMETER;
-	}
-
-	irp->outputBuffer = outbuf;
-	irp->outputBufferLength = size;
-
-	return ret;
-}
-
-static uint32
-parallel_read(IRP * irp)
-{
-	PARALLEL_DEVICE_INFO *info;
-	char *buf;
-	ssize_t r;
-
-	info = (PARALLEL_DEVICE_INFO *) irp->dev->info;
-	buf = malloc(irp->length);
-	memset(buf, 0, irp->length);
-
-	r = read(info->file, buf, irp->length);
-	if (r == -1)
-	{
-		free(buf);
-		return get_error_status();
+		DEBUG_WARN("failed to create %s: %s", parallel->path, strerror(errno));
 	}
 	else
 	{
-		irp->outputBuffer = buf;
-		irp->outputBufferLength = r;
-		return RD_STATUS_SUCCESS;
+		/* all read and write operations should be non-blocking */
+		if (fcntl(parallel->file, F_SETFL, O_NONBLOCK) == -1)
+			DEBUG_WARN("%s fcntl %s", path, strerror(errno));
+
+		DEBUG_SVC("%s(%d) created", parallel->path, parallel->file);
 	}
+
+	stream_write_uint32(irp->output, parallel->id);
+	stream_write_uint8(irp->output, 0);
+
+	xfree(path);
+
+	irp->Complete(irp);
 }
 
-static uint32
-parallel_write(IRP * irp)
+static void parallel_process_irp_close(PARALLEL_DEVICE* parallel, IRP* irp)
 {
-	PARALLEL_DEVICE_INFO * info;
-	ssize_t r;
+	if (close(parallel->file) < 0)
+		DEBUG_SVC("failed to close %s(%d)", parallel->path, parallel->id);
+	else
+		DEBUG_SVC("%s(%d) closed", parallel->path, parallel->id);
+
+	stream_write_zero(irp->output, 5); /* Padding(5) */
+
+	irp->Complete(irp);
+}
+
+static void parallel_process_irp_read(PARALLEL_DEVICE* parallel, IRP* irp)
+{
+	uint32 Length;
+	uint64 Offset;
+	ssize_t status;
+	uint8* buffer = NULL;
+
+	stream_read_uint32(irp->input, Length);
+	stream_read_uint64(irp->input, Offset);
+
+	buffer = (uint8*) xmalloc(Length);
+
+	status = read(parallel->file, irp->output->p, Length);
+
+	if (status < 0)
+	{
+		irp->IoStatus = STATUS_UNSUCCESSFUL;
+		xfree(buffer);
+		buffer = NULL;
+		Length = 0;
+
+		DEBUG_WARN("read %s(%d) failed", parallel->path, parallel->id);
+	}
+	else
+	{
+		DEBUG_SVC("read %llu-%llu from %d", Offset, Offset + Length, parallel->id);
+	}
+
+	stream_write_uint32(irp->output, Length);
+	if (Length > 0)
+	{
+		stream_check_size(irp->output, Length);
+		stream_write(irp->output, buffer, Length);
+	}
+	xfree(buffer);
+
+	irp->Complete(irp);
+}
+
+static void parallel_process_irp_write(PARALLEL_DEVICE* parallel, IRP* irp)
+{
+	uint32 Length;
+	uint64 Offset;
+	ssize_t status;
 	uint32 len;
 
-	info = (PARALLEL_DEVICE_INFO *) irp->dev->info;
+	stream_read_uint32(irp->input, Length);
+	stream_read_uint64(irp->input, Offset);
+	stream_seek(irp->input, 20); /* Padding */
 
-	len = 0;
-	while (len < irp->inputBufferLength)
+	DEBUG_SVC("Length %u Offset %llu", Length, Offset);
+
+	len = Length;
+	while (len > 0)
 	{
-		r = write(info->file, irp->inputBuffer, irp->inputBufferLength);
-		if (r == -1)
-			return get_error_status();
+		status = write(parallel->file, stream_get_tail(irp->input), len);
 
-		len += r;
-	}
-	LLOGLN(10, ("parallel_write: id=%d len=%d off=%lld", irp->fileID, irp->inputBufferLength, irp->offset));
-	return RD_STATUS_SUCCESS;
-}
-
-static uint32
-parallel_free(DEVICE * dev)
-{
-	LLOGLN(10, ("parallel_free"));
-
-	free(dev->info);
-	if (dev->data)
-	{
-		free(dev->data);
-		dev->data = NULL;
-	}
-	return 0;
-}
-
-static uint32
-parallel_create(IRP * irp, const char * path)
-{
-	PARALLEL_DEVICE_INFO *info;
-
-	info = (PARALLEL_DEVICE_INFO *) irp->dev->info;
-
-	info->file = open(info->path, O_RDWR);
-	if (info->file == -1)
-	{
-		perror("parallel open");
-		return RD_STATUS_ACCESS_DENIED;
-	}
-
-	/* all read and writes should be non blocking */
-	if (fcntl(info->file, F_SETFL, O_NONBLOCK) == -1)
-		perror("fcntl");
-	LLOGLN(10, ("parallel create"));
-
-/*	info->read_total_timeout_constant = 5;*/
-	return RD_STATUS_SUCCESS;
-}
-
-static uint32
-parallel_close(IRP * irp)
-{
-	PARALLEL_DEVICE_INFO *info = (PARALLEL_DEVICE_INFO *) irp->dev->info;
-
-	close(info->file);
-
-	LLOGLN(10, ("parallel_close: id=%d", irp->fileID));
-	return RD_STATUS_SUCCESS;
-}
-
-static SERVICE *
-parallel_register_service(PDEVMAN pDevman, PDEVMAN_ENTRY_POINTS pEntryPoints)
-{
-	SERVICE * srv;
-
-	srv = pEntryPoints->pDevmanRegisterService(pDevman);
-
-	srv->create = parallel_create;
-	srv->close = parallel_close;
-	srv->read = parallel_read;
-	srv->write = parallel_write;
-	srv->control = parallel_control;
-	srv->query_volume_info = NULL;
-	srv->query_info = NULL;
-	srv->set_info = NULL;
-	srv->query_directory = NULL;
-	srv->notify_change_directory = NULL;
-	srv->lock_control = NULL;
-	srv->free = parallel_free;
-	srv->type = RDPDR_DTYP_PARALLEL;
-	srv->get_event = NULL;
-	srv->file_descriptor = parallel_get_fd;
-	srv->get_timeouts = NULL;
-
-	return srv;
-}
-
-int
-DeviceServiceEntry(PDEVMAN pDevman, PDEVMAN_ENTRY_POINTS pEntryPoints)
-{
-	SERVICE * srv = NULL;
-	DEVICE * dev;
-	PARALLEL_DEVICE_INFO * info;
-	RD_PLUGIN_DATA * data;
-	int i;
-
-	data = (RD_PLUGIN_DATA *) pEntryPoints->pExtendedData;
-	while (data && data->size > 0)
-	{
-		if (strcmp((char*)data->data[0], "parallel") == 0)
+		if (status < 0)
 		{
-			if (srv == NULL)
-				srv = parallel_register_service(pDevman, pEntryPoints);
+			irp->IoStatus = STATUS_UNSUCCESSFUL;
+			Length = 0;
 
-			info = (PARALLEL_DEVICE_INFO *) malloc(sizeof(PARALLEL_DEVICE_INFO));
-			memset(info, 0, sizeof(PARALLEL_DEVICE_INFO));
-			info->devman = pDevman;
-			info->DevmanRegisterService = pEntryPoints->pDevmanRegisterService;
-			info->DevmanUnregisterService = pEntryPoints->pDevmanUnregisterService;
-			info->DevmanRegisterDevice = pEntryPoints->pDevmanRegisterDevice;
-			info->DevmanUnregisterDevice = pEntryPoints->pDevmanUnregisterDevice;
-			info->path = (char *) data->data[2];
-
-			dev = info->DevmanRegisterDevice(pDevman, srv, (char*)data->data[1]);
-			dev->info = info;
-
-			/* [MS-RDPEFS] 2.2.3.1 said this is a unicode string, however, only ASCII works.
-			   Any non-ASCII characters simply screw up the whole channel. Long name is supported though.
-			   This is yet to be investigated. */
-			dev->data_len = strlen(dev->name) + 1;
-			dev->data = strdup(dev->name);
-			for (i = 0; i < dev->data_len; i++)
-			{
-				if (dev->data[i] < 0)
-				{
-					dev->data[i] = '_';
-				}
-			}
+			DEBUG_WARN("write %s(%d) failed.", parallel->path, parallel->id);
+			break;
 		}
-		data = (RD_PLUGIN_DATA *) (((void *) data) + data->size);
+
+		stream_seek(irp->input, status);
+		len -= status;
 	}
 
-	return 1;
+	stream_write_uint32(irp->output, Length);
+	stream_write_uint8(irp->output, 0); /* Padding */
+
+	irp->Complete(irp);
+}
+
+static void parallel_process_irp_device_control(PARALLEL_DEVICE* parallel, IRP* irp)
+{
+	DEBUG_SVC("in");
+	stream_write_uint32(irp->output, 0); /* OutputBufferLength */
+	irp->Complete(irp);
+}
+
+static void parallel_process_irp(PARALLEL_DEVICE* parallel, IRP* irp)
+{
+	DEBUG_SVC("MajorFunction %u", irp->MajorFunction);
+
+	switch (irp->MajorFunction)
+	{
+		case IRP_MJ_CREATE:
+			parallel_process_irp_create(parallel, irp);
+			break;
+
+		case IRP_MJ_CLOSE:
+			parallel_process_irp_close(parallel, irp);
+			break;
+
+		case IRP_MJ_READ:
+			parallel_process_irp_read(parallel, irp);
+			break;
+
+		case IRP_MJ_WRITE:
+			parallel_process_irp_write(parallel, irp);
+			break;
+
+		case IRP_MJ_DEVICE_CONTROL:
+			parallel_process_irp_device_control(parallel, irp);
+			break;
+
+		default:
+			DEBUG_WARN("MajorFunction 0x%X not supported", irp->MajorFunction);
+			irp->IoStatus = STATUS_NOT_SUPPORTED;
+			irp->Complete(irp);
+			break;
+	}
+}
+
+static void parallel_process_irp_list(PARALLEL_DEVICE* parallel)
+{
+	IRP* irp;
+
+	while (1)
+	{
+		if (freerdp_thread_is_stopped(parallel->thread))
+			break;
+
+		freerdp_thread_lock(parallel->thread);
+		irp = (IRP*) list_dequeue(parallel->irp_list);
+		freerdp_thread_unlock(parallel->thread);
+
+		if (irp == NULL)
+			break;
+
+		parallel_process_irp(parallel, irp);
+	}
+}
+
+static void* parallel_thread_func(void* arg)
+{
+	PARALLEL_DEVICE* parallel = (PARALLEL_DEVICE*) arg;
+
+	while (1)
+	{
+		freerdp_thread_wait(parallel->thread);
+
+		if (freerdp_thread_is_stopped(parallel->thread))
+			break;
+
+		freerdp_thread_reset(parallel->thread);
+		parallel_process_irp_list(parallel);
+	}
+
+	freerdp_thread_quit(parallel->thread);
+
+	return NULL;
+}
+
+static void parallel_irp_request(DEVICE* device, IRP* irp)
+{
+	PARALLEL_DEVICE* parallel = (PARALLEL_DEVICE*) device;
+
+	freerdp_thread_lock(parallel->thread);
+	list_enqueue(parallel->irp_list, irp);
+	freerdp_thread_unlock(parallel->thread);
+
+	freerdp_thread_signal(parallel->thread);
+}
+
+static void parallel_free(DEVICE* device)
+{
+	IRP* irp;
+	PARALLEL_DEVICE* parallel = (PARALLEL_DEVICE*) device;
+
+	DEBUG_SVC("freeing device");
+
+	freerdp_thread_stop(parallel->thread);
+	freerdp_thread_free(parallel->thread);
+
+	while ((irp = (IRP*) list_dequeue(parallel->irp_list)) != NULL)
+		irp->Discard(irp);
+
+	list_free(parallel->irp_list);
+
+	xfree(parallel);
+}
+
+int DeviceServiceEntry(PDEVICE_SERVICE_ENTRY_POINTS pEntryPoints)
+{
+	char* name;
+	char* path;
+	int i, length;
+	PARALLEL_DEVICE* parallel;
+
+	name = (char*) pEntryPoints->plugin_data->data[1];
+	path = (char*) pEntryPoints->plugin_data->data[2];
+
+	if (name[0] && path[0])
+	{
+		parallel = xnew(PARALLEL_DEVICE);
+
+		parallel->device.type = RDPDR_DTYP_PARALLEL;
+		parallel->device.name = name;
+		parallel->device.IRPRequest = parallel_irp_request;
+		parallel->device.Free = parallel_free;
+
+		length = strlen(name);
+		parallel->device.data = stream_new(length + 1);
+
+		for (i = 0; i <= length; i++)
+			stream_write_uint8(parallel->device.data, name[i] < 0 ? '_' : name[i]);
+
+		parallel->path = path;
+
+		parallel->irp_list = list_new();
+		parallel->thread = freerdp_thread_new();
+
+		pEntryPoints->RegisterDevice(pEntryPoints->devman, (DEVICE*) parallel);
+
+		freerdp_thread_start(parallel->thread, parallel_thread_func, parallel);
+	}
+
+	return 0;
 }

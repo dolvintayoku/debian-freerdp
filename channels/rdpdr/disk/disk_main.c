@@ -1,1001 +1,651 @@
-/* -*- c-basic-offset: 8 -*-
-   FreeRDP: A Remote Desktop Protocol client.
-   Redirected Disk Device Service
+/**
+ * FreeRDP: A Remote Desktop Protocol client.
+ * File System Virtual Channel
+ *
+ * Copyright 2010-2011 Marc-Andre Moreau <marcandre.moreau@gmail.com>
+ * Copyright 2010-2011 Vic Lee
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-   Copyright (C) Marc-Andre Moreau <marcandre.moreau@gmail.com> 2010
-
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-*/
-
+#include "config.h"
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <fnmatch.h>
-#include <utime.h>
+#include <freerdp/utils/memory.h>
+#include <freerdp/utils/stream.h>
+#include <freerdp/utils/unicode.h>
+#include <freerdp/utils/list.h>
+#include <freerdp/utils/thread.h>
+#include <freerdp/utils/svc_plugin.h>
 
-#ifdef HAVE_SYS_VFS_H
-#include <sys/vfs.h>
-#endif
-
-#ifdef HAVE_SYS_STATVFS_H
-#include <sys/statvfs.h>
-#endif
-
-#ifdef HAVE_SYS_STATFS_H
-#include <sys/statfs.h>
-#endif
-
-#ifdef HAVE_SYS_PARAM_H
-#include <sys/param.h>
-#endif
-
-#ifdef HAVE_SYS_MOUNT_H
-#include <sys/mount.h>
-#endif
-
-#include "rdpdr_types.h"
 #include "rdpdr_constants.h"
-#include "devman.h"
+#include "rdpdr_types.h"
+#include "disk_file.h"
 
-#ifdef STAT_STATFS3_OSF1
-#define STATFS_FN(path, buf) (statfs(path,buf,sizeof(buf)))
-#define STATFS_T statfs
-#define USE_STATFS
-#endif
-
-#ifdef STAT_STATVFS
-#define STATFS_FN(path, buf) (statvfs(path,buf))
-#define STATFS_T statvfs
-#define USE_STATVFS
-#endif
-
-#ifdef STAT_STATVFS64
-#define STATFS_FN(path, buf) (statvfs64(path,buf))
-#define STATFS_T statvfs64
-#define USE_STATVFS
-#endif
-
-#if (defined(STAT_STATFS2_FS_DATA) || defined(STAT_STATFS2_BSIZE) || defined(STAT_STATFS2_FSIZE))
-#define STATFS_FN(path, buf) (statfs(path,buf))
-#define STATFS_T statfs
-#define USE_STATFS
-#endif
-
-#ifdef STAT_STATFS4
-#define STATFS_FN(path, buf) (statfs(path,buf,sizeof(buf),0))
-#define STATFS_T statfs
-#define USE_STATFS
-#endif
-
-#if ((defined(USE_STATFS) && defined(HAVE_STRUCT_STATFS_F_NAMEMAX)) || (defined(USE_STATVFS) && defined(HAVE_STRUCT_STATVFS_F_NAMEMAX)))
-#define F_NAMELEN(buf) ((buf).f_namemax)
-#endif
-
-#if ((defined(USE_STATFS) && defined(HAVE_STRUCT_STATFS_F_NAMELEN)) || (defined(USE_STATVFS) && defined(HAVE_STRUCT_STATVFS_F_NAMELEN)))
-#define F_NAMELEN(buf) ((buf).f_namelen)
-#endif
-
-#ifndef F_NAMELEN
-#define F_NAMELEN(buf) (255)
-#endif
-
-/* Dummy statfs fallback */
-#ifndef STATFS_T
-struct dummy_statfs_t
+typedef struct _DISK_DEVICE DISK_DEVICE;
+struct _DISK_DEVICE
 {
-	long f_bfree;
-	long f_bsize;
-	long f_blocks;
-	int f_namelen;
-	int f_namemax;
+	DEVICE device;
+
+	char* path;
+	LIST* files;
+
+	LIST* irp_list;
+	freerdp_thread* thread;
 };
 
-static int
-dummy_statfs(struct dummy_statfs_t *buf)
+
+static uint32
+disk_map_posix_err(int fs_errno)
 {
-	buf->f_blocks = 262144;
-	buf->f_bfree = 131072;
-	buf->f_bsize = 512;
-	buf->f_namelen = 255;
-	buf->f_namemax = 255;
+	uint32 rc;
 
-	return 0;
-}
-
-#define STATFS_T dummy_statfs_t
-#define STATFS_FN(path,buf) (dummy_statfs(buf))
-#endif
-
-struct _FILE_INFO
-{
-	uint32 file_id;
-	struct stat file_stat;
-	uint32 file_attr;
-	int is_dir;
-	int file;
-	DIR * dir;
-	struct _FILE_INFO * next;
-	char * fullpath;
-	char * pattern;
-	int delete_pending;
-};
-typedef struct _FILE_INFO FILE_INFO;
-
-struct _DISK_DEVICE_INFO
-{
-	PDEVMAN devman;
-
-	PDEVMAN_REGISTER_SERVICE DevmanRegisterService;
-	PDEVMAN_UNREGISTER_SERVICE DevmanUnregisterService;
-	PDEVMAN_REGISTER_DEVICE DevmanRegisterDevice;
-	PDEVMAN_UNREGISTER_DEVICE DevmanUnregisterDevice;
-
-	char * path;
-
-	FILE_INFO * head;
-};
-typedef struct _DISK_DEVICE_INFO DISK_DEVICE_INFO;
-
-static uint64
-get_rdp_filetime(time_t seconds)
-{
-	return ((uint64)seconds + 11644473600LL) * 10000000LL;
-}
-
-static time_t
-get_system_filetime(uint64 rdp_time)
-{
-	if (rdp_time == 0LL || rdp_time == (uint64)(-1LL))
-		return 0;
-	return (time_t) (rdp_time / 10000000LL - 11644473600LL);
-}
-
-static int
-get_error_status(void)
-{
-	switch (errno)
+	/* try to return NTSTATUS version of error code */
+	switch (fs_errno)
 	{
+		case EPERM:
 		case EACCES:
-		case ENOTDIR:
-		case ENFILE:
-			return RD_STATUS_ACCESS_DENIED;
-		case EISDIR:
-			return RD_STATUS_FILE_IS_A_DIRECTORY;
+			rc = STATUS_ACCESS_DENIED;
+			break;
+		case ENOENT:
+			rc = STATUS_NO_SUCH_FILE;
+			break;
+		case EBUSY:
+			rc = STATUS_DEVICE_BUSY;
+			break;
 		case EEXIST:
-			return RD_STATUS_OBJECT_NAME_COLLISION;
-		case EBADF:
-			return RD_STATUS_INVALID_HANDLE;
+			rc  = STATUS_OBJECT_NAME_COLLISION;
+			break;
+		case EISDIR:
+			rc = STATUS_FILE_IS_A_DIRECTORY;
+			break;
+
 		default:
-			return RD_STATUS_NO_SUCH_FILE;
+			rc = STATUS_UNSUCCESSFUL;
+			break;
 	}
+	DEBUG_SVC("errno 0x%x mapped to 0x%x\n", fs_errno, rc);
+	return rc;
 }
 
-static uint32
-get_file_attribute(const char * filename, struct stat * filestat)
+static DISK_FILE* disk_get_file_by_id(DISK_DEVICE* disk, uint32 id)
 {
-	uint32 attr;
+	LIST_ITEM* item;
+	DISK_FILE* file;
 
-	attr = 0;
-	if (S_ISDIR(filestat->st_mode))
-		attr |= FILE_ATTRIBUTE_DIRECTORY;
-	if (filename[0] == '.')
-		attr |= FILE_ATTRIBUTE_HIDDEN;
-	if (!attr)
-		attr |= FILE_ATTRIBUTE_NORMAL;
-	if (!(filestat->st_mode & S_IWUSR))
-		attr |= FILE_ATTRIBUTE_READONLY;
-	return attr;
-}
-
-static int
-set_file_size(int fd, off_t length)
-{
-	off_t pos;
-
-	if ((pos = lseek(fd, 0, SEEK_END)) == -1)
-		return -1;
-	if (pos == length)
-		return 0;
-	if (pos > length)
+	for (item = disk->files->head; item; item = item->next)
 	{
-		return ftruncate(fd, length);
-	}
-	if (lseek(fd, length, SEEK_SET) == -1)
-		return -1;
-	if (write(fd, "", 1) == -1)
-		return -1;
-	return ftruncate(fd, length);
-}
-
-static char *
-disk_get_fullpath(DEVICE * dev, const char * path)
-{
-	DISK_DEVICE_INFO * info;
-	char * fullpath;
-	int len;
-	int i;
-
-	info = (DISK_DEVICE_INFO *) dev->info;
-	fullpath = malloc(strlen(info->path) + strlen(path) + 1);
-	strcpy(fullpath, info->path);
-	strcat(fullpath, path);
-	len = strlen(fullpath);
-	for (i = 0; i < len; i++)
-	{
-		if (fullpath[i] == '\\')
-			fullpath[i] = '/';
-	}
-	if (len > 0 && fullpath[len - 1] == '/')
-		fullpath[len - 1] = '\0';
-
-	return fullpath;
-}
-
-static uint32
-disk_create_fullpath(IRP * irp, FILE_INFO * finfo, const char * fullpath)
-{
-	int mode = S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH;
-	int flags = 0;
-	char * p;
-	struct stat file_stat;
-
-	if (stat(fullpath, &file_stat) == 0)
-	{
-		finfo->is_dir = S_ISDIR(file_stat.st_mode);
-	}
-	else
-	{
-		finfo->is_dir = ((irp->createOptions & FILE_DIRECTORY_FILE) ? 1 : 0);
-	}
-	if (finfo->is_dir)
-	{
-		if (irp->createDisposition == FILE_CREATE)
-		{
-			if (mkdir(fullpath, mode) != 0)
-				return get_error_status();
-		}
-		finfo->dir = opendir(fullpath);
-		if (finfo->dir == NULL)
-			return get_error_status();
-	}
-	else
-	{
-		switch (irp->createDisposition)
-		{
-			case FILE_SUPERSEDE:
-				flags = O_TRUNC | O_CREAT;
-				break;
-			case FILE_OPEN:
-				break;
-			case FILE_CREATE:
-				flags |= O_CREAT | O_EXCL;
-				break;
-			case FILE_OPEN_IF:
-				flags |= O_CREAT;
-				break;
-			case FILE_OVERWRITE:
-				flags |= O_TRUNC;
-				break;
-			case FILE_OVERWRITE_IF:
-				flags |= O_TRUNC | O_CREAT;
-				break;
-			default:
-				return RD_STATUS_INVALID_PARAMETER;
-		}
-
-		if ((irp->desiredAccess & GENERIC_ALL)
-			|| (irp->desiredAccess & GENERIC_WRITE)
-			|| (irp->desiredAccess & FILE_WRITE_DATA)
-			|| (irp->desiredAccess & FILE_APPEND_DATA))
-		{
-			flags |= O_RDWR;
-		}
-		else
-		{
-			flags |= O_RDONLY;
-		}
-
-		finfo->file = open(fullpath, flags, mode);
-		if (finfo->file == -1)
-			return get_error_status();
-	}
-
-	if (stat(fullpath, &finfo->file_stat) != 0)
-	{
-		return RD_STATUS_NO_SUCH_FILE;
-	}
-
-	p = strrchr(fullpath, '/');
-	finfo->file_attr = get_file_attribute((p ? p + 1 : fullpath), &finfo->file_stat);
-
-	return RD_STATUS_SUCCESS;
-}
-
-static FILE_INFO *
-disk_get_file_info(DEVICE * dev, uint32 file_id)
-{
-	DISK_DEVICE_INFO * info;
-	FILE_INFO * curr;
-
-	info = (DISK_DEVICE_INFO *) dev->info;
-	for (curr = info->head; curr; curr = curr->next)
-	{
-		if (curr->file_id == file_id)
-		{
-			return curr;
-		}
+		file = (DISK_FILE*)item->data;
+		if (file->id == id)
+			return file;
 	}
 	return NULL;
 }
 
-static void
-disk_remove_file(DEVICE * dev, uint32 file_id)
+static void disk_process_irp_create(DISK_DEVICE* disk, IRP* irp)
 {
-	DISK_DEVICE_INFO * info;
-	FILE_INFO * curr;
-	FILE_INFO * prev;
+	DISK_FILE* file;
+	uint32 DesiredAccess;
+	uint32 CreateDisposition;
+	uint32 CreateOptions;
+	uint32 PathLength;
+	UNICONV* uniconv;
+	char* path;
+	uint32 FileId;
+	uint8 Information;
 
-	info = (DISK_DEVICE_INFO *) dev->info;
-	for (prev = NULL, curr = info->head; curr; prev = curr, curr = curr->next)
+	stream_read_uint32(irp->input, DesiredAccess);
+	stream_seek(irp->input, 16); /* AllocationSize(8), FileAttributes(4), SharedAccess(4) */
+	stream_read_uint32(irp->input, CreateDisposition);
+	stream_read_uint32(irp->input, CreateOptions);
+	stream_read_uint32(irp->input, PathLength);
+
+	uniconv = freerdp_uniconv_new();
+	path = freerdp_uniconv_in(uniconv, stream_get_tail(irp->input), PathLength);
+	freerdp_uniconv_free(uniconv);
+
+	FileId = irp->devman->id_sequence++;
+	file = disk_file_new(disk->path, path, FileId,
+		DesiredAccess, CreateDisposition, CreateOptions);
+
+	if (file == NULL)
 	{
-		if (curr->file_id == file_id)
-		{
-			LLOGLN(10, ("disk_remove_file: id=%d", curr->file_id));
+		irp->IoStatus = STATUS_UNSUCCESSFUL;
+		FileId = 0;
+		Information = 0;
 
-			if (curr->file != -1)
-				close(curr->file);
-			if (curr->dir)
-				closedir(curr->dir);
-			if (curr->delete_pending)
-			{
-				if (curr->is_dir)
-				{
-					/* TODO: this should delete files recursively */
-					rmdir(curr->fullpath);
-				}
-				else
-				{
-					unlink(curr->fullpath);
-				}
-			}
-
-			if (curr->fullpath)
-				free(curr->fullpath);
-			if (curr->pattern)
-				free(curr->pattern);
-
-			if (prev == NULL)
-				info->head = curr->next;
-			else
-				prev->next  = curr->next;
-
-			free(curr);
-			break;
-		}
+		DEBUG_WARN("failed to create %s.", path);
 	}
-}
-
-static uint32
-disk_create(IRP * irp, const char * path)
-{
-	DISK_DEVICE_INFO * info;
-	FILE_INFO * finfo;
-	char * fullpath;
-	uint32 status;
-
-	info = (DISK_DEVICE_INFO *) irp->dev->info;
-	finfo = (FILE_INFO *) malloc(sizeof(FILE_INFO));
-	memset(finfo, 0, sizeof(FILE_INFO));
-	finfo->file = -1;
-
-	fullpath = disk_get_fullpath(irp->dev, path);
-	status = disk_create_fullpath(irp, finfo, fullpath);
-
-	if (status == RD_STATUS_SUCCESS)
+	else if (file->err)
 	{
-		finfo->fullpath = fullpath;
-		finfo->file_id = info->devman->id_sequence++;
-		finfo->next = info->head;
-		info->head = finfo;
+		FileId = 0;
+		Information = 0;
 
-		irp->fileID = finfo->file_id;
-		LLOGLN(10, ("disk_create: %s (id=%d)", path, finfo->file_id));
+		/* map errno to windows result*/
+		irp->IoStatus = disk_map_posix_err(file->err);
+
+		disk_file_free(file);
 	}
 	else
 	{
-		free(fullpath);
-		free(finfo);
+		list_enqueue(disk->files, file);
+
+		switch (CreateDisposition)
+		{
+			case FILE_SUPERSEDE:
+			case FILE_OPEN:
+			case FILE_CREATE:
+			case FILE_OVERWRITE:
+				Information = FILE_SUPERSEDED;
+				break;
+			case FILE_OPEN_IF:
+				Information = FILE_OPENED;
+				break;
+			case FILE_OVERWRITE_IF:
+				Information = FILE_OVERWRITTEN;
+				break;
+			default:
+				Information = 0;
+				break;
+		}
+		DEBUG_SVC("%s(%d) created.", file->fullpath, file->id);
 	}
 
-	return status;
+	stream_write_uint32(irp->output, FileId);
+	stream_write_uint8(irp->output, Information);
+
+	xfree(path);
+
+	irp->Complete(irp);
 }
 
-static uint32
-disk_close(IRP * irp)
+static void disk_process_irp_close(DISK_DEVICE* disk, IRP* irp)
 {
-	LLOGLN(10, ("disk_close: id=%d", irp->fileID));
-	disk_remove_file(irp->dev, irp->fileID);
-	return RD_STATUS_SUCCESS;
-}
+	DISK_FILE* file;
 
-static uint32
-disk_read(IRP * irp)
-{
-	FILE_INFO * finfo;
-	char * buf;
-	ssize_t r;
+	file = disk_get_file_by_id(disk, irp->FileId);
 
-	LLOGLN(10, ("disk_read: id=%d len=%d off=%lld", irp->fileID, irp->length, irp->offset));
-	finfo = disk_get_file_info(irp->dev, irp->fileID);
-	if (finfo == NULL)
+	if (file == NULL)
 	{
-		LLOGLN(0, ("disk_read: invalid file id"));
-		return RD_STATUS_INVALID_HANDLE;
-	}
-	if (finfo->is_dir)
-		return RD_STATUS_FILE_IS_A_DIRECTORY;
-	if (finfo->file == -1)
-		return RD_STATUS_INVALID_HANDLE;
+		irp->IoStatus = STATUS_UNSUCCESSFUL;
 
-	if (lseek(finfo->file, irp->offset, SEEK_SET) == (off_t) - 1)
-		return get_error_status();
-
-	buf = malloc(irp->length);
-	memset(buf, 0, irp->length);
-	r = read(finfo->file, buf, irp->length);
-	if (r == -1)
-	{
-		free(buf);
-		return get_error_status();
+		DEBUG_WARN("FileId %d not valid.", irp->FileId);
 	}
 	else
 	{
-		irp->outputBuffer = buf;
-		irp->outputBufferLength = r;
-		return RD_STATUS_SUCCESS;
+		DEBUG_SVC("%s(%d) closed.", file->fullpath, file->id);
+
+		list_remove(disk->files, file);
+		disk_file_free(file);
 	}
+
+	stream_write_zero(irp->output, 5); /* Padding(5) */
+
+	irp->Complete(irp);
 }
 
-static uint32
-disk_write(IRP * irp)
+static void disk_process_irp_read(DISK_DEVICE* disk, IRP* irp)
 {
-	FILE_INFO * finfo;
-	ssize_t r;
-	uint32 len;
+	DISK_FILE* file;
+	uint32 Length;
+	uint64 Offset;
+	uint8* buffer = NULL;
 
-	LLOGLN(10, ("disk_write: id=%d len=%d off=%lld", irp->fileID, irp->inputBufferLength, irp->offset));
-	finfo = disk_get_file_info(irp->dev, irp->fileID);
-	if (finfo == NULL)
+	stream_read_uint32(irp->input, Length);
+	stream_read_uint64(irp->input, Offset);
+
+	file = disk_get_file_by_id(disk, irp->FileId);
+
+	if (file == NULL)
 	{
-		LLOGLN(0, ("disk_read: invalid file id"));
-		return RD_STATUS_INVALID_HANDLE;
+		irp->IoStatus = STATUS_UNSUCCESSFUL;
+		Length = 0;
+
+		DEBUG_WARN("FileId %d not valid.", irp->FileId);
 	}
-	if (finfo->is_dir)
-		return RD_STATUS_FILE_IS_A_DIRECTORY;
-	if (finfo->file == -1)
-		return RD_STATUS_INVALID_HANDLE;
-
-	if (lseek(finfo->file, irp->offset, SEEK_SET) == (off_t) - 1)
-		return get_error_status();
-
-	len = 0;
-	while (len < irp->inputBufferLength)
+	else if (!disk_file_seek(file, Offset))
 	{
-		r = write(finfo->file, irp->inputBuffer, irp->inputBufferLength);
-		if (r == -1)
+		irp->IoStatus = STATUS_UNSUCCESSFUL;
+		Length = 0;
+
+		DEBUG_WARN("seek %s(%d) failed.", file->fullpath, file->id);
+	}
+	else
+	{
+		buffer = (uint8*)xmalloc(Length);
+		if (!disk_file_read(file, buffer, &Length))
 		{
-			return get_error_status();
+			irp->IoStatus = STATUS_UNSUCCESSFUL;
+			xfree(buffer);
+			buffer = NULL;
+			Length = 0;
+
+			DEBUG_WARN("read %s(%d) failed.", file->fullpath, file->id);
 		}
-		len += r;
+		else
+		{
+			DEBUG_SVC("read %llu-%llu from %s(%d).", Offset, Offset + Length, file->fullpath, file->id);
+		}
 	}
-	return RD_STATUS_SUCCESS;
+
+	stream_write_uint32(irp->output, Length);
+	if (Length > 0)
+	{
+		stream_check_size(irp->output, Length);
+		stream_write(irp->output, buffer, Length);
+	}
+	xfree(buffer);
+
+	irp->Complete(irp);
 }
 
-static uint32
-disk_control(IRP * irp)
+static void disk_process_irp_write(DISK_DEVICE* disk, IRP* irp)
 {
-	LLOGLN(10, ("disk_control: id=%d io=%X", irp->fileID, irp->ioControlCode));
-	return RD_STATUS_SUCCESS;
+	DISK_FILE* file;
+	uint32 Length;
+	uint64 Offset;
+
+	stream_read_uint32(irp->input, Length);
+	stream_read_uint64(irp->input, Offset);
+	stream_seek(irp->input, 20); /* Padding */
+
+	file = disk_get_file_by_id(disk, irp->FileId);
+
+	if (file == NULL)
+	{
+		irp->IoStatus = STATUS_UNSUCCESSFUL;
+		Length = 0;
+
+		DEBUG_WARN("FileId %d not valid.", irp->FileId);
+	}
+	else if (!disk_file_seek(file, Offset))
+	{
+		irp->IoStatus = STATUS_UNSUCCESSFUL;
+		Length = 0;
+
+		DEBUG_WARN("seek %s(%d) failed.", file->fullpath, file->id);
+	}
+	else if (!disk_file_write(file, stream_get_tail(irp->input), Length))
+	{
+		irp->IoStatus = STATUS_UNSUCCESSFUL;
+		Length = 0;
+
+		DEBUG_WARN("write %s(%d) failed.", file->fullpath, file->id);
+	}
+	else
+	{
+		DEBUG_SVC("write %llu-%llu to %s(%d).", Offset, Offset + Length, file->fullpath, file->id);
+	}
+
+	stream_write_uint32(irp->output, Length);
+	stream_write_uint8(irp->output, 0); /* Padding */
+
+	irp->Complete(irp);
 }
 
-static uint32
-disk_query_volume_info(IRP * irp)
+static void disk_process_irp_query_information(DISK_DEVICE* disk, IRP* irp)
 {
-	FILE_INFO * finfo;
-	struct STATFS_T stat_fs;
-	uint32 status;
-	int size;
-	char * buf;
-	int len;
+	DISK_FILE* file;
+	uint32 FsInformationClass;
 
-	LLOGLN(10, ("disk_query_volume_info: class=%d id=%d", irp->infoClass, irp->fileID));
-	finfo = disk_get_file_info(irp->dev, irp->fileID);
-	if (finfo == NULL)
+	stream_read_uint32(irp->input, FsInformationClass);
+
+	file = disk_get_file_by_id(disk, irp->FileId);
+
+	if (file == NULL)
 	{
-		LLOGLN(0, ("disk_query_volume_info: invalid file id"));
-		return RD_STATUS_INVALID_HANDLE;
+		irp->IoStatus = STATUS_UNSUCCESSFUL;
+
+		DEBUG_WARN("FileId %d not valid.", irp->FileId);
 	}
-	if (STATFS_FN(finfo->fullpath, &stat_fs) != 0)
+	else if (!disk_file_query_information(file, FsInformationClass, irp->output))
 	{
-		LLOGLN(0, ("disk_query_volume_info: statfs failed"));
-		return RD_STATUS_ACCESS_DENIED;
+		irp->IoStatus = STATUS_UNSUCCESSFUL;
+
+		DEBUG_WARN("FsInformationClass %d on %s(%d) failed.", FsInformationClass, file->fullpath, file->id);
+	}
+	else
+	{
+		DEBUG_SVC("FsInformationClass %d on %s(%d).", FsInformationClass, file->fullpath, file->id);
 	}
 
-	size = 0;
-	buf = NULL;
-	status = RD_STATUS_SUCCESS;
+	irp->Complete(irp);
+}
 
-	switch (irp->infoClass)
+static void disk_process_irp_set_information(DISK_DEVICE* disk, IRP* irp)
+{
+	DISK_FILE* file;
+	uint32 FsInformationClass;
+	uint32 Length;
+
+	stream_read_uint32(irp->input, FsInformationClass);
+	stream_read_uint32(irp->input, Length);
+	stream_seek(irp->input, 24); /* Padding */
+
+	file = disk_get_file_by_id(disk, irp->FileId);
+
+	if (file == NULL)
+	{
+		irp->IoStatus = STATUS_UNSUCCESSFUL;
+
+		DEBUG_WARN("FileId %d not valid.", irp->FileId);
+	}
+	else if (!disk_file_set_information(file, FsInformationClass, Length, irp->input))
+	{
+		irp->IoStatus = STATUS_UNSUCCESSFUL;
+
+		DEBUG_WARN("FsInformationClass %d on %s(%d) failed.", FsInformationClass, file->fullpath, file->id);
+	}
+	else
+	{
+		DEBUG_SVC("FsInformationClass %d on %s(%d) ok.", FsInformationClass, file->fullpath, file->id);
+	}
+
+	stream_write_uint32(irp->output, Length);
+
+	irp->Complete(irp);
+}
+
+static void disk_process_irp_query_volume_information(DISK_DEVICE* disk, IRP* irp)
+{
+	uint32 FsInformationClass;
+	STREAM* output = irp->output;
+
+	stream_read_uint32(irp->input, FsInformationClass);
+
+	switch (FsInformationClass)
 	{
 		case FileFsVolumeInformation:
-			buf = malloc(256);
-			memset(buf, 0, 256);
-			SET_UINT64(buf, 0, 0); /* VolumeCreationTime */
-			SET_UINT32(buf, 8, 0); /* VolumeSerialNumber */
-			len = freerdp_set_wstr(buf + 17, size - 17, "FREERDP", strlen("FREERDP") + 1);
-			SET_UINT32(buf, 12, len); /* VolumeLabelLength */
-			SET_UINT8(buf, 16, 0);	/* SupportsObjects */
-			size = 17 + len;
+			/* http://msdn.microsoft.com/en-us/library/cc232108.aspx */
+			stream_write_uint32(output, 34); /* Length */
+			stream_check_size(output, 34);
+			stream_write_uint64(output, 0); /* VolumeCreationTime */
+			stream_write_uint32(output, 0); /* VolumeSerialNumber */
+			stream_write_uint32(output, 16); /* VolumeLabelLength */
+			stream_write_uint8(output, 0); /* SupportsObjects */
+			stream_write_uint8(output, 0); /* Reserved */
+			stream_write(output, "F\0R\0E\0E\0R\0D\0P\0\0\0", 16); /* VolumeLabel (Unicode) */
 			break;
 
 		case FileFsSizeInformation:
-			size = 24;
-			buf = malloc(size);
-			memset(buf, 0, size);
-			SET_UINT64(buf, 0, stat_fs.f_blocks); /* TotalAllocationUnits */
-			SET_UINT64(buf, 8, stat_fs.f_bfree); /* AvailableAllocationUnits */
-			SET_UINT32(buf, 16, stat_fs.f_bsize / 0x200); /* SectorsPerAllocationUnit */
-			SET_UINT32(buf, 20, 0x200); /* BytesPerSector */
+			/* http://msdn.microsoft.com/en-us/library/cc232107.aspx */
+			stream_write_uint32(output, 24); /* Length */
+			stream_check_size(output, 24);
+			stream_write_uint64(output, 0x1000000); /* TotalAllocationUnits */
+			stream_write_uint64(output, 0x800000); /* AvailableAllocationUnits */
+			stream_write_uint32(output, 1); /* SectorsPerAllocationUnit */
+			stream_write_uint32(output, 0x400); /* BytesPerSector */
 			break;
 
 		case FileFsAttributeInformation:
-			buf = malloc(256);
-			memset(buf, 0, 256);
-			SET_UINT32(buf, 0, FILE_CASE_SENSITIVE_SEARCH | FILE_CASE_PRESERVED_NAMES | FILE_UNICODE_ON_DISK); /* FileSystemAttributes */
-			SET_UINT32(buf, 4, F_NAMELEN(stat_fs)); /* MaximumComponentNameLength */
-			len = freerdp_set_wstr(buf + 12, 256 - 12, "FREERDP", 8);
-			SET_UINT32(buf, 8, len); /* FileSystemNameLength */
-			size = 12 + len;
+			/* http://msdn.microsoft.com/en-us/library/cc232101.aspx */
+			stream_write_uint32(output, 22); /* Length */
+			stream_check_size(output, 22);
+			stream_write_uint32(output,
+				FILE_CASE_SENSITIVE_SEARCH | 
+				FILE_CASE_PRESERVED_NAMES | 
+				FILE_UNICODE_ON_DISK); /* FileSystemAttributes */
+			stream_write_uint32(output, 510); /* MaximumComponentNameLength */
+			stream_write_uint32(output, 10); /* FileSystemNameLength */
+			stream_write(output, "F\0A\0T\03\02\0", 10); /* FileSystemName */
 			break;
 
 		case FileFsFullSizeInformation:
-			size = 32;
-			buf = malloc(size);
-			memset(buf, 0, size);
-			SET_UINT64(buf, 0, stat_fs.f_blocks); /* TotalAllocationUnits */
-			SET_UINT64(buf, 8, stat_fs.f_bfree); /* CallerAvailableAllocationUnits */
-			SET_UINT64(buf, 16, stat_fs.f_bfree); /* ActualAvailableAllocationUnits */
-			SET_UINT32(buf, 24, stat_fs.f_bsize / 0x200); /* SectorsPerAllocationUnit */
-			SET_UINT32(buf, 28, 0x200); /* BytesPerSector */
+			/* http://msdn.microsoft.com/en-us/library/cc232104.aspx */
+			stream_write_uint32(output, 32); /* Length */
+			stream_check_size(output, 32);
+			stream_write_uint64(output, 0x1000000); /* TotalAllocationUnits */
+			stream_write_uint64(output, 0x800000); /* CallerAvailableAllocationUnits */
+			stream_write_uint64(output, 0x800000); /* ActualAvailableAllocationUnits */
+			stream_write_uint32(output, 1); /* SectorsPerAllocationUnit */
+			stream_write_uint32(output, 0x400); /* BytesPerSector */
 			break;
 
 		case FileFsDeviceInformation:
-			size = 8;
-			buf = malloc(size);
-			memset(buf, 0, size);
-			SET_UINT32(buf, 0, FILE_DEVICE_DISK); /* DeviceType */
-			SET_UINT32(buf, 4, 0); /* BytesPerSector */
+			/* http://msdn.microsoft.com/en-us/library/cc232109.aspx */
+			stream_write_uint32(output, 8); /* Length */
+			stream_check_size(output, 8);
+			stream_write_uint32(output, FILE_DEVICE_DISK); /* DeviceType */
+			stream_write_uint32(output, 0); /* Characteristics */
 			break;
 
 		default:
-			LLOGLN(0, ("disk_query_volume_info: invalid info class"));
-			status = RD_STATUS_NOT_SUPPORTED;
+			irp->IoStatus = STATUS_UNSUCCESSFUL;
+			stream_write_uint32(output, 0); /* Length */
+			DEBUG_WARN("invalid FsInformationClass %d", FsInformationClass);
 			break;
 	}
 
-	irp->outputBuffer = buf;
-	irp->outputBufferLength = size;
-
-	return status;
+	irp->Complete(irp);
 }
 
-static uint32
-disk_query_info(IRP * irp)
+static void disk_process_irp_query_directory(DISK_DEVICE* disk, IRP* irp)
 {
-	FILE_INFO *finfo;
-	uint32 status;
-	int size;
-	char * buf;
+	DISK_FILE* file;
+	uint32 FsInformationClass;
+	uint8 InitialQuery;
+	uint32 PathLength;
+	UNICONV* uniconv;
+	char* path;
 
-	LLOGLN(10, ("disk_query_info: class=%d id=%d", irp->infoClass, irp->fileID));
-	finfo = disk_get_file_info(irp->dev, irp->fileID);
-	if (finfo == NULL)
+	stream_read_uint32(irp->input, FsInformationClass);
+	stream_read_uint8(irp->input, InitialQuery);
+	stream_read_uint32(irp->input, PathLength);
+	stream_seek(irp->input, 23); /* Padding */
+
+	uniconv = freerdp_uniconv_new();
+	path = freerdp_uniconv_in(uniconv, stream_get_tail(irp->input), PathLength);
+	freerdp_uniconv_free(uniconv);
+
+	file = disk_get_file_by_id(disk, irp->FileId);
+
+	if (file == NULL)
 	{
-		LLOGLN(0, ("disk_query_info: invalid file id"));
-		return RD_STATUS_INVALID_HANDLE;
+		irp->IoStatus = STATUS_UNSUCCESSFUL;
+		stream_write_uint32(irp->output, 0); /* Length */
+		DEBUG_WARN("FileId %d not valid.", irp->FileId);
+	}
+	else if (!disk_file_query_directory(file, FsInformationClass, InitialQuery, path, irp->output))
+	{
+		irp->IoStatus = STATUS_NO_MORE_FILES;
 	}
 
-	size = 256;
-	buf = malloc(size);
-	memset(buf, 0, size);
+	xfree(path);
 
-	status = RD_STATUS_SUCCESS;
+	irp->Complete(irp);
+}
 
-	switch (irp->infoClass)
+static void disk_process_irp_directory_control(DISK_DEVICE* disk, IRP* irp)
+{
+	switch (irp->MinorFunction)
 	{
-		case FileBasicInformation:
-			SET_UINT64(buf, 0, get_rdp_filetime(finfo->file_stat.st_ctime < finfo->file_stat.st_mtime ?
-				finfo->file_stat.st_ctime : finfo->file_stat.st_mtime)); /* CreationTime */
-			SET_UINT64(buf, 8, get_rdp_filetime(finfo->file_stat.st_atime)); /* LastAccessTime */
-			SET_UINT64(buf, 16, get_rdp_filetime(finfo->file_stat.st_mtime)); /* LastWriteTime */
-			SET_UINT64(buf, 24, get_rdp_filetime(finfo->file_stat.st_ctime)); /* ChangeTime */
-			SET_UINT32(buf, 32, finfo->file_attr); /* FileAttributes */
-			size = 36;
+		case IRP_MN_QUERY_DIRECTORY:
+			disk_process_irp_query_directory(disk, irp);
 			break;
 
-		case FileStandardInformation:
-			SET_UINT64(buf, 0, finfo->file_stat.st_size); /* AllocationSize */
-			SET_UINT64(buf, 8, finfo->file_stat.st_size); /* EndOfFile */
-			SET_UINT32(buf, 16, finfo->file_stat.st_nlink); /* NumberOfLinks */
-			SET_UINT8(buf, 20, 0); /* DeletePending */
-			SET_UINT8(buf, 21, finfo->is_dir); /* Directory */
-			size = 22;
-			break;
-
-		case FileObjectIdInformation:
-			SET_UINT32(buf, 0, finfo->file_attr); /* FileAttributes */
-			SET_UINT32(buf, 4, 0);	/* ReparseTag */
-			size = 8;
+		case IRP_MN_NOTIFY_CHANGE_DIRECTORY: /* TODO */
+			irp->Discard(irp);
 			break;
 
 		default:
-			LLOGLN(0, ("disk_query_info: invalid info class"));
-			size = 0;
-			status = RD_STATUS_NOT_SUPPORTED;
+			DEBUG_WARN("MinorFunction 0x%X not supported", irp->MinorFunction);
+			irp->IoStatus = STATUS_NOT_SUPPORTED;
+			stream_write_uint32(irp->output, 0); /* Length */
+			irp->Complete(irp);
 			break;
 	}
-
-	irp->outputBuffer = buf;
-	irp->outputBufferLength = size;
-
-	return status;
 }
 
-static uint32
-disk_set_info(IRP * irp)
+static void disk_process_irp_device_control(DISK_DEVICE* disk, IRP* irp)
 {
-	FILE_INFO *finfo;
-	uint32 status;
-	uint64 len;
-	char * buf;
-	int size;
-	char * fullpath;
-	struct stat file_stat;
-	struct utimbuf tvs;
-	int mode;
-	uint32 attr;
-	time_t t;
+	stream_write_uint32(irp->output, 0); /* OutputBufferLength */
+	irp->Complete(irp);
+}
 
-	LLOGLN(10, ("disk_set_info: class=%d id=%d", irp->infoClass, irp->fileID));
-	finfo = disk_get_file_info(irp->dev, irp->fileID);
-	if (finfo == NULL)
+static void disk_process_irp(DISK_DEVICE* disk, IRP* irp)
+{
+	switch (irp->MajorFunction)
 	{
-		LLOGLN(0, ("disk_set_info: invalid file id"));
-		return RD_STATUS_INVALID_HANDLE;
-	}
-
-	status = RD_STATUS_SUCCESS;
-
-	switch (irp->infoClass)
-	{
-		case FileBasicInformation:
-			if (stat(finfo->fullpath, &file_stat) != 0)
-				return get_error_status();
-
-			/* Change file time */
-			tvs.actime = file_stat.st_atime;
-			tvs.modtime = file_stat.st_mtime;
-			t = get_system_filetime(GET_UINT64(irp->inputBuffer, 8)); /* LastAccessTime */
-			if (t > 0)
-				tvs.actime = t;
-			t = get_system_filetime(GET_UINT64(irp->inputBuffer, 16)); /* LastWriteTime */
-			if (t > 0)
-				tvs.modtime = t;
-			utime(finfo->fullpath, &tvs);
-
-			/* Change read-only flag */
-			attr = GET_UINT32(irp->inputBuffer, 32);
-			if (attr == 0)
-				break;
-			mode = file_stat.st_mode;
-			if (attr & FILE_ATTRIBUTE_READONLY)
-				mode &= ~(S_IWUSR | S_IWGRP | S_IWOTH);
-			else
-				mode |= S_IWUSR;
-			mode &= 0777;
-			chmod(finfo->fullpath, mode);
+		case IRP_MJ_CREATE:
+			disk_process_irp_create(disk, irp);
 			break;
 
-		case FileEndOfFileInformation:
-		case FileAllocationInformation:
-			len = GET_UINT64(irp->inputBuffer, 0);
-			set_file_size(finfo->file, len);
+		case IRP_MJ_CLOSE:
+			disk_process_irp_close(disk, irp);
 			break;
 
-		case FileDispositionInformation:
-			/* Delete on close */
-			finfo->delete_pending = 1;
+		case IRP_MJ_READ:
+			disk_process_irp_read(disk, irp);
 			break;
 
-		case FileRenameInformation:
-			//replaceIfExists = GET_UINT8(irp->inputBuffer, 0); /* ReplaceIfExists */
-			//rootDirectory = GET_UINT8(irp->inputBuffer, 1); /* RootDirectory */
-			len = GET_UINT32(irp->inputBuffer, 2);
-			size = len * 2;
-			buf = malloc(size);
-			memset(buf, 0, size);
-			freerdp_get_wstr(buf, size, irp->inputBuffer + 6, len);
-			fullpath = disk_get_fullpath(irp->dev, buf);
-			free(buf);
-			LLOGLN(10, ("disk_set_info: rename %s to %s", finfo->fullpath, fullpath));
-			if (rename(finfo->fullpath, fullpath) == 0)
-			{
-				free(finfo->fullpath);
-				finfo->fullpath = fullpath;
-			}
-			else
-			{
-				free(fullpath);
-				return get_error_status();
-			}
+		case IRP_MJ_WRITE:
+			disk_process_irp_write(disk, irp);
+			break;
+
+		case IRP_MJ_QUERY_INFORMATION:
+			disk_process_irp_query_information(disk, irp);
+			break;
+
+		case IRP_MJ_SET_INFORMATION:
+			disk_process_irp_set_information(disk, irp);
+			break;
+
+		case IRP_MJ_QUERY_VOLUME_INFORMATION:
+			disk_process_irp_query_volume_information(disk, irp);
+			break;
+
+		case IRP_MJ_DIRECTORY_CONTROL:
+			disk_process_irp_directory_control(disk, irp);
+			break;
+
+		case IRP_MJ_DEVICE_CONTROL:
+			disk_process_irp_device_control(disk, irp);
 			break;
 
 		default:
-			LLOGLN(0, ("disk_set_info: invalid info class"));
-			status = RD_STATUS_NOT_SUPPORTED;
+			DEBUG_WARN("MajorFunction 0x%X not supported", irp->MajorFunction);
+			irp->IoStatus = STATUS_NOT_SUPPORTED;
+			irp->Complete(irp);
 			break;
 	}
-
-	return status;
 }
 
-static uint32
-disk_query_directory(IRP * irp, uint8 initialQuery, const char * path)
+static void disk_process_irp_list(DISK_DEVICE* disk)
 {
-	DISK_DEVICE_INFO * info;
-	FILE_INFO * finfo;
-	char * p;
-	uint32 status;
-	char * buf;
-	int size;
-	int len;
-	struct dirent * pdirent;
-	struct stat file_stat;
-	uint32 attr;
+	IRP* irp;
 
-	LLOGLN(10, ("disk_query_directory: class=%d id=%d init=%d path=%s", irp->infoClass, irp->fileID,
-		initialQuery, path));
-	finfo = disk_get_file_info(irp->dev, irp->fileID);
-	if (finfo == NULL || finfo->dir == NULL)
+	while (1)
 	{
-		LLOGLN(0, ("disk_query_directory: invalid file id"));
-		return RD_STATUS_INVALID_HANDLE;
-	}
-	info = (DISK_DEVICE_INFO *) irp->dev->info;
-
-	if (initialQuery)
-	{
-		if (finfo->pattern)
-			free(finfo->pattern);
-		p = strrchr(path, '\\');
-		p = (p ? p + 1 : (char *)path);
-		finfo->pattern = malloc(strlen(p) + 1);
-		strcpy(finfo->pattern, p);
-		rewinddir(finfo->dir);
-	}
-
-	status = RD_STATUS_SUCCESS;
-	buf = NULL;
-	size = 0;
-
-	pdirent = readdir(finfo->dir);
-	while (pdirent && finfo->pattern[0] && fnmatch(finfo->pattern, pdirent->d_name, 0) != 0)
-		pdirent = readdir(finfo->dir);
-	if (pdirent == NULL)
-	{
-		return RD_STATUS_NO_MORE_FILES;
-	}
-
-	memset(&file_stat, 0, sizeof(struct stat));
-	p = malloc(strlen(finfo->fullpath) + strlen(pdirent->d_name) + 2);
-	sprintf(p, "%s/%s", finfo->fullpath, pdirent->d_name);
-	if (stat(p, &file_stat) != 0)
-	{
-		LLOGLN(0, ("disk_query_directory: stat %s failed (%i)\n", p, errno));
-	}
-	free(p);
-
-	attr = get_file_attribute(pdirent->d_name, &file_stat);
-
-	switch (irp->infoClass)
-	{
-		case FileBothDirectoryInformation:
-			size = 93 + strlen(pdirent->d_name) * 2;
-			buf = malloc(size);
-			memset(buf, 0, size);
-
-			SET_UINT32(buf, 0, 0); /* NextEntryOffset */
-			SET_UINT32(buf, 4, 0); /* FileIndex */
-			SET_UINT64(buf, 8, get_rdp_filetime(file_stat.st_ctime < file_stat.st_mtime ?
-				file_stat.st_ctime : file_stat.st_mtime)); /* CreationTime */
-			SET_UINT64(buf, 16, get_rdp_filetime(file_stat.st_atime)); /* LastAccessTime */
-			SET_UINT64(buf, 24, get_rdp_filetime(file_stat.st_mtime)); /* LastWriteTime */
-			SET_UINT64(buf, 32, get_rdp_filetime(file_stat.st_ctime)); /* ChangeTime */
-			SET_UINT64(buf, 40, file_stat.st_size); /* EndOfFile */
-			SET_UINT64(buf, 48, file_stat.st_size); /* AllocationSize */
-			SET_UINT32(buf, 56, attr); /* FileAttributes */
-			SET_UINT32(buf, 64, 0); /* EaSize */
-			SET_UINT8(buf, 68, 0); /* ShortNameLength */
-			/* [MS-FSCC] has one byte padding here but RDP does not! */
-			//SET_UINT8(buf, 69, 0); /* Reserved */
-			/* ShortName 24  bytes */
-			len = freerdp_set_wstr(buf + 93, size - 93, pdirent->d_name, strlen(pdirent->d_name));
-			SET_UINT32(buf, 60, len); /* FileNameLength */
-			size = 93 + len;
+		if (freerdp_thread_is_stopped(disk->thread))
 			break;
 
-		case FileFullDirectoryInformation:
-			size = 68 + strlen(pdirent->d_name) * 2;
-			buf = malloc(size);
-			memset(buf, 0, size);
+		freerdp_thread_lock(disk->thread);
+		irp = (IRP*)list_dequeue(disk->irp_list);
+		freerdp_thread_unlock(disk->thread);
 
-			SET_UINT32(buf, 0, 0); /* NextEntryOffset */
-			SET_UINT32(buf, 4, 0); /* FileIndex */
-			SET_UINT64(buf, 8, get_rdp_filetime(file_stat.st_ctime < file_stat.st_mtime ?
-				file_stat.st_ctime : file_stat.st_mtime)); /* CreationTime */
-			SET_UINT64(buf, 16, get_rdp_filetime(file_stat.st_atime)); /* LastAccessTime */
-			SET_UINT64(buf, 24, get_rdp_filetime(file_stat.st_mtime)); /* LastWriteTime */
-			SET_UINT64(buf, 32, get_rdp_filetime(file_stat.st_ctime)); /* ChangeTime */
-			SET_UINT64(buf, 40, file_stat.st_size); /* EndOfFile */
-			SET_UINT64(buf, 48, file_stat.st_size); /* AllocationSize */
-			SET_UINT32(buf, 56, attr); /* FileAttributes */
-			SET_UINT32(buf, 64, 0); /* EaSize */
-			len = freerdp_set_wstr(buf + 68, size - 68, pdirent->d_name, strlen(pdirent->d_name));
-			SET_UINT32(buf, 60, len); /* FileNameLength */
-			size = 68 + len;
+		if (irp == NULL)
 			break;
 
-		default:
-			LLOGLN(0, ("disk_query_directory: invalid info class"));
-			status = RD_STATUS_NOT_SUPPORTED;
+		disk_process_irp(disk, irp);
+	}
+}
+
+static void* disk_thread_func(void* arg)
+{
+	DISK_DEVICE* disk = (DISK_DEVICE*)arg;
+
+	while (1)
+	{
+		freerdp_thread_wait(disk->thread);
+
+		if (freerdp_thread_is_stopped(disk->thread))
 			break;
+
+		freerdp_thread_reset(disk->thread);
+		disk_process_irp_list(disk);
 	}
 
-	irp->outputBuffer = buf;
-	irp->outputBufferLength = size;
+	freerdp_thread_quit(disk->thread);
 
-	return status;
+	return NULL;
 }
 
-static uint32
-disk_notify_change_directory(IRP * irp)
+static void disk_irp_request(DEVICE* device, IRP* irp)
 {
-	return RD_STATUS_PENDING;
+	DISK_DEVICE* disk = (DISK_DEVICE*)device;
+
+	freerdp_thread_lock(disk->thread);
+	list_enqueue(disk->irp_list, irp);
+	freerdp_thread_unlock(disk->thread);
+
+	freerdp_thread_signal(disk->thread);
 }
 
-static uint32
-disk_lock_control(IRP * irp)
+static void disk_free(DEVICE* device)
 {
-	return RD_STATUS_SUCCESS;
+	DISK_DEVICE* disk = (DISK_DEVICE*)device;
+	IRP* irp;
+	DISK_FILE* file;
+
+	freerdp_thread_stop(disk->thread);
+	freerdp_thread_free(disk->thread);
+	
+	while ((irp = (IRP*)list_dequeue(disk->irp_list)) != NULL)
+		irp->Discard(irp);
+	list_free(disk->irp_list);
+
+	while ((file = (DISK_FILE*)list_dequeue(disk->files)) != NULL)
+		disk_file_free(file);
+	list_free(disk->files);
+	xfree(disk);
 }
 
-static uint32
-disk_free(DEVICE * dev)
+int DeviceServiceEntry(PDEVICE_SERVICE_ENTRY_POINTS pEntryPoints)
 {
-	DISK_DEVICE_INFO * info;
+	DISK_DEVICE* disk;
+	char* name;
+	char* path;
+	int i, len;
 
-	LLOGLN(10, ("disk_free"));
-	info = (DISK_DEVICE_INFO *) dev->info;
-	while (info->head)
+	name = (char*)pEntryPoints->plugin_data->data[1];
+	path = (char*)pEntryPoints->plugin_data->data[2];
+
+	if (name[0] && path[0])
 	{
-		disk_remove_file(dev, info->head->file_id);
+		disk = xnew(DISK_DEVICE);
+
+		disk->device.type = RDPDR_DTYP_FILESYSTEM;
+		disk->device.name = name;
+		disk->device.IRPRequest = disk_irp_request;
+		disk->device.Free = disk_free;
+
+		len = strlen(name);
+		disk->device.data = stream_new(len + 1);
+		for (i = 0; i <= len; i++)
+			stream_write_uint8(disk->device.data, name[i] < 0 ? '_' : name[i]);
+
+		disk->path = path;
+		disk->files = list_new();
+
+		disk->irp_list = list_new();
+		disk->thread = freerdp_thread_new();
+
+		pEntryPoints->RegisterDevice(pEntryPoints->devman, (DEVICE*)disk);
+
+		freerdp_thread_start(disk->thread, disk_thread_func, disk);
 	}
-	free(info);
-	if (dev->data)
-	{
-		free(dev->data);
-		dev->data = NULL;
-	}
+
 	return 0;
-}
-
-static int
-disk_get_fd(IRP * irp)
-{
-	FILE_INFO * finfo = disk_get_file_info(irp->dev, irp->fileID);
-	return finfo->file;
-}
-
-static SERVICE *
-disk_register_service(PDEVMAN pDevman, PDEVMAN_ENTRY_POINTS pEntryPoints)
-{
-	SERVICE * srv;
-
-	srv = pEntryPoints->pDevmanRegisterService(pDevman);
-
-	srv->create = disk_create;
-	srv->close = disk_close;
-	srv->read = disk_read;
-	srv->write = disk_write;
-	srv->control = disk_control;
-	srv->query_volume_info = disk_query_volume_info;
-	srv->query_info = disk_query_info;
-	srv->set_info = disk_set_info;
-	srv->query_directory = disk_query_directory;
-	srv->notify_change_directory = disk_notify_change_directory;
-	srv->lock_control = disk_lock_control;
-	srv->free = disk_free;
-	srv->type = RDPDR_DTYP_FILESYSTEM;
-	srv->get_event = NULL;
-	srv->file_descriptor = disk_get_fd;
-	srv->get_timeouts = NULL;
-
-	return srv;
-}
-
-int
-DeviceServiceEntry(PDEVMAN pDevman, PDEVMAN_ENTRY_POINTS pEntryPoints)
-{
-	SERVICE * srv = NULL;
-	DEVICE * dev;
-	DISK_DEVICE_INFO * info;
-	RD_PLUGIN_DATA * data;
-	int i;
-
-	data = (RD_PLUGIN_DATA *) pEntryPoints->pExtendedData;
-	while (data && data->size > 0)
-	{
-		if (strcmp((char*)data->data[0], "disk") == 0)
-		{
-			if (srv == NULL)
-				srv = disk_register_service(pDevman, pEntryPoints);
-
-			info = (DISK_DEVICE_INFO *) malloc(sizeof(DISK_DEVICE_INFO));
-			memset(info, 0, sizeof(DISK_DEVICE_INFO));
-			info->devman = pDevman;
-			info->DevmanRegisterService = pEntryPoints->pDevmanRegisterService;
-			info->DevmanUnregisterService = pEntryPoints->pDevmanUnregisterService;
-			info->DevmanRegisterDevice = pEntryPoints->pDevmanRegisterDevice;
-			info->DevmanUnregisterDevice = pEntryPoints->pDevmanUnregisterDevice;
-			info->path = (char *) data->data[2];
-
-			dev = info->DevmanRegisterDevice(pDevman, srv, (char*)data->data[1]);
-			dev->info = info;
-
-			/* [MS-RDPEFS] 2.2.3.1 said this is a unicode string, however, only ASCII works.
-			   Any non-ASCII characters simply screw up the whole channel. Long name is supported though.
-			   This is yet to be investigated. */
-			dev->data_len = strlen(dev->name) + 1;
-			dev->data = strdup(dev->name);
-			for (i = 0; i < dev->data_len; i++)
-			{
-				if (dev->data[i] < 0)
-				{
-					dev->data[i] = '_';
-				}
-			}
-		}
-		data = (RD_PLUGIN_DATA *) (((void *) data) + data->size);
-	}
-
-	return 1;
 }

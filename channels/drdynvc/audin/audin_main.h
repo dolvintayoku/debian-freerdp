@@ -1,43 +1,65 @@
-/*
-   Copyright (c) 2010 Vic Lee
-
-   Permission is hereby granted, free of charge, to any person obtaining a
-   copy of this software and associated documentation files (the "Software"),
-   to deal in the Software without restriction, including without limitation
-   the rights to use, copy, modify, merge, publish, distribute, sublicense,
-   and/or sell copies of the Software, and to permit persons to whom the
-   Software is furnished to do so, subject to the following conditions:
-
-   The above copyright notice and this permission notice shall be included
-   in all copies or substantial portions of the Software.
-
-   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-   DEALINGS IN THE SOFTWARE.
-
-*/
+/**
+ * FreeRDP: A Remote Desktop Protocol client.
+ * Audio Input Reirection Virtual Channel
+ *
+ * Copyright 2010-2011 Vic Lee
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #ifndef __AUDIN_MAIN_H
 #define __AUDIN_MAIN_H
 
-typedef int (*wave_in_receive_func) (char * wave_data, int size, void * user_data);
+#include "drdynvc_types.h"
 
-void *
-wave_in_new(void);
-void
-wave_in_free(void * device_data);
-int
-wave_in_format_supported(void * device_data, char * snd_format, int size);
-int
-wave_in_set_format(void * device_data, uint32 FramesPerPacket, char * snd_format, int size);
-int
-wave_in_open(void * device_data, wave_in_receive_func receive_func, void * user_data);
-int
-wave_in_close(void * device_data);
+typedef boolean (*AudinReceive) (uint8* data, int size, void* user_data);
 
-#endif
+typedef struct audin_format audinFormat;
+struct audin_format
+{
+	uint16 wFormatTag;
+	uint16 nChannels;
+	uint32 nSamplesPerSec;
+	uint16 nBlockAlign;
+	uint16 wBitsPerSample;
+	uint16 cbSize;
+	uint8* data;
+};
+
+typedef struct _IAudinDevice IAudinDevice;
+struct _IAudinDevice
+{
+	void (*Open) (IAudinDevice* devplugin, AudinReceive receive, void* user_data);
+	boolean (*FormatSupported) (IAudinDevice* devplugin, audinFormat* format);
+	void (*SetFormat) (IAudinDevice* devplugin, audinFormat* format, uint32 FramesPerPacket);
+	void (*Close) (IAudinDevice* devplugin);
+	void (*Free) (IAudinDevice* devplugin);
+};
+
+#define AUDIN_DEVICE_EXPORT_FUNC_NAME "FreeRDPAudinDeviceEntry"
+
+typedef void (*PREGISTERAUDINDEVICE)(IWTSPlugin* plugin, IAudinDevice* device);
+
+struct _FREERDP_AUDIN_DEVICE_ENTRY_POINTS
+{
+	IWTSPlugin* plugin;
+	PREGISTERAUDINDEVICE pRegisterAudinDevice;
+	RDP_PLUGIN_DATA* plugin_data;
+};
+typedef struct _FREERDP_AUDIN_DEVICE_ENTRY_POINTS FREERDP_AUDIN_DEVICE_ENTRY_POINTS;
+typedef FREERDP_AUDIN_DEVICE_ENTRY_POINTS* PFREERDP_AUDIN_DEVICE_ENTRY_POINTS;
+
+typedef int (*PFREERDP_AUDIN_DEVICE_ENTRY)(PFREERDP_AUDIN_DEVICE_ENTRY_POINTS pEntryPoints);
+
+#endif /* __AUDIN_MAIN_H */
 

@@ -1,61 +1,70 @@
-# ./autogen.sh
-# ./configure
-# make dist # creates freerdp-0.0.1.tar.gz
-# rpmbuild -ta freerdp-UNKNOWN.tar.gz
+# cmake
+# make package_source
+# rpmbuild -ta freerdp-<...>.tar.gz
 
 Summary: Remote Desktop Protocol functionality
 Name: freerdp
-Version: UNKNOWN
+Version: 1.0.0
 Release: 1%{?dist}
-License: GPLv2
+License: Apache License 2.0
 Group: Applications/Communications
-Url: http://freerdp.sourceforge.net/
+URL: http://www.freerdp.com/
 Source: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:  openssl-devel, libX11-devel, libXcursor-devel, cups-devel, alsa-lib-devel
+BuildRequires:  openssl-devel
+BuildRequires:	libX11-devel, libXcursor-devel, libXext-devel, libXinerama-devel, libXdamage-devel, libXv-devel, libxkbfile-devel
+BuildRequires:	cups-devel
+BuildRequires:	alsa-lib-devel
+BuildRequires:	pcsc-lite-devel
 
 %description
-freerdp implements Remote Desktop Protocol (RDP), used in a number of Microsoft
-products.
+FreeRDP is a free implementation of the Remote Desktop Protocol (RDP)
+according to the Microsoft Open Specifications.
 
 %package -n xfreerdp
 Summary: Remote Desktop Protocol client
+Group: Applications/Communications
 Requires: %{name}-libs = %{version}-%{release}, %{name}-plugins-standard = %{version}-%{release}
 %description -n xfreerdp
-xfreerdp is a client for Remote Desktop Protocol (RDP), used in a number of
-Microsoft products.
+FreeRDP is a free implementation of the Remote Desktop Protocol (RDP)
+according to the Microsoft Open Specifications.
 
 %package libs
 Summary: Core libraries implementing the RDP protocol
+Group: Applications/Communications
 %description libs
-libfreerdp can be embedded in applications.
+libfreerdp-core can be embedded in applications.
 
-libfreerdpchanman and libfreerdpkbd might be convenient to use in X
-applications together with libfreerdp.
+libfreerdp-channels and libfreerdp-kbd might be convenient to use in X
+applications together with libfreerdp-core.
 
-libfreerdp can be extended with plugins handling RDP channels.
+libfreerdp-core can be extended with plugins handling RDP channels.
 
 %package plugins-standard
 Summary: Plugins for handling the standard RDP channels
+Group: Applications/Communications
 Requires: %{name}-libs = %{version}-%{release}
 %description plugins-standard
 A set of plugins to the channel manager implementing the standard virtual
-channels extending RDP core functionality.  For example, sounds, clipboard
+channels extending RDP core functionality. For instance, sounds, clipboard
 sync, disk/printer redirection, etc.
 
 %package devel
 Summary: Libraries and header files for embedding and extending freerdp
+Group: Applications/Communications
 Requires: %{name}-libs = %{version}-%{release}
 Requires: pkgconfig
 %description devel
-Header files and unversioned libraries for libfreerdp, libfreerdpchanman and
-libfreerdpkbd.
+Header files and unversioned libraries for libfreerdp-core, libfreerdp-channels,
+libfreerdp-kbd, libfreerdp-cache, libfreerdp-codec, libfreerdp-rail,
+libfreerdp-gdi and libfreerdp-utils.
 
 %prep
 %setup -q
 
 %build
-%configure --with-ipv6 --enable-smartcard --with-sound --with-sound=alsa --with-crypto=openssl --with-gnu-ld
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DWITH_PCSC=ON . 
+
 make %{?_smp_mflags}
 
 %install
@@ -77,7 +86,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(-,root,root)
-%doc COPYING AUTHORS doc/ipv6.txt doc/ChangeLog
+%doc LICENSE README
 %{_libdir}/lib*.so.*
 %dir %{_libdir}/freerdp
 %{_datadir}/freerdp/

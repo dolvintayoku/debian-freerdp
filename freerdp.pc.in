@@ -1,12 +1,13 @@
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-libdir=@libdir@
-includedir=@includedir@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=@CMAKE_INSTALL_PREFIX@
+libdir=@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@
+includedir=@CMAKE_INSTALL_PREFIX@/include
 
 Name: FreeRDP
 Description: A free remote desktop protocol client
-Version: @VERSION@
+URL: http://www.freerdp.com/
+Version: @FREERDP_VERSION_FULL@
 Requires: 
-Libs: -L${libdir} -lfreerdpkbd -lfreerdpchanman -lfreerdp
+Libs: -L${libdir} -lfreerdp-core -lfreerdp-codec -lfreerdp-gdi -lfreerdp-kbd -lfreerdp-rail -lfreerdp-channels -lfreerdp-utils
 Cflags: -I${includedir}
 

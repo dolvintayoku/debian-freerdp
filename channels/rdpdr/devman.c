@@ -1,301 +1,103 @@
-/* -*- c-basic-offset: 8 -*-
-   FreeRDP: A Remote Desktop Protocol client.
-   Redirected Device Manager
-
-   Copyright (C) Marc-Andre Moreau <marcandre.moreau@gmail.com> 2010
-
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-*/
-
-#include <dlfcn.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+/**
+ * FreeRDP: A Remote Desktop Protocol client.
+ * File System Virtual Channel
+ *
+ * Copyright 2010-2011 Marc-Andre Moreau <marcandre.moreau@gmail.com>
+ * Copyright 2010-2011 Vic Lee
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #include "config.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <freerdp/types.h>
+#include <freerdp/utils/memory.h>
+#include <freerdp/utils/stream.h>
+#include <freerdp/utils/list.h>
+#include <freerdp/utils/svc_plugin.h>
+#include <freerdp/utils/load_plugin.h>
+
 #include "rdpdr_types.h"
-#include "rdpdr_constants.h"
 #include "devman.h"
 
-DEVMAN*
-devman_new(void* data)
+DEVMAN* devman_new(rdpSvcPlugin* plugin)
 {
 	DEVMAN* devman;
-	PDEVMAN_ENTRY_POINTS pDevmanEntryPoints;
 
-	devman = (PDEVMAN)malloc(sizeof(DEVMAN));
-	pDevmanEntryPoints = (PDEVMAN_ENTRY_POINTS)malloc(sizeof(DEVMAN_ENTRY_POINTS));
-
-	devman->idev = NULL;
-	devman->head = NULL;
-	devman->tail = NULL;
-	devman->count = 0;
+	devman = xnew(DEVMAN);
+	devman->plugin = plugin;
 	devman->id_sequence = 1;
-
-	pDevmanEntryPoints->pDevmanRegisterService = devman_register_service;
-	pDevmanEntryPoints->pDevmanUnregisterService = devman_unregister_service;
-	pDevmanEntryPoints->pDevmanRegisterDevice = devman_register_device;
-	pDevmanEntryPoints->pDevmanUnregisterDevice = devman_unregister_device;
-	pDevmanEntryPoints->pExtendedData = data;
-	devman->pDevmanEntryPoints = (void*)pDevmanEntryPoints;
+	devman->devices = list_new();
 
 	return devman;
 }
 
-int
-devman_free(DEVMAN* devman)
+void devman_free(DEVMAN* devman)
 {
-	DEVICE* pdev;
+	DEVICE* device;
 
-	/* unregister all services, which will in turn unregister all devices */
+	while ((device = (DEVICE*)list_dequeue(devman->devices)) != NULL)
+		IFCALL(device->Free, device);
+	list_free(devman->devices);
+	xfree(devman);
+}
 
-	devman_rewind(devman);
+static void devman_register_device(DEVMAN* devman, DEVICE* device)
+{
+	device->id = devman->id_sequence++;
+	list_add(devman->devices, device);
 
-	while (devman_has_next(devman) != 0)
+	DEBUG_SVC("device %d.%s registered", device->id, device->name);
+}
+
+static void devman_unregister_device(DEVMAN* devman, DEVICE* device)
+{
+	list_remove(devman->devices, device);
+
+	DEBUG_SVC("device %d.%s unregistered", device->id, device->name);
+}
+
+boolean devman_load_device_service(DEVMAN* devman, RDP_PLUGIN_DATA* plugin_data)
+{
+	DEVICE_SERVICE_ENTRY_POINTS ep;
+	PDEVICE_SERVICE_ENTRY entry;
+
+	entry = freerdp_load_plugin((char*)plugin_data->data[0], "DeviceServiceEntry");
+	if (entry == NULL)
+		return false;
+
+	ep.devman = devman;
+	ep.RegisterDevice = devman_register_device;
+	ep.UnregisterDevice = devman_unregister_device;
+	ep.plugin_data = plugin_data;
+
+	entry(&ep);
+
+	return true;
+}
+
+DEVICE* devman_get_device_by_id(DEVMAN* devman, uint32 id)
+{
+	LIST_ITEM* item;
+	DEVICE* device;
+
+	for (item = devman->devices->head; item; item = item->next)
 	{
-		pdev = devman_get_next(devman);
-		devman_unregister_service(devman, pdev->service);
-		devman_rewind(devman);
+		device = (DEVICE*)item->data;
+		if (device->id == id)
+			return device;
 	}
-
-	free(devman->pDevmanEntryPoints);
-
-	/* free devman */
-	free(devman);
-
-	return 1;
-}
-
-SERVICE*
-devman_register_service(DEVMAN* devman)
-{
-	SERVICE* srv;
-
-	srv = (SERVICE*)malloc(sizeof(SERVICE));
-	memset(srv, 0, sizeof(SERVICE));
-
-	return srv;
-}
-
-int
-devman_unregister_service(DEVMAN* devman, SERVICE* srv)
-{
-	DEVICE* pdev;
-
-	/* unregister all devices depending on the service */
-
-	devman_rewind(devman);
-
-	while (devman_has_next(devman) != 0)
-	{
-		pdev = devman_get_next(devman);
-
-		if (pdev->service == srv)
-		{
-			devman_unregister_device(devman, pdev);
-			devman_rewind(devman);
-		}
-	}
-
-	/* unregister service */
-	free(srv);
-
-	return 1;
-}
-
-DEVICE*
-devman_register_device(DEVMAN* devman, SERVICE* srv, char* name)
-{
-	DEVICE* pdev;
-
-	pdev = (DEVICE*)malloc(sizeof(DEVICE));
-	pdev->id = devman->id_sequence++;
-	pdev->prev = NULL;
-	pdev->next = NULL;
-	pdev->service = srv;
-	pdev->data_len = 0;
-	pdev->data = NULL;
-
-	pdev->name = malloc(strlen(name) + 1);
-	strcpy(pdev->name, name);
-
-	if (devman->head == NULL)
-	{
-		/* linked list is empty */
-		devman->head = pdev;
-		devman->tail = pdev;
-	}
-	else
-	{
-		/* append device to the end of the linked list */
-		devman->tail->next = (void*)pdev;
-		pdev->prev = (void*)devman->tail;
-		devman->tail = pdev;
-	}
-
-	devman->count++;
-	return pdev;
-}
-
-int
-devman_unregister_device(DEVMAN* devman, DEVICE* dev)
-{
-	DEVICE* pdev;
-
-	devman_rewind(devman);
-
-	while (devman_has_next(devman) != 0)
-	{
-		pdev = devman_get_next(devman);
-
-		if (pdev == dev) /* device exists */
-		{
-			/* set previous device to point to next device */
-
-			if (dev->prev != NULL)
-			{
-				/* unregistered device is not the head */
-				pdev = (DEVICE*)dev->prev;
-				pdev->next = dev->next;
-			}
-			else
-			{
-				/* unregistered device is the head, update head */
-				devman->head = (DEVICE*)dev->next;
-			}
-
-			/* set next device to point to previous device */
-
-			if (dev->next != NULL)
-			{
-				/* unregistered device is not the tail */
-				pdev = (DEVICE*)dev->next;
-				pdev->prev = dev->prev;
-			}
-			else
-			{
-				/* unregistered device is the tail, update tail */
-				devman->tail = (DEVICE*)dev->prev;
-			}
-
-			devman->count--;
-
-			if (dev->service->free)
-				dev->service->free(dev);
-			free(dev->name);
-			free(dev); /* free memory for unregistered device */
-			return 1; /* unregistration successful */
-		}
-	}
-
-	/* if we reach this point, the device wasn't found */
-	return 0;
-}
-
-void
-devman_rewind(DEVMAN* devman)
-{
-	devman->idev = devman->head;
-}
-
-int
-devman_has_next(DEVMAN* devman)
-{
-	if (devman->idev == NULL)
-		return 0;
-	else
-		return 1;
-}
-
-DEVICE*
-devman_get_next(DEVMAN* devman)
-{
-	DEVICE* pdev;
-
-	pdev = devman->idev;
-	devman->idev = (DEVICE*)devman->idev->next;
-
-	return pdev;
-}
-
-DEVICE*
-devman_get_device_by_id(DEVMAN* devman, uint32 id)
-{
-	DEVICE* pdev;
-
-	devman_rewind(devman);
-
-	while (devman_has_next(devman) != 0)
-	{
-		pdev = devman_get_next(devman);
-
-		/* device with given ID was found */
-		if (pdev->id == id)
-			return pdev;
-	}
-
-	/* no device with the given ID was found */
 	return NULL;
-}
-
-SERVICE*
-devman_get_service_by_type(DEVMAN* devman, int type)
-{
-	DEVICE* pdev;
-
-	devman_rewind(devman);
-
-	while (devman_has_next(devman) != 0)
-	{
-		pdev = devman_get_next(devman);
-
-		/* service with given type was found */
-		if (pdev->service->type == type)
-			return pdev->service;
-	}
-
-	/* no service with the given type was found */
-	return NULL;
-}
-
-int
-devman_load_device_service(DEVMAN* devman, char* filename)
-{
-	void* dl;
-	char* fn;
-	PDEVICE_SERVICE_ENTRY pDeviceServiceEntry = NULL;
-
-	if (strchr(filename, '/'))
-	{
-		fn = strdup(filename);
-	}
-	else
-	{
-		fn = malloc(strlen(PLUGIN_PATH) + strlen(filename) + 10);
-		sprintf(fn, PLUGIN_PATH "/%s.so", filename);
-	}
-	dl = dlopen(fn, RTLD_LOCAL | RTLD_LAZY);
-
-	pDeviceServiceEntry = (PDEVICE_SERVICE_ENTRY)dlsym(dl, "DeviceServiceEntry");
-
-	if(pDeviceServiceEntry != NULL)
-	{
-		pDeviceServiceEntry(devman, devman->pDevmanEntryPoints);
-		LLOGLN(0, ("loaded device service: %s", fn));
-	}
-	free(fn);
-
-	return 0;
 }
