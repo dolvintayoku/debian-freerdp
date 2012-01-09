@@ -1,7 +1,7 @@
 freerdp (1.0-beta5-1) UNRELEASED; urgency=low
 
   [ Jeremy Bicha ]
-  * New upstream release.
+  * New upstream release. Closes: #647498.
   * Updated symbols
   * debian/control:
     - Added new build dependencies
