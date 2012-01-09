@@ -1,3 +1,16 @@
+freerdp (1.0-beta5-1) UNRELEASED; urgency=low
+
+  [ Jeremy Bicha ]
+  * New upstream release.
+  * Updated symbols
+  * debian/control:
+    - Added new build dependencies
+  * debian/rules:
+    - Turn on strict symbols checking
+  * debian/watch: Watch github
+
+ -- Jeremy Bicha <jbicha@ubuntu.com>  Sun, 08 Jan 2012 23:58:29 -0500
+
 freerdp (0.8.2-2) unstable; urgency=low
 
   * freerdp-x11: recommends libfreerdp-plugins-standard. Closes:
