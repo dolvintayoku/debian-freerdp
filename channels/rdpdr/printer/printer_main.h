@@ -1,27 +1,26 @@
-/* -*- c-basic-offset: 8 -*-
-   FreeRDP: A Remote Desktop Protocol client.
-   Redirected Printer Device Service
-
-   Copyright (C) Marc-Andre Moreau <marcandre.moreau@gmail.com> 2010
-   Copyright (C) Vic Lee <llyzs@163.com> 2010
-
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-*/
+/**
+ * FreeRDP: A Remote Desktop Protocol client.
+ * Print Virtual Channel
+ *
+ * Copyright 2010-2011 Vic Lee
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #ifndef __PRINTER_MAIN_H
 #define __PRINTER_MAIN_H
+
+#include "rdpdr_types.h"
 
 /* SERVER_PRINTER_CACHE_EVENT.cachedata */
 #define RDPDR_ADD_PRINTER_EVENT             0x00000001
@@ -36,25 +35,45 @@
 #define RDPDR_PRINTER_ANNOUNCE_FLAG_TSPRINTER       0x00000008
 #define RDPDR_PRINTER_ANNOUNCE_FLAG_XPSFORMAT       0x00000010
 
-int
-printer_register(PDEVMAN pDevman, PDEVMAN_ENTRY_POINTS pEntryPoints, SERVICE * srv,
-	const char * name, const char * driver, int is_default, int * port);
-uint32
-printer_free(DEVICE * dev);
+typedef struct rdp_printer_driver rdpPrinterDriver;
+typedef struct rdp_printer rdpPrinter;
+typedef struct rdp_print_job rdpPrintJob;
 
-void *
-printer_hw_new(const char * name);
-int
-printer_hw_register_auto(PDEVMAN pDevman, PDEVMAN_ENTRY_POINTS pEntryPoints, SERVICE * srv,
-	int * port);
-uint32
-printer_hw_create(IRP * irp, const char * path);
-uint32
-printer_hw_close(IRP * irp);
-uint32
-printer_hw_write(IRP * irp);
-void
-printer_hw_free(void * info);
+typedef rdpPrinter** (*pcEnumPrinters) (rdpPrinterDriver* driver);
+typedef rdpPrinter* (*pcGetPrinter) (rdpPrinterDriver* driver, const char* name);
+
+struct rdp_printer_driver
+{
+	pcEnumPrinters EnumPrinters;
+	pcGetPrinter GetPrinter;
+};
+
+typedef rdpPrintJob* (*pcCreatePrintJob) (rdpPrinter* printer, uint32 id);
+typedef rdpPrintJob* (*pcFindPrintJob) (rdpPrinter* printer, uint32 id);
+typedef void (*pcFreePrinter) (rdpPrinter* printer);
+
+struct rdp_printer
+{
+	int id;
+	char* name;
+	char* driver;
+	boolean is_default;
+
+	pcCreatePrintJob CreatePrintJob;
+	pcFindPrintJob FindPrintJob;
+	pcFreePrinter Free;
+};
+
+typedef void (*pcWritePrintJob) (rdpPrintJob* printjob, uint8* data, int size);
+typedef void (*pcClosePrintJob) (rdpPrintJob* printjob);
+
+struct rdp_print_job
+{
+	uint32 id;
+	rdpPrinter* printer;
+
+	pcWritePrintJob Write;
+	pcClosePrintJob Close;
+};
 
 #endif
-
