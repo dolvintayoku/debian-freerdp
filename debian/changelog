@@ -5,6 +5,8 @@ freerdp (1.0-beta5-1) UNRELEASED; urgency=low
   * Updated symbols
   * debian/control:
     - Added new build dependencies
+    - Bump Standards-Version to 3.9.2
+  * debian/source/format: Set to 3.0 (quilt)
   * debian/rules:
     - Turn on strict symbols checking
   * debian/watch: Watch github
