@@ -7,11 +7,14 @@ freerdp (1.0-beta5-1) UNRELEASED; urgency=low
     - Added new build dependencies
     - Bump Standards-Version to 3.9.2
   * debian/source/format: Set to 3.0 (quilt)
-  * debian/rules:
-    - Turn on strict symbols checking
+  * debian/rules: Turn on strict symbols checking
   * debian/watch: Watch github
 
- -- Jeremy Bicha <jbicha@ubuntu.com>  Sun, 08 Jan 2012 23:58:29 -0500
+  [ Jean-Louis Dupond ]
+  * debian/control: Updated homepage
+  * debian/copyright: Reflect upstream switch to the Apache license
+
+ -- Jean-Louis Dupond <jean-louis@dupond.be>  Sun, 08 Jan 2012 21:32:16 +0100
 
 freerdp (0.8.2-2) unstable; urgency=low
 
