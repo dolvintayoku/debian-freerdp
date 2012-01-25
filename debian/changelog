@@ -2,7 +2,7 @@ freerdp (1.0.0-1) UNRELEASED; urgency=low
 
   [ Jeremy Bicha ]
   * New upstream release. Closes: #647498.
-  * Updated symbols
+  * Updated symbols and bumped soname
   * debian/control:
     - Added new build dependencies
     - Bump Standards-Version to 3.9.2
