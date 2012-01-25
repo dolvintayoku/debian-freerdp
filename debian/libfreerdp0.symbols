@@ -93,6 +93,7 @@ libfreerdp-codec.so.1.0 libfreerdp0 #MINVER#
  freerdp_color_convert_rgb_bgr@Base 1.0~beta5
  freerdp_color_convert_var_bgr@Base 1.0~beta5
  freerdp_color_convert_var_rgb@Base 1.0~beta5
+ freerdp_color_convert_var@Base 1.0.0-1
  freerdp_color_make_bgr@Base 1.0~beta5
  freerdp_color_make_rgb@Base 1.0~beta5
  freerdp_color_split_bgr@Base 1.0~beta5
@@ -167,6 +168,8 @@ libfreerdp-core.so.1.0 libfreerdp0 #MINVER#
  Glyph_EndDraw@Base 1.0~beta5
  Glyph_Free@Base 1.0~beta5
  Glyph_New@Base 1.0~beta5
+ LEChash@Base 1.0.0-1
+ LOMhash@Base 1.0.0-1
  Pointer_Alloc@Base 1.0~beta5
  Pointer_Free@Base 1.0~beta5
  Pointer_New@Base 1.0~beta5
@@ -236,7 +239,6 @@ libfreerdp-core.so.1.0 libfreerdp0 #MINVER#
  crypto_cert_print_info@Base 1.0~beta5
  crypto_cert_read@Base 1.0~beta5
  crypto_cert_subject@Base 1.0~beta5
- crypto_cert_verify@Base 1.0~beta5
  crypto_des3_decrypt@Base 1.0~beta5
  crypto_des3_decrypt_init@Base 1.0~beta5
  crypto_des3_encrypt@Base 1.0~beta5
@@ -293,6 +295,7 @@ libfreerdp-core.so.1.0 libfreerdp0 #MINVER#
  freerdp_error_info@Base 1.0~beta5
  freerdp_free@Base 1.0~beta5
  freerdp_get_fds@Base 1.0~beta5
+ freerdp_get_version@Base 1.0.0-1
  freerdp_listener_free@Base 1.0~beta5
  freerdp_listener_new@Base 1.0~beta5
  freerdp_new@Base 1.0~beta5
@@ -327,6 +330,8 @@ libfreerdp-core.so.1.0 libfreerdp0 #MINVER#
  gcc_write_server_network_data@Base 1.0~beta5
  gcc_write_server_security_data@Base 1.0~beta5
  gcc_write_user_data_header@Base 1.0~beta5
+ getLECindex@Base 1.0.0-1
+ getLOMindex@Base 1.0.0-1
  graphics_free@Base 1.0~beta5
  graphics_new@Base 1.0~beta5
  graphics_register_bitmap@Base 1.0~beta5
@@ -410,6 +415,8 @@ libfreerdp-core.so.1.0 libfreerdp0 #MINVER#
  mcs_write_connect_response@Base 1.0~beta5
  mcs_write_domain_mcspdu_header@Base 1.0~beta5
  mcs_write_domain_parameters@Base 1.0~beta5
+ miniLEChash@Base 1.0.0-1
+ miniLOMhash@Base 1.0.0-1
  mppc_free@Base 1.0~beta5
  mppc_new@Base 1.0~beta5
  nego_attempt_nla@Base 1.0~beta5
@@ -568,6 +575,7 @@ libfreerdp-core.so.1.0 libfreerdp0 #MINVER#
  rdp_read_window_list_capability_set@Base 1.0~beta5
  rdp_recv@Base 1.0~beta5
  rdp_recv_client_font_list_pdu@Base 1.0~beta5
+ rdp_recv_client_font_map_pdu@Base 1.0.0-1
  rdp_recv_client_info@Base 1.0~beta5
  rdp_recv_client_synchronize_pdu@Base 1.0~beta5
  rdp_recv_confirm_active@Base 1.0~beta5
@@ -576,6 +584,7 @@ libfreerdp-core.so.1.0 libfreerdp0 #MINVER#
  rdp_recv_deactivate_all@Base 1.0~beta5
  rdp_recv_demand_active@Base 1.0~beta5
  rdp_recv_enhanced_security_redirection_packet@Base 1.0~beta5
+ rdp_recv_font_map_pdu@Base 1.0.0-1
  rdp_recv_logon_error_info@Base 1.0~beta5
  rdp_recv_logon_info_extended@Base 1.0~beta5
  rdp_recv_logon_info_v1@Base 1.0~beta5
@@ -589,6 +598,7 @@ libfreerdp-core.so.1.0 libfreerdp0 #MINVER#
  rdp_recv_server_redirection_pdu@Base 1.0~beta5
  rdp_recv_server_synchronize_pdu@Base 1.0~beta5
  rdp_recv_set_error_info_data_pdu@Base 1.0~beta5
+ rdp_recv_synchronize_pdu@Base 1.0.0-1
  rdp_send@Base 1.0~beta5
  rdp_send_channel_data@Base 1.0~beta5
  rdp_send_client_control_pdu@Base 1.0~beta5
@@ -1024,6 +1034,7 @@ libfreerdp-kbd.so.1.0 libfreerdp0 #MINVER#
  detect_keyboard_layout_from_locale@Base 1.0~beta5
  detect_keyboard_layout_from_xkb@Base 1.0~beta5
  find_keyboard_layout_in_xorg_rules@Base 1.0~beta5
+ freerdp_kbd_get_keycode_by_scancode@Base 1.0.0-1
  freerdp_kbd_get_layouts@Base 1.0~beta5
  freerdp_kbd_get_scancode_by_keycode@Base 1.0~beta5
  freerdp_kbd_get_scancode_by_virtualkey@Base 1.0~beta5
@@ -1032,7 +1043,8 @@ libfreerdp-kbd.so.1.0 libfreerdp0 #MINVER#
  get_layout_name@Base 1.0~beta5
  init_keycodes_from_xkb@Base 1.0~beta5
  init_xkb@Base 1.0~beta5
- x_keycode_to_rdp_keycode@Base 1.0~beta5
+ rdp_scancode_to_x_keycode@Base 1.0.0-1
+ x_keycode_to_rdp_scancode@Base 1.0.0-1
 libfreerdp-rail.so.1.0 libfreerdp0 #MINVER#
  icon_cache_free@Base 1.0~beta5
  icon_cache_get@Base 1.0~beta5
