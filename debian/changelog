@@ -17,6 +17,8 @@ freerdp (1.0.0-1) UNRELEASED; urgency=low
   [ Martin Pitt ]
   * debian/libfreerdp0.symbols: Fix version number, should
     be 1.0~beta5, not 1.0-beta5.
+  * debian/control: Add libavcodec-dev build dependency, upstream build system
+    checks for that. Thanks Jean-Louis Dupond!
 
  -- Jean-Louis Dupond <jean-louis@dupond.be>  Sun, 08 Jan 2012 21:32:16 +0100
 
