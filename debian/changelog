@@ -1,4 +1,4 @@
-freerdp (1.0-beta5-1) UNRELEASED; urgency=low
+freerdp (1.0~beta5-1) UNRELEASED; urgency=low
 
   [ Jeremy Bicha ]
   * New upstream release. Closes: #647498.
@@ -13,6 +13,10 @@ freerdp (1.0-beta5-1) UNRELEASED; urgency=low
   [ Jean-Louis Dupond ]
   * debian/control: Updated homepage
   * debian/copyright: Reflect upstream switch to the Apache license
+
+  [ Martin Pitt ]
+  * debian/libfreerdp0.symbols, debian/changelog: Fix version number, should
+    be 1.0~beta5, not 1.0-beta5.
 
  -- Jean-Louis Dupond <jean-louis@dupond.be>  Sun, 08 Jan 2012 21:32:16 +0100
 
