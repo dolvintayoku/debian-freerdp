@@ -1,4 +1,4 @@
-freerdp (1.0.0-1) UNRELEASED; urgency=low
+freerdp (1.0.0-1) unstable; urgency=low
 
   [ Jeremy Bicha ]
   * New upstream release. Closes: #647498.
@@ -20,7 +20,7 @@ freerdp (1.0.0-1) UNRELEASED; urgency=low
   * debian/control: Add libavcodec-dev build dependency, upstream build system
     checks for that. Thanks Jean-Louis Dupond!
 
- -- Jean-Louis Dupond <jean-louis@dupond.be>  Sun, 08 Jan 2012 21:32:16 +0100
+ -- Otavio Salvador <otavio@debian.org>  Tue, 31 Jan 2012 11:46:23 -0200
 
 freerdp (0.8.2-2) unstable; urgency=low
 
