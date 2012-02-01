@@ -1,3 +1,10 @@
+freerdp (1.0.0-2) UNRELEASED; urgency=low
+
+  [ Jeremy Bicha ]
+  * Don't install the freerdp keymaps; they're provided by xkb   
+
+ -- Jeremy Bicha <jbicha@ubuntu.com>  Tue, 31 Jan 2012 20:45:06 -0500
+
 freerdp (1.0.0-1) unstable; urgency=low
 
   [ Jeremy Bicha ]

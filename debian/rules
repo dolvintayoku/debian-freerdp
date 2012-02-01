@@ -7,6 +7,7 @@ override_dh_install:
 	# Removing unused files
 	rm -f debian/tmp/usr/lib/*.la
 	rm -f debian/tmp/usr/lib/freerdp/*.la
+	rm -rf debian/tmp/usr/share/freerdp/keymaps
 
 	dh_install --fail-missing
 
