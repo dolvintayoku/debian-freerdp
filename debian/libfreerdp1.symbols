@@ -87,6 +87,8 @@ libfreerdp-codec.so.1.0 libfreerdp1 #MINVER#
  bitmap_decompress@Base 1.0~beta5
  freerdp_alpha_cursor_convert@Base 1.0~beta5
  freerdp_bitmap_flip@Base 1.0~beta5
+ freerdp_clrconv_free@Base 1.0.1
+ freerdp_clrconv_new@Base 1.0.1
  freerdp_color_convert_bgr@Base 1.0~beta5
  freerdp_color_convert_bgr_rgb@Base 1.0~beta5
  freerdp_color_convert_rgb@Base 1.0~beta5
@@ -202,6 +204,10 @@ libfreerdp-core.so.1.0 libfreerdp1 #MINVER#
  ber_write_octet_string_tag@Base 1.0~beta5
  ber_write_sequence_tag@Base 1.0~beta5
  ber_write_universal_tag@Base 1.0~beta5
+ certificate_data_free@Base 1.0.1
+ certificate_data_match@Base 1.0.1
+ certificate_data_new@Base 1.0.1
+ certificate_data_print@Base 1.0.1
  certificate_free@Base 1.0~beta5
  certificate_free_x509_certificate_chain@Base 1.0~beta5
  certificate_new@Base 1.0~beta5
@@ -210,6 +216,9 @@ libfreerdp-core.so.1.0 libfreerdp1 #MINVER#
  certificate_read_server_proprietary_certificate@Base 1.0~beta5
  certificate_read_server_x509_certificate_chain@Base 1.0~beta5
  certificate_read_x509_certificate@Base 1.0~beta5
+ certificate_store_free@Base 1.0.1
+ certificate_store_init@Base 1.0.1
+ certificate_store_new@Base 1.0.1
  credssp_authenticate@Base 1.0~beta5
  credssp_current_time@Base 1.0~beta5
  credssp_encode_ts_credentials@Base 1.0~beta5
@@ -239,12 +248,14 @@ libfreerdp-core.so.1.0 libfreerdp1 #MINVER#
  crypto_cert_print_info@Base 1.0~beta5
  crypto_cert_read@Base 1.0~beta5
  crypto_cert_subject@Base 1.0~beta5
+ crypto_cert_subject_alt_name@Base 1.0.1
+ crypto_cert_subject_common_name@Base 1.0.1
  crypto_des3_decrypt@Base 1.0~beta5
  crypto_des3_decrypt_init@Base 1.0~beta5
  crypto_des3_encrypt@Base 1.0~beta5
  crypto_des3_encrypt_init@Base 1.0~beta5
  crypto_des3_free@Base 1.0~beta5
- crypto_get_cert_data@Base 1.0~beta5
+ crypto_get_certificate_data@Base 1.0.1
  crypto_hmac_final@Base 1.0~beta5
  crypto_hmac_free@Base 1.0~beta5
  crypto_hmac_new@Base 1.0~beta5
@@ -259,7 +270,11 @@ libfreerdp-core.so.1.0 libfreerdp1 #MINVER#
  crypto_rc4_free@Base 1.0~beta5
  crypto_rc4_init@Base 1.0~beta5
  crypto_reverse@Base 1.0~beta5
- crypto_rsa_encrypt@Base 1.0~beta5
+ crypto_rsa_decrypt@Base 1.0.1
+ crypto_rsa_private_decrypt@Base 1.0.1
+ crypto_rsa_private_encrypt@Base 1.0.1
+ crypto_rsa_public_decrypt@Base 1.0.1
+ crypto_rsa_public_encrypt@Base 1.0.1
  crypto_sha1_final@Base 1.0~beta5
  crypto_sha1_init@Base 1.0~beta5
  crypto_sha1_update@Base 1.0~beta5
@@ -273,6 +288,7 @@ libfreerdp-core.so.1.0 libfreerdp1 #MINVER#
  extension_post_connect@Base 1.0~beta5
  extension_pre_connect@Base 1.0~beta5
  fastpath_free@Base 1.0~beta5
+ fastpath_header_length@Base 1.0.1
  fastpath_input_pdu_init@Base 1.0~beta5
  fastpath_new@Base 1.0~beta5
  fastpath_read_header@Base 1.0~beta5
@@ -304,6 +320,7 @@ libfreerdp-core.so.1.0 libfreerdp1 #MINVER#
  freerdp_peer_free@Base 1.0~beta5
  freerdp_peer_new@Base 1.0~beta5
  freerdp_send_keep_alive@Base 1.0~beta5
+ freerdp_shall_disconnect@Base 1.0.1
  gcc_read_client_cluster_data@Base 1.0~beta5
  gcc_read_client_core_data@Base 1.0~beta5
  gcc_read_client_data_blocks@Base 1.0~beta5
@@ -341,6 +358,7 @@ libfreerdp-core.so.1.0 libfreerdp1 #MINVER#
  h221_sc_key@Base 1.0~beta5
  input_free@Base 1.0~beta5
  input_new@Base 1.0~beta5
+ input_recv@Base 1.0.1
  input_register_client_callbacks@Base 1.0~beta5
  input_send_extended_mouse_event@Base 1.0~beta5
  input_send_fastpath_extended_mouse_event@Base 1.0~beta5
@@ -357,6 +375,8 @@ libfreerdp-core.so.1.0 libfreerdp1 #MINVER#
  input_write_mouse_event@Base 1.0~beta5
  input_write_synchronize_event@Base 1.0~beta5
  input_write_unicode_keyboard_event@Base 1.0~beta5
+ key_free@Base 1.0.1
+ key_new@Base 1.0.1
  license_decrypt_platform_challenge@Base 1.0~beta5
  license_encrypt_premaster_secret@Base 1.0~beta5
  license_free@Base 1.0~beta5
@@ -620,6 +640,7 @@ libfreerdp-core.so.1.0 libfreerdp1 #MINVER#
  rdp_server_accept_client_control_pdu@Base 1.0~beta5
  rdp_server_accept_client_font_list_pdu@Base 1.0~beta5
  rdp_server_accept_client_info@Base 1.0~beta5
+ rdp_server_accept_client_keys@Base 1.0.1
  rdp_server_accept_confirm_active@Base 1.0~beta5
  rdp_server_accept_mcs_attach_user_request@Base 1.0~beta5
  rdp_server_accept_mcs_channel_join_request@Base 1.0~beta5
@@ -700,6 +721,7 @@ libfreerdp-core.so.1.0 libfreerdp1 #MINVER#
  security_mac_signature@Base 1.0~beta5
  security_master_secret@Base 1.0~beta5
  security_md5_16_32_32@Base 1.0~beta5
+ security_salted_mac_signature@Base 1.0.1
  security_session_key_blob@Base 1.0~beta5
  security_uint32_le@Base 1.0~beta5
  settings_free@Base 1.0~beta5
@@ -721,7 +743,8 @@ libfreerdp-core.so.1.0 libfreerdp1 #MINVER#
  tls_free@Base 1.0~beta5
  tls_get_certificate@Base 1.0~beta5
  tls_new@Base 1.0~beta5
- tls_print_cert_error@Base 1.0~beta5
+ tls_print_certificate_error@Base 1.0.1
+ tls_print_certificate_name_mismatch_error@Base 1.0.1
  tls_print_error@Base 1.0~beta5
  tls_read@Base 1.0~beta5
  tls_verify_certificate@Base 1.0~beta5
@@ -756,6 +779,9 @@ libfreerdp-core.so.1.0 libfreerdp1 #MINVER#
  transport_send_stream_init@Base 1.0~beta5
  transport_set_blocking_mode@Base 1.0~beta5
  transport_write@Base 1.0~beta5
+ tssk_exponent@Base 1.0.1
+ tssk_modulus@Base 1.0.1
+ tssk_privateExponent@Base 1.0.1
  update_decompress_brush@Base 1.0~beta5
  update_free@Base 1.0~beta5
  update_new@Base 1.0~beta5
@@ -853,7 +879,7 @@ libfreerdp-core.so.1.0 libfreerdp1 #MINVER#
  update_seek_glyph_delta@Base 1.0~beta5
  update_write_surfcmd_frame_marker@Base 1.0~beta5
  update_write_surfcmd_surface_bits_header@Base 1.0~beta5
- x509_verify_cert@Base 1.0~beta5
+ x509_verify_certificate@Base 1.0.1
 libfreerdp-gdi.so.1.0 libfreerdp1 #MINVER#
  BitBlt_16bpp@Base 1.0~beta5
  BitBlt_32bpp@Base 1.0~beta5
@@ -868,13 +894,61 @@ libfreerdp-gdi.so.1.0 libfreerdp1 #MINVER#
  LineTo_32bpp@Base 1.0~beta5
  LineTo_8bpp@Base 1.0~beta5
  LineTo_@Base 1.0~beta5
+ LineTo_BLACK_16bpp@Base 1.0.1
+ LineTo_BLACK_32bpp@Base 1.0.1
+ LineTo_BLACK_8bpp@Base 1.0.1
+ LineTo_COPYPEN_16bpp@Base 1.0.1
+ LineTo_COPYPEN_32bpp@Base 1.0.1
+ LineTo_COPYPEN_8bpp@Base 1.0.1
+ LineTo_MASKNOTPEN_16bpp@Base 1.0.1
+ LineTo_MASKNOTPEN_32bpp@Base 1.0.1
+ LineTo_MASKNOTPEN_8bpp@Base 1.0.1
+ LineTo_MASKPENNOT_16bpp@Base 1.0.1
+ LineTo_MASKPENNOT_32bpp@Base 1.0.1
+ LineTo_MASKPENNOT_8bpp@Base 1.0.1
+ LineTo_MASKPEN_16bpp@Base 1.0.1
+ LineTo_MASKPEN_32bpp@Base 1.0.1
+ LineTo_MASKPEN_8bpp@Base 1.0.1
+ LineTo_MERGENOTPEN_16bpp@Base 1.0.1
+ LineTo_MERGENOTPEN_32bpp@Base 1.0.1
+ LineTo_MERGENOTPEN_8bpp@Base 1.0.1
+ LineTo_MERGEPENNOT_16bpp@Base 1.0.1
+ LineTo_MERGEPENNOT_32bpp@Base 1.0.1
+ LineTo_MERGEPENNOT_8bpp@Base 1.0.1
+ LineTo_MERGEPEN_16bpp@Base 1.0.1
+ LineTo_MERGEPEN_32bpp@Base 1.0.1
+ LineTo_MERGEPEN_8bpp@Base 1.0.1
+ LineTo_NOP_16bpp@Base 1.0.1
+ LineTo_NOP_32bpp@Base 1.0.1
+ LineTo_NOP_8bpp@Base 1.0.1
+ LineTo_NOTCOPYPEN_16bpp@Base 1.0.1
+ LineTo_NOTCOPYPEN_32bpp@Base 1.0.1
+ LineTo_NOTCOPYPEN_8bpp@Base 1.0.1
+ LineTo_NOTMASKPEN_16bpp@Base 1.0.1
+ LineTo_NOTMASKPEN_32bpp@Base 1.0.1
+ LineTo_NOTMASKPEN_8bpp@Base 1.0.1
+ LineTo_NOTMERGEPEN_16bpp@Base 1.0.1
+ LineTo_NOTMERGEPEN_32bpp@Base 1.0.1
+ LineTo_NOTMERGEPEN_8bpp@Base 1.0.1
+ LineTo_NOTXORPEN_16bpp@Base 1.0.1
+ LineTo_NOTXORPEN_32bpp@Base 1.0.1
+ LineTo_NOTXORPEN_8bpp@Base 1.0.1
+ LineTo_NOT_16bpp@Base 1.0.1
+ LineTo_NOT_32bpp@Base 1.0.1
+ LineTo_NOT_8bpp@Base 1.0.1
+ LineTo_ROP2_16bpp@Base 1.0.1
+ LineTo_ROP2_32bpp@Base 1.0.1
+ LineTo_ROP2_8bpp@Base 1.0.1
+ LineTo_WHITE_16bpp@Base 1.0.1
+ LineTo_WHITE_32bpp@Base 1.0.1
+ LineTo_WHITE_8bpp@Base 1.0.1
+ LineTo_XORPEN_16bpp@Base 1.0.1
+ LineTo_XORPEN_32bpp@Base 1.0.1
+ LineTo_XORPEN_8bpp@Base 1.0.1
  PatBlt_16bpp@Base 1.0~beta5
  PatBlt_32bpp@Base 1.0~beta5
  PatBlt_8bpp@Base 1.0~beta5
  PatBlt_@Base 1.0~beta5
- SetPixel16_ROP2_@Base 1.0~beta5
- SetPixel32_ROP2_@Base 1.0~beta5
- SetPixel8_ROP2_@Base 1.0~beta5
  SetPixel_BLACK_16bpp@Base 1.0~beta5
  SetPixel_BLACK_32bpp@Base 1.0~beta5
  SetPixel_BLACK_8bpp@Base 1.0~beta5
@@ -939,6 +1013,7 @@ libfreerdp-gdi.so.1.0 libfreerdp1 #MINVER#
  gdi_CreateBitmap@Base 1.0~beta5
  gdi_CreateCompatibleBitmap@Base 1.0~beta5
  gdi_CreateCompatibleDC@Base 1.0~beta5
+ gdi_CreateDC@Base 1.0.1
  gdi_CreatePalette@Base 1.0~beta5
  gdi_CreatePatternBrush@Base 1.0~beta5
  gdi_CreatePen@Base 1.0~beta5
@@ -1070,35 +1145,39 @@ libfreerdp-rail.so.1.0 libfreerdp1 #MINVER#
  window_list_update@Base 1.0~beta5
  window_state_update@Base 1.0~beta5
 libfreerdp-utils.so.1.0 libfreerdp1 #MINVER#
- cert_data_match@Base 1.0~beta5
- cert_data_print@Base 1.0~beta5
- certdata_free@Base 1.0~beta5
- certdata_new@Base 1.0~beta5
- certstore_close@Base 1.0~beta5
- certstore_create@Base 1.0~beta5
- certstore_free@Base 1.0~beta5
- certstore_init@Base 1.0~beta5
- certstore_load@Base 1.0~beta5
- certstore_new@Base 1.0~beta5
- certstore_open@Base 1.0~beta5
  dsp_decode_ima_adpcm@Base 1.0~beta5
  dsp_encode_ima_adpcm@Base 1.0~beta5
  dsp_resample@Base 1.0~beta5
+ freerdp_append_shared_library_suffix@Base 1.0.1
  freerdp_bitmap_write@Base 1.0~beta5
  freerdp_blob_alloc@Base 1.0~beta5
  freerdp_blob_free@Base 1.0~beta5
+ freerdp_check_file_exists@Base 1.0.1
+ freerdp_close_library@Base 1.0.1
+ freerdp_construct_path@Base 1.0.1
+ freerdp_detect_development_mode@Base 1.0.1
+ freerdp_detect_paths@Base 1.0.1
  freerdp_event_free@Base 1.0~beta5
  freerdp_event_new@Base 1.0~beta5
+ freerdp_get_config_path@Base 1.0.1
+ freerdp_get_current_path@Base 1.0.1
+ freerdp_get_home_path@Base 1.0.1
+ freerdp_get_library_symbol@Base 1.0.1
+ freerdp_get_parent_path@Base 1.0.1
  freerdp_handle_signals@Base 1.0~beta5
  freerdp_hexdump@Base 1.0~beta5
+ freerdp_load_channel_plugin@Base 1.0.1
+ freerdp_load_library_symbol@Base 1.0.1
  freerdp_load_plugin@Base 1.0~beta5
  freerdp_mkdir@Base 1.0~beta5
  freerdp_mutex_free@Base 1.0~beta5
  freerdp_mutex_lock@Base 1.0~beta5
  freerdp_mutex_new@Base 1.0~beta5
  freerdp_mutex_unlock@Base 1.0~beta5
+ freerdp_open_library@Base 1.0.1
  freerdp_parse_args@Base 1.0~beta5
  freerdp_passphrase_read@Base 1.0~beta5
+ freerdp_path_contains_separator@Base 1.0.1
  freerdp_read_rectangle_16@Base 1.0~beta5
  freerdp_rectangle_16_free@Base 1.0~beta5
  freerdp_rectangle_16_new@Base 1.0~beta5
@@ -1120,7 +1199,6 @@ libfreerdp-utils.so.1.0 libfreerdp1 #MINVER#
  freerdp_uniconv_uppercase@Base 1.0~beta5
  freerdp_usleep@Base 1.0~beta5
  freerdp_write_rectangle_16@Base 1.0~beta5
- get_local_certloc@Base 1.0~beta5
  list_dequeue@Base 1.0~beta5
  list_enqueue@Base 1.0~beta5
  list_free@Base 1.0~beta5
