@@ -1,9 +1,10 @@
-freerdp (1.0.1-1) UNRELEASED; urgency=low
+freerdp (1.0.1-1) unstable; urgency=low
 
+  [ Jeremy Bicha ]
   * New upstream release. Closes: #659332.
   * Updated symbols
 
- -- Jeremy Bicha <jbicha@ubuntu.com>  Fri, 10 Feb 2012 14:16:58 -0500
+ -- Otavio Salvador <otavio@debian.org>  Sat, 11 Feb 2012 10:34:05 -0200
 
 freerdp (1.0.0-2) unstable; urgency=low
 
