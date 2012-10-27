@@ -5,9 +5,8 @@ freerdp (1.0.1-2) UNRELEASED; urgency=low
     - Fix handling of numlock with remoteapp. Closes: #683885.
     - libfreerdp-gdi: add PatBlt DPa operation. Closes: #662854.
   * libfreerdp1: Update symbols
-  * debian/*.install: Fix for multilib build.
+  * debian/*.install, debian/control: Add multiarch support.
   * debian/rules: Enable PulseAudio support. Closes: #672604
-  * debian/control: Add multiarch support.
 
  -- Otavio Salvador <otavio@debian.org>  Fri, 26 Oct 2012 22:57:31 -0200
 
