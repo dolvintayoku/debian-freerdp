@@ -3,7 +3,7 @@ Section: x11
 Priority: optional
 Maintainer: Otavio Salvador <otavio@debian.org>
 Build-Depends:
- debhelper (>= 7.0.50~), autotools-dev, cmake, libasound2-dev, libcups2-dev,
+ debhelper (>= 9), autotools-dev, cmake, libasound2-dev, libcups2-dev,
  libpcsclite-dev, libpulse-dev, libssl-dev, libx11-dev, libxcursor-dev,
  libxdamage-dev, libxext-dev, libxkbfile-dev, libxinerama-dev, libxv-dev,
  pkg-config, xmlto, libavcodec-dev
@@ -51,7 +51,9 @@ Description: RDP client for Windows Terminal Services
 Package: libfreerdp1
 Architecture: any
 Section: libs
+Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
 Suggests: freerdp-x11
 Description: RDP client for Windows Terminal Services (library)
  FreeRDP is a client for Windows Terminal Services implementing the Remote
@@ -62,7 +64,9 @@ Description: RDP client for Windows Terminal Services (library)
 Package: libfreerdp-plugins-standard
 Architecture: any
 Section: libs
+Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
 Description: RDP client for Windows Terminal Services (plugins)
  FreeRDP is a client for Windows Terminal Services implementing the Remote
  Desktop Protocol (RDP).
