@@ -1,12 +1,13 @@
-freerdp (1.0.1-3) UNRELEASED; urgency=low
+freerdp (1.0.1-4) UNRELEASED; urgency=low
 
   * debian/control: Fix suggeting package name. Closes: #674138.
   * New upstream stable snapshot:
     - Fix handling of numlock with remoteapp. Closes: #683885.
     - libfreerdp-gdi: add PatBlt DPa operation. Closes: #662854.
   * libfreerdp1: Update symbols
+  * debian/*.install: Fix for multilib build.
 
- -- Otavio Salvador <otavio@debian.org>  Fri, 26 Oct 2012 22:54:36 -0200
+ -- Otavio Salvador <otavio@debian.org>  Fri, 26 Oct 2012 22:55:48 -0200
 
 freerdp (1.0.1-1) unstable; urgency=low
 
