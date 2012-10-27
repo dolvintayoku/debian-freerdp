@@ -1,4 +1,4 @@
-freerdp (1.0.1-5) UNRELEASED; urgency=low
+freerdp (1.0.1-2) UNRELEASED; urgency=low
 
   * debian/control: Fix suggeting package name. Closes: #674138.
   * New upstream stable snapshot:
