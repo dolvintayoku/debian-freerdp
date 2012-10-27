@@ -93,9 +93,9 @@ libfreerdp-codec.so.1.0 libfreerdp1 #MINVER#
  freerdp_color_convert_bgr_rgb@Base 1.0~beta5
  freerdp_color_convert_rgb@Base 1.0~beta5
  freerdp_color_convert_rgb_bgr@Base 1.0~beta5
+ freerdp_color_convert_var@Base 1.0.0
  freerdp_color_convert_var_bgr@Base 1.0~beta5
  freerdp_color_convert_var_rgb@Base 1.0~beta5
- freerdp_color_convert_var@Base 1.0.0
  freerdp_color_make_bgr@Base 1.0~beta5
  freerdp_color_make_rgb@Base 1.0~beta5
  freerdp_color_split_bgr@Base 1.0~beta5
@@ -1079,6 +1079,8 @@ libfreerdp-gdi.so.1.0 libfreerdp1 #MINVER#
  gdi_bitmap_new_ex@Base 1.0~beta5
  gdi_create_bitmap@Base 1.0~beta5
  gdi_dstblt@Base 1.0~beta5
+ gdi_ellipse_cb@Base 1.0.1-2
+ gdi_ellipse_sc@Base 1.0.1-2
  gdi_free@Base 1.0~beta5
  gdi_get_bitmap_pointer@Base 1.0~beta5
  gdi_get_brush_pointer@Base 1.0~beta5
@@ -1096,6 +1098,8 @@ libfreerdp-gdi.so.1.0 libfreerdp1 #MINVER#
  gdi_opaque_rect@Base 1.0~beta5
  gdi_palette_update@Base 1.0~beta5
  gdi_patblt@Base 1.0~beta5
+ gdi_polygon_cb@Base 1.0.1-2
+ gdi_polygon_sc@Base 1.0.1-2
  gdi_polyline@Base 1.0~beta5
  gdi_register_graphics@Base 1.0~beta5
  gdi_register_update_callbacks@Base 1.0~beta5
