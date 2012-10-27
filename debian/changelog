@@ -1,4 +1,4 @@
-freerdp (1.0.1-2) UNRELEASED; urgency=low
+freerdp (1.0.1-2) unstable; urgency=low
 
   * debian/control: Fix suggeting package name. Closes: #674138.
   * New upstream stable snapshot:
@@ -10,7 +10,7 @@ freerdp (1.0.1-2) UNRELEASED; urgency=low
   * debian/compat: Bump to 9 so debhelper can handle build flags
     automatically for CMake.
 
- -- Otavio Salvador <otavio@debian.org>  Fri, 26 Oct 2012 22:57:31 -0200
+ -- Otavio Salvador <otavio@debian.org>  Sat, 27 Oct 2012 16:19:56 -0200
 
 freerdp (1.0.1-1) unstable; urgency=low
 
