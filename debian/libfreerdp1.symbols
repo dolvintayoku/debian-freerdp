@@ -1180,6 +1180,7 @@ libfreerdp-utils.so.1.0 libfreerdp1 #MINVER#
  freerdp_mutex_unlock@Base 1.0~beta5
  freerdp_open_library@Base 1.0.1
  freerdp_parse_args@Base 1.0~beta5
+ freerdp_parse_hostname@Base 1.0.2
  freerdp_passphrase_read@Base 1.0~beta5
  freerdp_path_contains_separator@Base 1.0.1
  freerdp_read_rectangle_16@Base 1.0~beta5

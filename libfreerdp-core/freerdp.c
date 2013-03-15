@@ -35,8 +35,6 @@ boolean freerdp_connect(freerdp* instance)
 
 	rdp = instance->context->rdp;
 
-	extension_pre_connect(rdp->extension);
-
 	IFCALLRET(instance->PreConnect, status, instance);
 
 	if (status != true)
@@ -44,6 +42,9 @@ boolean freerdp_connect(freerdp* instance)
 		printf("freerdp_pre_connect failed\n");
 		return false;
 	}
+
+	rdp->extension = extension_new(instance);
+	extension_pre_connect(rdp->extension);
 
 	status = rdp_client_connect(rdp);
 
@@ -192,11 +193,16 @@ void freerdp_context_new(freerdp* instance)
 
 void freerdp_context_free(freerdp* instance)
 {
+	if (instance->context == NULL)
+		return;
+
 	IFCALL(instance->ContextFree, instance, instance->context);
 
 	rdp_free(instance->context->rdp);
 	graphics_free(instance->context->graphics);
+
 	xfree(instance->context);
+	instance->context = NULL;
 }
 
 uint32 freerdp_error_info(freerdp* instance)
@@ -219,11 +225,10 @@ freerdp* freerdp_new()
 	return instance;
 }
 
-void freerdp_free(freerdp* freerdp)
+void freerdp_free(freerdp* instance)
 {
-	if (freerdp)
+	if (instance)
 	{
-		freerdp_context_free(freerdp);
-		xfree(freerdp);
+		xfree(instance);
 	}
 }

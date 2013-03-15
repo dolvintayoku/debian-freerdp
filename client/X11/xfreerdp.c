@@ -288,8 +288,8 @@ void xf_create_window(xfInfo* xfi)
 	xfi->attribs.backing_store = xfi->primary ? NotUseful : Always;
 	xfi->attribs.override_redirect = xfi->fullscreen;
 	xfi->attribs.colormap = xfi->colormap;
-	xfi->attribs.bit_gravity = ForgetGravity;
-	xfi->attribs.win_gravity = StaticGravity;
+	xfi->attribs.bit_gravity = NorthWestGravity;
+	xfi->attribs.win_gravity = NorthWestGravity;
 
 	if (xfi->instance->settings->window_title != NULL)
 	{
@@ -309,18 +309,8 @@ void xf_create_window(xfInfo* xfi)
 	xfi->window = xf_CreateDesktopWindow(xfi, win_title, width, height, xfi->decorations);
 	xfree(win_title);
 
-	if (xfi->parent_window)
-		XReparentWindow(xfi->display, xfi->window->handle, xfi->parent_window, 0, 0);
-
 	if (xfi->fullscreen)
 		xf_SetWindowFullscreen(xfi, xfi->window, xfi->fullscreen);
-
-	/* wait for VisibilityNotify */
-	do
-	{
-		XMaskEvent(xfi->display, VisibilityChangeMask, &xevent);
-	}
-	while (xevent.type != VisibilityNotify);
 
 	xfi->unobscured = (xevent.xvisibility.state == VisibilityUnobscured);
 
@@ -353,6 +343,7 @@ boolean xf_get_pixmap_info(xfInfo* xfi)
 	XVisualInfo template;
 	XPixmapFormatValues* pf;
 	XPixmapFormatValues* pfs;
+	XWindowAttributes window_attributes;
 
 	pfs = XListPixmapFormats(xfi->display, &pf_count);
 
@@ -379,6 +370,12 @@ boolean xf_get_pixmap_info(xfInfo* xfi)
 	template.class = TrueColor;
 	template.screen = xfi->screen_number;
 
+	if (XGetWindowAttributes(xfi->display, RootWindowOfScreen(xfi->screen), &window_attributes) == 0)
+	{
+		printf("xf_get_pixmap_info: XGetWindowAttributes failed\n");
+		return false;
+	}
+
 	vis = XGetVisualInfo(xfi->display, VisualClassMask | VisualScreenMask, &template, &vi_count);
 
 	if (vis == NULL)
@@ -392,7 +389,7 @@ boolean xf_get_pixmap_info(xfInfo* xfi)
 	{
 		vi = vis + i;
 
-		if (vi->depth == xfi->depth)
+		if (vi->visual == window_attributes.visual)
 		{
 			xfi->visual = vi->visual;
 			break;
@@ -481,6 +478,7 @@ boolean xf_pre_connect(freerdp* instance)
 
 	settings->os_major_type = OSMAJORTYPE_UNIX;
 	settings->os_minor_type = OSMINORTYPE_NATIVE_XSERVER;
+
 	settings->order_support[NEG_DSTBLT_INDEX] = true;
 	settings->order_support[NEG_PATBLT_INDEX] = true;
 	settings->order_support[NEG_SCRBLT_INDEX] = true;
@@ -507,6 +505,21 @@ boolean xf_pre_connect(freerdp* instance)
 	settings->order_support[NEG_ELLIPSE_CB_INDEX] = false;
 
 	freerdp_channels_pre_connect(xfi->_context->channels, instance);
+
+  if (settings->authentication_only) {
+		/* Check --authonly has a username and password. */
+		if (settings->username == NULL ) {
+			fprintf(stderr, "--authonly, but no -u username. Please provide one.\n");
+			exit(1);
+		}
+		if (settings->password == NULL ) {
+			fprintf(stderr, "--authonly, but no -p password. Please provide one.\n");
+			exit(1);
+		}
+		fprintf(stderr, "%s:%d: Authentication only. Don't connect to X.\n", __FILE__, __LINE__);
+		// Avoid XWindows initialization and configuration below.
+		return true;
+	}
 
 	xfi->display = XOpenDisplay(NULL);
 
@@ -575,18 +588,26 @@ void cpuid(unsigned info, unsigned *eax, unsigned *ebx, unsigned *ecx, unsigned 
 {
 #ifdef __GNUC__
 #if defined(__i386__) || defined(__x86_64__)
-	*eax = info;
 	__asm volatile
-		("mov %%ebx, %%edi;" /* 32bit PIC: don't clobber ebx */
-		 "cpuid;"
-		 "mov %%ebx, %%esi;"
-		 "mov %%edi, %%ebx;"
-		 :"+a" (*eax), "=S" (*ebx), "=c" (*ecx), "=d" (*edx)
-		 : :"edi");
+	(
+		/* The EBX (or RBX register on x86_64) is used for the PIC base address
+		   and must not be corrupted by our inline assembly. */
+#if defined(__i386__)
+		"mov %%ebx, %%esi;"
+		"cpuid;"
+		"xchg %%ebx, %%esi;"
+#else
+		"mov %%rbx, %%rsi;"
+		"cpuid;"
+		"xchg %%rbx, %%rsi;"
+#endif
+		: "=a" (*eax), "=S" (*ebx), "=c" (*ecx), "=d" (*edx)
+		: "0" (info)
+	);
 #endif
 #endif
 }
- 
+
 uint32 xf_detect_cpu()
 {
 	unsigned int eax, ebx, ecx, edx = 0;
@@ -614,6 +635,9 @@ boolean xf_post_connect(freerdp* instance)
 	xfi = ((xfContext*) instance->context)->xfi;
 	cache = instance->context->cache;
 	channels = xfi->_context->channels;
+
+	if (instance->settings->authentication_only)
+		return true;
 
 	if (xf_get_pixmap_info(xfi) != true)
 		return false;
@@ -727,7 +751,7 @@ boolean xf_authenticate(freerdp* instance, char** username, char** password, cha
 {
 	*password = xmalloc(password_size * sizeof(char));
 
-	if (freerdp_passphrase_read("Password: ", *password, password_size) == NULL)
+	if (freerdp_passphrase_read("Password: ", *password, password_size, instance->settings->from_stdin) == NULL)
 		return false;
 
 	return true;
@@ -749,6 +773,14 @@ boolean xf_verify_certificate(freerdp* instance, char* subject, char* issuer, ch
 	{
 		printf("Do you trust the above certificate? (Y/N) ");
 		answer = fgetc(stdin);
+		if (feof(stdin))
+		{
+			printf("\nError: Could not read answer from stdin.");
+			if (instance->settings->from_stdin)
+				printf(" - Run without parameter \"--from-stdin\" to set trust.");
+			printf("\n");
+			return false;
+		}
 
 		if (answer == 'y' || answer == 'Y')
 		{
@@ -946,6 +978,13 @@ int xfreerdp_run(freerdp* instance)
 
 	if (!freerdp_connect(instance))
 		return XF_EXIT_CONN_FAILED;
+
+	if (instance->settings->authentication_only)
+	{
+		freerdp_disconnect(instance);
+		freerdp_free(instance);
+		return ret;
+	}
 
 	xfi = ((xfContext*) instance->context)->xfi;
 	channels = instance->context->channels;

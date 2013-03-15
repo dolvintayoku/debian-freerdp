@@ -1,3 +1,13 @@
+freerdp (1.0.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * Remove 1.0-stable-sync.patch , this release contains those fixes.
+  * Update libfreerdp1 symbols.
+  * Update Standards-Version to 3.9.4 .
+  * Add myself to uploaders.
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.hu>  Fri, 15 Mar 2013 20:12:30 +0100
+
 freerdp (1.0.1-2) unstable; urgency=low
 
   * debian/control: Fix suggeting package name. Closes: #674138.

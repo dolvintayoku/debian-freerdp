@@ -2,12 +2,13 @@ Source: freerdp
 Section: x11
 Priority: optional
 Maintainer: Otavio Salvador <otavio@debian.org>
+Uploaders: Laszlo Boszormenyi (GCS) <gcs@debian.hu>
 Build-Depends:
  debhelper (>= 9), autotools-dev, cmake, libasound2-dev, libcups2-dev,
  libpcsclite-dev, libpulse-dev, libssl-dev, libx11-dev, libxcursor-dev,
  libxdamage-dev, libxext-dev, libxkbfile-dev, libxinerama-dev, libxv-dev,
  pkg-config, xmlto, libavcodec-dev
-Standards-Version: 3.9.2
+Standards-Version: 3.9.4
 Homepage: http://www.freerdp.com/
 Vcs-Browser: http://git.debian.org/?p=collab-maint/freerdp.git
 Vcs-Git: git://git.debian.org/git/collab-maint/freerdp.git
