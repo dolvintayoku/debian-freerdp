@@ -858,7 +858,7 @@ void rdp_set_blocking_mode(rdpRdp* rdp, boolean blocking)
 
 int rdp_check_fds(rdpRdp* rdp)
 {
-	return transport_check_fds(rdp->transport);
+	return transport_check_fds(&(rdp->transport));
 }
 
 /**
@@ -878,7 +878,7 @@ rdpRdp* rdp_new(freerdp* instance)
 		rdp->settings = settings_new((void*) instance);
 		if (instance != NULL)
 			instance->settings = rdp->settings;
-		rdp->extension = extension_new(instance);
+
 		rdp->transport = transport_new(rdp->settings);
 		rdp->license = license_new(rdp);
 		rdp->input = input_new(rdp);
@@ -902,6 +902,11 @@ void rdp_free(rdpRdp* rdp)
 {
 	if (rdp != NULL)
 	{
+		crypto_rc4_free(rdp->rc4_decrypt_key);
+		crypto_rc4_free(rdp->rc4_encrypt_key);
+		crypto_des3_free(rdp->fips_encrypt);
+		crypto_des3_free(rdp->fips_decrypt);
+		crypto_hmac_free(rdp->fips_hmac);
 		extension_free(rdp->extension);
 		settings_free(rdp->settings);
 		transport_free(rdp->transport);
