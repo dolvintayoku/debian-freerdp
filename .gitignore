@@ -1,19 +1,38 @@
 # CMake
 CMakeFiles/
+CMakeScripts/
 CMakeCache.txt
 config.h
-install_manifest.txt
+install_manifest*.txt
 CTestTestfile.cmake
 freerdp.pc
 Makefile
+Testing
 cmake_install.cmake
 CPackConfig.cmake
 CPackSourceConfig.cmake
+DartConfiguration.tcl
+_CPack_Packages
+external/*
+!external/README
+
+# Packages
+*.zip
+*.exe
+*.sh
+*.deb
+*.rpm
+*.tar.Z
+*.tar.gz
 
 # Eclipse
 *.project
 *.cproject
 *.settings
+
+# .rdp files
+*.rdp
+*.RDP
 
 # Documentation
 docs/api
@@ -21,29 +40,58 @@ client/X11/xfreerdp.1
 
 # Mac OS X
 .DS_Store
+*.xcodeproj/
+DerivedData/
+
+# iOS
+FreeRDP.build
+Debug-*
+Release-*
 
 # Windows
 *.vcxproj
 *.vcxproj.*
+*.vcproj
+*.vcproj.*
 *.sdf
 *.sln
 *.suo
+*.ncb
 *.opensdf
+Thumbs.db
 ipch
 Debug
+RelWithDebInfo
 
 # Binaries
 *.a
 *.so
 *.so.*
 *.dylib
+bin
+libs
 cunit/test_freerdp
 client/X11/xfreerdp
-client/test/freerdp-test
+client/Mac/xcode
+client/Sample/sfreerdp
 client/DirectFB/dfreerdp
-server/test/tfreerdp-server
+server/Sample/sfreerdp-server
 server/X11/xfreerdp-server
+xcode
 
 # Other
 *~
+*.dir
+Release
+Win32
+build*/
+*.orig
 
+default.log
+*Amplifier XE*
+*Inspector XE*
+
+*.cbp
+*.txt.user
+
+*.autosave
