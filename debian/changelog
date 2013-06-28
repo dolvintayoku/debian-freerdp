@@ -1,3 +1,17 @@
+freerdp (1.0.2-2) UNRELEASED; urgency=low
+
+  * debian/watch: Upstream has moved to Github a while ago.
+  * New maintainer: Mike Gabriel <sunweaver@debian.org>. Former
+    maintainer Otavio Salvador <otavio@debian.org> moved to
+    Uploaders.
+  * debian/copyright: Name copyright holders of the several project
+    files. Make it more compliant to DEP-5.
+  * Comply more with Standards: 3.9.4. (After updating of debian/copyright).
+  * Lintian issue fixed: freerdp source: binary-control-field-duplicates-source
+    field "section" in package freerdp-x11.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Fri, 28 Jun 2013 17:18:25 +0200
+
 freerdp (1.0.2-1) unstable; urgency=low
 
   * New upstream release.

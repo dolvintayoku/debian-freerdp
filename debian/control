@@ -1,8 +1,10 @@
 Source: freerdp
 Section: x11
 Priority: optional
-Maintainer: Otavio Salvador <otavio@debian.org>
-Uploaders: Laszlo Boszormenyi (GCS) <gcs@debian.hu>
+Maintainer: Mike Gabriel <sunweaver@debian.org>
+Uploaders:
+ Otavio Salvador <otavio@debian.org>,
+ Laszlo Boszormenyi (GCS) <gcs@debian.hu>,
 Build-Depends:
  debhelper (>= 9), autotools-dev, cmake, libasound2-dev, libcups2-dev,
  libpcsclite-dev, libpulse-dev, libssl-dev, libx11-dev, libxcursor-dev,
@@ -28,7 +30,6 @@ Description: RDP client for Windows Terminal Services (debug)
  This package contains the debug symbols.
 
 Package: freerdp-x11
-Section: x11
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Recommends: libfreerdp-plugins-standard
