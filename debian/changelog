@@ -1,3 +1,10 @@
+freerdp (1.1.0~beta1+git20130629-1) UNRELEASED; urgency=low
+
+  * Development snapshot [June 2013]. Targeted for Debian experimental.
+    Based on upstream commit: 1274752506e97ac597fc02196ae83e63662e0753.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Fri, 28 Jun 2013 18:16:49 +0200
+
 freerdp (1.0.2-2) unstable; urgency=low
 
   * debian/watch: Upstream has moved to Github a while ago.
