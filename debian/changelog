@@ -5,6 +5,7 @@ freerdp (1.0.2-3) UNRELEASED; urgency=low
     reporting this. (Closes: #729044).
   * debian/control:
     + Alioth-canonicalize Vcs-*: fields.
+    + Make freerdp-dbg bin:package Multi-Arch: same.
 
  -- Mike Gabriel <sunweaver@debian.org>  Fri, 08 Nov 2013 12:41:02 +0100
 

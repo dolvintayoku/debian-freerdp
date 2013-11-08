@@ -23,6 +23,7 @@ Depends:
  ${misc:Depends}, freerdp-x11 (= ${binary:Version}),
  libfreerdp1 (= ${binary:Version}),
  libfreerdp-plugins-standard (= ${binary:Version}),
+Multi-Arch: same
 Description: RDP client for Windows Terminal Services (debug)
  FreeRDP is a client for Windows Terminal Services implementing the Remote
  Desktop Protocol (RDP).
