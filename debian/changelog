@@ -1,3 +1,11 @@
+freerdp (1.0.2-3) UNRELEASED; urgency=low
+
+  * Add patch: 1001_fix-compliling.patch. Fix compilation errors
+    against libfreerdp-dev. Thanks to Jean-Baptiste Rouault for
+    reporting this. (Closes: #729044).
+
+ -- Mike Gabriel <sunweaver@debian.org>  Fri, 08 Nov 2013 12:41:02 +0100
+
 freerdp (1.0.2-2) unstable; urgency=low
 
   * debian/watch: Upstream has moved to Github a while ago.
