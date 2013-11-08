@@ -1,0 +1,13 @@
+Author: Mike Gabriel <sunweaver@debian.org>
+Description: Work around Debian bug #720959 (in package xmlto)
+--- a/client/X11/xfreerdp.1.xml
++++ b/client/X11/xfreerdp.1.xml
+@@ -61,7 +61,7 @@
+         <listitem>
+           <para>
+             Sets the working-dir to <replaceable class="parameter">dir</replaceable>.
+-            This parameter is only used when an AlternateShell (<xref linkend="AlternateShell"/>) is requested.
++            This parameter is only used when an AlternateShell ( <xref linkend="AlternateShell"/>) is requested.
+             <replaceable class="parameter">dir</replaceable> should contain the executable file specified in the AlternateShell.
+           </para>
+         </listitem>
