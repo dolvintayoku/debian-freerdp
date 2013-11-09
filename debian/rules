@@ -16,11 +16,14 @@ override_dh_install:
 	rm -f debian/tmp/usr/lib/*.la
 	rm -f debian/tmp/usr/lib/freerdp/*.la
 	rm -rf debian/tmp/usr/share/freerdp/keymaps
-
+	# patch man page (work around Debian bug #720959 (in package xmlto) -> FIXME
+	sed -e 's/ (-s / (\\-s /' -e 's/^-c /^\\-c /' -i debian/tmp/usr/share/man/man1/xfreerdp.1
 	dh_install --fail-missing
 
 override_dh_strip:
-	dh_strip --dbg-package=freerdp-dbg
+	dh_strip -pfreerdp-x11 --dbg-package=freerdp-x11-dbg
+	dh_strip -plibfreerdp1 --dbg-package=libfreerdp1-dbg
+	dh_strip -plibfreerdp-plugins-standard --dbg-package=libfreerdp-plugins-standard-dbg
 
 override_dh_makeshlibs:
 	dh_makeshlibs -V -- -c4

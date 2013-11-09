@@ -3,12 +3,14 @@ freerdp (1.0.2-3) UNRELEASED; urgency=low
   * Add patch: 1001_fix-compliling.patch. Fix compilation errors
     against libfreerdp-dev. Thanks to Jean-Baptiste Rouault for
     reporting this. (Closes: #729044).
-  * Add patch: 2001_hyphen-used-as-minus-sign.patch. Work around
-    xmlto bug (as described in #729059). Silence lintian about
-    hyphens being used as minus signs.
   * debian/control:
     + Alioth-canonicalize Vcs-*: fields.
     + Make freerdp-dbg bin:package Multi-Arch: same.
+    + Split up freerdp-dbg in several -dbg packages (freerdp-x11-dbg
+      -> multi-arch: no, libfreerdp*-dbg -> Multi-Arch: same).
+  * debian/rules:
+    + Patch generated man page file. Fixes hyphen-used-as-minus-sign
+      lintian issue.
 
  -- Mike Gabriel <sunweaver@debian.org>  Fri, 08 Nov 2013 12:41:02 +0100
 
