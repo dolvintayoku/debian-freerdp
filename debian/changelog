@@ -6,6 +6,22 @@ freerdp (1.1.0~beta1+git20130629-1) experimental; urgency=low
 
  -- Mike Gabriel <sunweaver@debian.org>  Sat, 29 Jun 2013 11:50:57 +0200
 
+freerdp (1.0.2-3) unstable; urgency=low
+
+  * Add patch: 1001_fix-compliling.patch. Fix compilation errors
+    against libfreerdp-dev. Thanks to Jean-Baptiste Rouault for
+    reporting this. (Closes: #729044).
+  * debian/control:
+    + Alioth-canonicalize Vcs-*: fields.
+    + Make freerdp-dbg bin:package Multi-Arch: same.
+    + Split up freerdp-dbg in several -dbg packages (freerdp-x11-dbg
+      -> multi-arch: no, libfreerdp*-dbg -> Multi-Arch: same).
+  * debian/rules:
+    + Patch generated man page file. Fixes hyphen-used-as-minus-sign
+      lintian issue.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Sat, 09 Nov 2013 13:34:40 +0100
+
 freerdp (1.0.2-2) unstable; urgency=low
 
   * debian/watch: Upstream has moved to Github a while ago.

@@ -12,22 +12,8 @@ Build-Depends:
  pkg-config, xmlto, libavcodec-dev, libxi-dev
 Standards-Version: 3.9.4
 Homepage: http://www.freerdp.com/
-Vcs-Browser: http://git.debian.org/?p=collab-maint/freerdp.git
-Vcs-Git: git://git.debian.org/git/collab-maint/freerdp.git
-
-Package: freerdp-dbg
-Section: debug
-Priority: extra
-Architecture: any
-Depends:
- ${misc:Depends}, freerdp-x11 (= ${binary:Version}),
- libfreerdp1 (= ${binary:Version}),
- libfreerdp-plugins-standard (= ${binary:Version}),
-Description: RDP client for Windows Terminal Services (debug)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
- .
- This package contains the debug symbols.
+Vcs-Browser: http://anonscm.debian.org/gitweb?p=collab-maint/freerdp.git
+Vcs-Git: git://anonscm.debian.org/collab-maint/freerdp.git
 
 Package: freerdp-x11
 Architecture: any
@@ -88,3 +74,41 @@ Description: RDP client for Windows Terminal Services (development)
  Desktop Protocol (RDP).
  .
  This package contains the development files.
+
+Package: freerdp-x11-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends:
+ ${misc:Depends}, freerdp-x11 (= ${binary:Version}),
+Description: RDP client for Windows Terminal Services (debug)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the debug symbols of the xfreerdp executable.
+
+Package: libfreerdp1-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Multi-Arch: same
+Depends:
+  ${misc:Depends}, libfreerdp1 (= ${binary:Version}),
+Description: RDP client for Windows Terminal Services (library debug)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the debug symbols of libfreerdp1.
+
+Package: libfreerdp-plugins-standard-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Multi-Arch: same
+Depends:
+  ${misc:Depends}, libfreerdp-plugins-standard (= ${binary:Version}),
+Description: RDP client for Windows Terminal Services (plugins debug)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the debug symbols of libfreerdp-plugin-standard.
