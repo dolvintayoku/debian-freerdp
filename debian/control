@@ -10,7 +10,7 @@ Build-Depends:
  libpcsclite-dev, libpulse-dev, libssl-dev, libx11-dev, libxcursor-dev,
  libxdamage-dev, libxext-dev, libxkbfile-dev, libxinerama-dev, libxv-dev,
  pkg-config, xmlto, libavcodec-dev
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Homepage: http://www.freerdp.com/
 Vcs-Browser: http://anonscm.debian.org/gitweb?p=collab-maint/freerdp.git
 Vcs-Git: git://anonscm.debian.org/collab-maint/freerdp.git
