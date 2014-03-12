@@ -1,3 +1,11 @@
+freerdp (1.0.2-4) UNRELEASED; urgency=low
+
+  * debian/patches:
+    + Add patch: 2001_fix-libav10-FTBFS.patch. Fix FTBFS against libav10.
+      (Closes: #739242).
+
+ -- Mike Gabriel <sunweaver@debian.org>  Wed, 12 Mar 2014 12:13:19 +0100
+
 freerdp (1.0.2-3) unstable; urgency=low
 
   * Add patch: 1001_fix-compliling.patch. Fix compilation errors
