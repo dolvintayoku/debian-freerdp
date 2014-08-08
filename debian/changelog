@@ -1,4 +1,4 @@
-freerdp (1.1.0~git20140808.1.7b5cd86-1) UNRELEASED; urgency=medium
+freerdp (1.1.0~git20140808.1.7b5cd86+dfsg-1) UNRELEASED; urgency=medium
 
   * New Git snapshot upload to Debian.
     - Obtained from stable-1.1 branch of http://github.com/FreeRDP/FreeRDP.
