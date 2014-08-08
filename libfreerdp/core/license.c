@@ -28,8 +28,8 @@
 
 #include "license.h"
 
-//#define LICENSE_NULL_CLIENT_RANDOM		1
-#define LICENSE_NULL_PREMASTER_SECRET		1
+/* #define LICENSE_NULL_CLIENT_RANDOM		1 */
+/* #define LICENSE_NULL_PREMASTER_SECRET		1 */
 
 #ifdef WITH_DEBUG_LICENSE
 
@@ -107,7 +107,7 @@ void license_print_scope_list(SCOPE_LIST* scopeList)
 	for (index = 0; index < scopeList->count; index++)
 	{
 		scope = &scopeList->array[index];
-		fprintf(stderr, "\t%s\n", (char*) scope->buffer);
+		fprintf(stderr, "\t%s\n", (char*) scope->data);
 	}
 }
 
@@ -195,7 +195,7 @@ BOOL license_send(rdpLicense* license, wStream* s, BYTE type)
 	 * Using EXTENDED_ERROR_MSG_SUPPORTED here would cause mstsc to crash when
 	 * running in server mode! This flag seems to be incorrectly documented.
 	 */
-	flags = PREAMBLE_VERSION_3_0;
+	flags = PREAMBLE_VERSION_3_0 | EXTENDED_ERROR_MSG_SUPPORTED;
 
 	rdp_write_header(license->rdp, s, length, MCS_GLOBAL_CHANNEL_ID);
 	rdp_write_security_header(s, sec_flags);
@@ -409,7 +409,7 @@ void license_get_server_rsa_public_key(rdpLicense* license)
 
 	license->ModulusLength = ModulusLength;
 	license->Modulus = (BYTE*) malloc(ModulusLength);
-	ZeroMemory(license->Modulus, ModulusLength);
+	memcpy(license->Modulus, Modulus, ModulusLength);
 }
 
 void license_encrypt_premaster_secret(rdpLicense* license)
@@ -430,14 +430,15 @@ void license_encrypt_premaster_secret(rdpLicense* license)
 
 	EncryptedPremasterSecret = (BYTE*) malloc(license->ModulusLength);
 	ZeroMemory(EncryptedPremasterSecret, license->ModulusLength);
+	license->EncryptedPremasterSecret->type = BB_RANDOM_BLOB;
+	license->EncryptedPremasterSecret->length = PREMASTER_SECRET_LENGTH;
 
 #ifndef LICENSE_NULL_PREMASTER_SECRET
-	crypto_rsa_public_encrypt(license->PremasterSecret, PREMASTER_SECRET_LENGTH,
+	license->EncryptedPremasterSecret->length =
+		crypto_rsa_public_encrypt(license->PremasterSecret, PREMASTER_SECRET_LENGTH,
 			license->ModulusLength, license->Modulus, license->Exponent, EncryptedPremasterSecret);
 #endif
 
-	license->EncryptedPremasterSecret->type = BB_RANDOM_BLOB;
-	license->EncryptedPremasterSecret->length = PREMASTER_SECRET_LENGTH;
 	license->EncryptedPremasterSecret->data = EncryptedPremasterSecret;
 }
 
@@ -810,11 +811,11 @@ BOOL license_read_platform_challenge_packet(rdpLicense* license, wStream* s)
 	fprintf(stderr, "\n");
 
 	fprintf(stderr, "EncryptedPlatformChallenge:\n");
-	winpr_HexDump(license->EncryptedPlatformChallenge->buffer, license->EncryptedPlatformChallenge->length);
+	winpr_HexDump(license->EncryptedPlatformChallenge->data, license->EncryptedPlatformChallenge->length);
 	fprintf(stderr, "\n");
 
 	fprintf(stderr, "PlatformChallenge:\n");
-	winpr_HexDump(license->PlatformChallenge->buffer, license->PlatformChallenge->length);
+	winpr_HexDump(license->PlatformChallenge->data, license->PlatformChallenge->length);
 	fprintf(stderr, "\n");
 
 	fprintf(stderr, "MacData:\n");
@@ -937,13 +938,13 @@ void license_write_new_license_request_packet(rdpLicense* license, wStream* s)
 	fprintf(stderr, "\n");
 
 	fprintf(stderr, "EncryptedPremasterSecret\n");
-	winpr_HexDump(license->EncryptedPremasterSecret->buffer, license->EncryptedPremasterSecret->length);
+	winpr_HexDump(license->EncryptedPremasterSecret->data, license->EncryptedPremasterSecret->length);
 	fprintf(stderr, "\n");
 
-	fprintf(stderr, "ClientUserName (%d): %s\n", license->ClientUserName->length, (char*) license->ClientUserName->buffer);
+	fprintf(stderr, "ClientUserName (%d): %s\n", license->ClientUserName->length, (char*) license->ClientUserName->data);
 	fprintf(stderr, "\n");
 
-	fprintf(stderr, "ClientMachineName (%d): %s\n", license->ClientMachineName->length, (char*) license->ClientMachineName->buffer);
+	fprintf(stderr, "ClientMachineName (%d): %s\n", license->ClientMachineName->length, (char*) license->ClientMachineName->data);
 	fprintf(stderr, "\n");
 #endif
 }
@@ -1044,11 +1045,11 @@ void license_send_platform_challenge_response_packet(rdpLicense* license)
 	fprintf(stderr, "\n");
 
 	fprintf(stderr, "HardwareId:\n");
-	winpr_HexDump(license->HardwareId, 20);
+	winpr_HexDump(license->HardwareId, HWID_LENGTH);
 	fprintf(stderr, "\n");
 
 	fprintf(stderr, "EncryptedHardwareId:\n");
-	winpr_HexDump(license->EncryptedHardwareId->buffer, 20);
+	winpr_HexDump(license->EncryptedHardwareId->data, HWID_LENGTH);
 	fprintf(stderr, "\n");
 #endif
 

@@ -30,6 +30,7 @@
 #include <freerdp/locale/keyboard.h>
 
 #include <freerdp/client/cmdline.h>
+#include <freerdp/version.h>
 
 #include "compatibility.h"
 
@@ -865,13 +866,10 @@ int freerdp_detect_windows_style_command_line_syntax(int argc, char** argv, int*
 	}
 	while ((arg = CommandLineFindNextArgumentA(arg)) != NULL);
 
-	if (detect_status == 0)
-	{
-		if ((status <= COMMAND_LINE_ERROR) && (status >= COMMAND_LINE_ERROR_LAST))
-			detect_status = -1;
-	}
+	if ((status <= COMMAND_LINE_ERROR) && (status >= COMMAND_LINE_ERROR_LAST))
+		detect_status = -1;
 
-	return 0;
+	return detect_status;
 }
 
 int freerdp_detect_posix_style_command_line_syntax(int argc, char** argv, int* count)
@@ -901,13 +899,10 @@ int freerdp_detect_posix_style_command_line_syntax(int argc, char** argv, int* c
 	}
 	while ((arg = CommandLineFindNextArgumentA(arg)) != NULL);
 
-	if (detect_status == 0)
-	{
-		if ((status <= COMMAND_LINE_ERROR) && (status >= COMMAND_LINE_ERROR_LAST))
-			detect_status = -1;
-	}
+	if ((status <= COMMAND_LINE_ERROR) && (status >= COMMAND_LINE_ERROR_LAST))
+		detect_status = -1;
 
-	return 0;
+	return detect_status;
 }
 
 BOOL freerdp_client_detect_command_line(int argc, char** argv, DWORD* flags)
@@ -1033,6 +1028,7 @@ int freerdp_client_parse_command_line_arguments(int argc, char** argv, rdpSettin
 		status = CommandLineParseArgumentsA(argc, (const char**) argv, args, flags, settings,
 				freerdp_client_command_line_pre_filter, freerdp_client_command_line_post_filter);
 	}
+
 
 	arg = CommandLineFindArgumentA(args, "v");
 
@@ -1169,17 +1165,17 @@ int freerdp_client_parse_command_line_arguments(int argc, char** argv, rdpSettin
 		}
 		CommandLineSwitchCase(arg, "kbd")
 		{
-			int id;
+			unsigned long int id;
 			char* pEnd;
 
-			id = strtol(arg->Value, &pEnd, 16);
+			id = strtoul(arg->Value, &pEnd, 16);
 
 			if (pEnd != (arg->Value + strlen(arg->Value)))
 				id = 0;
 
 			if (id == 0)
 			{
-				id = freerdp_map_keyboard_layout_name_to_id(arg->Value);
+				id = (unsigned long int) freerdp_map_keyboard_layout_name_to_id(arg->Value);
 
 				if (!id)
 				{
@@ -1187,7 +1183,7 @@ int freerdp_client_parse_command_line_arguments(int argc, char** argv, rdpSettin
 				}
 			}
 
-			settings->KeyboardLayout = id;
+			settings->KeyboardLayout = (UINT32) id;
 		}
 		CommandLineSwitchCase(arg, "kbd-type")
 		{
@@ -1243,8 +1239,9 @@ int freerdp_client_parse_command_line_arguments(int argc, char** argv, rdpSettin
 				settings->GatewayHostname = _strdup(settings->ServerHostname);
 			}
 
-			settings->GatewayUsageMethod = TRUE;
+			settings->GatewayUsageMethod = TSC_PROXY_MODE_DIRECT;
 			settings->GatewayUseSameCredentials = TRUE;
+			settings->GatewayEnabled = TRUE;
 		}
 		CommandLineSwitchCase(arg, "gu")
 		{
@@ -1638,7 +1635,7 @@ int freerdp_client_parse_command_line_arguments(int argc, char** argv, rdpSettin
 	if (settings->DisableThemes)
 		settings->PerformanceFlags |= PERF_DISABLE_THEMING;
 
-	if (settings->GatewayUsageMethod)
+	if (settings->GatewayEnabled)
 	{
 		if (settings->GatewayUseSameCredentials)
 		{
@@ -1667,7 +1664,7 @@ int freerdp_client_parse_command_line_arguments(int argc, char** argv, rdpSettin
 		FillMemory(arg->Value, strlen(arg->Value), '*');
 	}
 
-	return 1;
+	return status;
 }
 
 int freerdp_client_load_static_channel_addin(rdpChannels* channels, rdpSettings* settings, char* name, void* data)
