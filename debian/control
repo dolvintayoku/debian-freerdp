@@ -9,7 +9,7 @@ Build-Depends:
  debhelper (>= 9), autotools-dev, cmake, libasound2-dev, libcups2-dev,
  libpcsclite-dev, libpulse-dev, libssl-dev, libx11-dev, libxcursor-dev,
  libxdamage-dev, libxext-dev, libxkbfile-dev, libxinerama-dev, libxv-dev,
- pkg-config, xmlto, libavcodec-dev
+ pkg-config, xmlto, libavcodec-dev, libxi-dev
 Standards-Version: 3.9.5
 Homepage: http://www.freerdp.com/
 Vcs-Browser: http://anonscm.debian.org/gitweb?p=collab-maint/freerdp.git

@@ -1,3 +1,11 @@
+freerdp (1.1.0~beta1+git20130629-1) experimental; urgency=low
+
+  * Development snapshot [June 2013]. Targeted for Debian experimental.
+    Based on upstream commit: 1274752506e97ac597fc02196ae83e63662e0753.
+  * debian/control: add B-D: libxi-dev.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Sat, 29 Jun 2013 11:50:57 +0200
+
 freerdp (1.0.2-4) unstable; urgency=low
 
   * debian/patches:

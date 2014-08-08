@@ -9,15 +9,9 @@ export LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
 	dh ${@}
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DWITH_PULSEAUDIO=ON
+	dh_auto_configure -- -DWITH_PULSE=ON -DWITH_CHANNELS=ON -DSTATIC_CHANNELS=off
 
 override_dh_install:
-	# Removing unused files
-	rm -f debian/tmp/usr/lib/*.la
-	rm -f debian/tmp/usr/lib/freerdp/*.la
-	rm -rf debian/tmp/usr/share/freerdp/keymaps
-	# patch man page (work around Debian bug #720959 (in package xmlto) -> FIXME
-	sed -e 's/ (-s / (\\-s /' -e 's/^-c /^\\-c /' -i debian/tmp/usr/share/man/man1/xfreerdp.1
 	dh_install --fail-missing
 
 override_dh_strip:
@@ -27,3 +21,9 @@ override_dh_strip:
 
 override_dh_makeshlibs:
 	dh_makeshlibs -V -- -c4
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f config.h
+	rm -f winpr/include/winpr/config.h
+	rm -f channels/client/tables.c
