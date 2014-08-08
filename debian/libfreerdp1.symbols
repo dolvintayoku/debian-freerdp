@@ -190,6 +190,7 @@ libfreerdp-client.so.1.1 libfreerdp1 #MINVER#
  freerdp_client_rdp_file_set_string@Base 1.1.0~beta1+git20130629
  freerdp_client_start@Base 1.1.0~beta1+git20130629
  freerdp_client_stop@Base 1.1.0~beta1+git20130629
+ freerdp_client_write_connection_file@Base 1.1.0~git20140808.1.7b5cd86
  freerdp_client_write_rdp_file@Base 1.1.0~beta1+git20130629
  freerdp_client_write_rdp_file_buffer@Base 1.1.0~beta1+git20130629
  freerdp_command_line_parse_comma_separated_values@Base 1.1.0~beta1+git20130629
@@ -286,6 +287,7 @@ libfreerdp-codec.so.1.1 libfreerdp1 #MINVER#
  decompress_rdp_61@Base 1.1.0~beta1+git20130629
  decompress_rdp_6@Base 1.1.0~beta1+git20130629
  freerdp_alpha_cursor_convert@Base 1.1.0~beta1+git20130629
+ freerdp_bitmap_compress@Base 1.1.0~git20140808.1.7b5cd86
  freerdp_bitmap_flip@Base 1.1.0~beta1+git20130629
  freerdp_clrconv_free@Base 1.1.0~beta1+git20130629
  freerdp_clrconv_new@Base 1.1.0~beta1+git20130629
@@ -335,6 +337,7 @@ libfreerdp-codec.so.1.1 libfreerdp1 #MINVER#
  rdpsnd_print_audio_formats@Base 1.1.0~beta1+git20130629
  rfx_compose_message@Base 1.1.0~beta1+git20130629
  rfx_compose_message_header@Base 1.1.0~beta1+git20130629
+ rfx_compose_message_tile_work_callback@Base 1.1.0~git20140808.1.7b5cd86
  rfx_context_free@Base 1.1.0~beta1+git20130629
  rfx_context_new@Base 1.1.0~beta1+git20130629
  rfx_context_reset@Base 1.1.0~beta1+git20130629
@@ -576,6 +579,7 @@ libfreerdp-core.so.1.1 libfreerdp1 #MINVER#
  freerdp_input_send_focus_in_event@Base 1.1.0~beta1+git20130629
  freerdp_input_send_keyboard_event@Base 1.1.0~beta1+git20130629
  freerdp_input_send_keyboard_event_ex@Base 1.1.0~beta1+git20130629
+ freerdp_input_send_keyboard_pause_event@Base 1.1.0~git20140808.1.7b5cd86
  freerdp_input_send_mouse_event@Base 1.1.0~beta1+git20130629
  freerdp_input_send_synchronize_event@Base 1.1.0~beta1+git20130629
  freerdp_input_send_unicode_keyboard_event@Base 1.1.0~beta1+git20130629
@@ -1693,6 +1697,7 @@ libfreerdp-gdi.so.1.1 libfreerdp1 #MINVER#
  gdi_scrblt@Base 1.1.0~beta1+git20130629
  gdi_set_bounds@Base 1.1.0~beta1+git20130629
  gdi_surface_bits@Base 1.1.0~beta1+git20130629
+ gdi_surface_frame_marker@Base 1.1.0~git20140808.1.7b5cd86
  tilenum@Base 1.1.0~beta1+git20130629
 libfreerdp-locale.so.1.1 libfreerdp1 #MINVER#
  VIRTUAL_SCANCODE_TO_X11_KEYCODE@Base 1.1.0~beta1+git20130629
@@ -2856,6 +2861,8 @@ libwinpr-synch.so.0.1 libfreerdp1 #MINVER#
  WakeByAddressAll@Base 1.1.0~beta1+git20130629
  WakeByAddressSingle@Base 1.1.0~beta1+git20130629
  WakeConditionVariable@Base 1.1.0~beta1+git20130629
+ _UnWaitCriticalSection@Base 1.1.0~git20140808.1.7b5cd86
+ _WaitForCriticalSection@Base 1.1.0~git20140808.1.7b5cd86
  cs@Base 1.1.0~beta1+git20130629
 libwinpr-sysinfo.so.0.1 libfreerdp1 #MINVER#
  GetComputerNameA@Base 1.1.0~beta1+git20130629
@@ -2959,11 +2966,13 @@ libwinpr-utils.so.0.1 libfreerdp1 #MINVER#
  ListDictionary_Contains@Base 1.1.0~beta1+git20130629
  ListDictionary_Count@Base 1.1.0~beta1+git20130629
  ListDictionary_Free@Base 1.1.0~beta1+git20130629
+ ListDictionary_GetItemValue@Base 1.1.0~git20140808.1.7b5cd86
  ListDictionary_IsFixedSized@Base 1.1.0~beta1+git20130629
  ListDictionary_IsReadOnly@Base 1.1.0~beta1+git20130629
  ListDictionary_IsSynchronized@Base 1.1.0~beta1+git20130629
  ListDictionary_New@Base 1.1.0~beta1+git20130629
  ListDictionary_Remove@Base 1.1.0~beta1+git20130629
+ ListDictionary_SetItemValue@Base 1.1.0~git20140808.1.7b5cd86
  MessagePipe_Free@Base 1.1.0~beta1+git20130629
  MessagePipe_New@Base 1.1.0~beta1+git20130629
  MessagePipe_PostQuit@Base 1.1.0~beta1+git20130629
@@ -3299,6 +3308,8 @@ libxfreerdp-client.so.1.1 libfreerdp1 #MINVER#
  xf_Glyph_New@Base 1.1.0~beta1+git20130629
  xf_IsWindowBorder@Base 1.1.0~beta1+git20130629
  xf_MoveWindow@Base 1.1.0~beta1+git20130629
+ xf_OnChannelConnectedEventHandler@Base 1.1.0~git20140808.1.7b5cd86
+ xf_OnChannelDisconnectedEventHandler@Base 1.1.0~git20140808.1.7b5cd86
  xf_ParamChangeEventHandler@Base 1.1.0~beta1+git20130629
  xf_Pointer_Free@Base 1.1.0~beta1+git20130629
  xf_Pointer_New@Base 1.1.0~beta1+git20130629
@@ -3394,8 +3405,8 @@ libxfreerdp-client.so.1.1 libfreerdp1 #MINVER#
  xf_lock_x11@Base 1.1.0~beta1+git20130629
  xf_logon_error_info@Base 1.1.0~beta1+git20130629
  xf_mono_bitmap_new@Base 1.1.0~beta1+git20130629
- xf_on_channel_connected@Base 1.1.0~beta1+git20130629
- xf_on_channel_disconnected@Base 1.1.0~beta1+git20130629
+#MISSING: 1.1.0~git20140808.1.7b5cd86# xf_on_channel_connected@Base 1.1.0~beta1+git20130629
+#MISSING: 1.1.0~git20140808.1.7b5cd86# xf_on_channel_disconnected@Base 1.1.0~beta1+git20130629
  xf_post_connect@Base 1.1.0~beta1+git20130629
  xf_pre_connect@Base 1.1.0~beta1+git20130629
  xf_process_channel_event@Base 1.1.0~beta1+git20130629
