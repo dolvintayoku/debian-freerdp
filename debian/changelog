@@ -1,3 +1,13 @@
+freerdp (1.1.0~git20140808.1.28f65ff-1) UNRELEASED; urgency=medium
+
+  * New Git snapshot upload to Debian.
+    - Obtained from stable-1.1 branch of http://github.com/FreeRDP/FreeRDP.
+      Using commit hash: 28f65ff297ff68c411829f2f911c920128a8aaa8.
+      Recommended by: Bernhard Miklautz on IRC (#freerdp channel on Freenode)
+      on 7th Aug 2014.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Fri, 08 Aug 2014 14:04:45 +0200
+
 freerdp (1.1.0~beta1+git20130629-1) experimental; urgency=low
 
   * Development snapshot [June 2013]. Targeted for Debian experimental.
