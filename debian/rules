@@ -5,11 +5,19 @@ export CFLAGS:=$(shell dpkg-buildflags --get CFLAGS)
 export CXXFLAGS:=$(shell dpkg-buildflags --get CXXFLAGS)
 export LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
 
+NULL =
+
 %:
 	dh ${@}
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DWITH_PULSE=ON -DWITH_CHANNELS=ON -DSTATIC_CHANNELS=off
+	dh_auto_configure -- -DWITH_PULSE=ON \
+	                     -DWITH_CHANNELS=ON \
+	                     -DSTATIC_CHANNELS=off \
+	                     -DWITH_CUPS=on \
+	                     -DWITH_PCSC=on \
+	                     -DWITH_JPEG=on \
+	                     $(NULL)
 
 override_dh_install:
 	dh_install --fail-missing
