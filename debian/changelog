@@ -1,3 +1,11 @@
+freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-1) UNRELEASED; urgency=medium
+
+  * New Git snapshot upload to unstable:
+    - Obtained from stable-1.1 branch of http://github.com/FreeRDP/FreeRDP.
+      Using commit hash: b07a5c11e41c70916e9725b4207f90fc90fd2d57.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Sat, 09 Aug 2014 23:53:50 +0200
+
 freerdp (1.1.0~git20140808.1.7b5cd86+dfsg-1) unstable; urgency=medium
 
   * New Git snapshot upload to unstable:
