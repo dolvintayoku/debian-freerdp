@@ -1,12 +1,35 @@
-freerdp (1.1.0~git20140808.1.7b5cd86+dfsg-1) UNRELEASED; urgency=medium
+freerdp (1.1.0~git20140808.1.7b5cd86+dfsg-1) unstable; urgency=medium
 
-  * New Git snapshot upload to Debian.
+  * New Git snapshot upload to unstable:
     - Obtained from stable-1.1 branch of http://github.com/FreeRDP/FreeRDP.
       Using commit hash: 7b5cd86a3e8eb3b22893f259c8039da982da0a99.
       Recommended by: Bernhard Miklautz on IRC (#freerdp channel on Freenode)
       on 7th Aug 2014.
+  * Drop APSL licensed files from upstream sources. Don't ship upstream code of
+    the Android/Mac/iOS/Windows clients in Debian.
+  * debian/watch:
+    + Mangle Debian version (-> +dfsg).
+  * debian/copyright:
+    + Bring file up-to-date.
+  * debian/patches:
+    + Add 0001_freerdp-ffmpeg.patch. Fix build against libav10, taken from an
+      upstream pull request yet to be merged.
+  * debian/control:
+    + Make B-Ds more readable (arrange in multi-lines). Add B-D: libjpeg-dev.
+  * debian/rules:
+    + Enable further build flags: WITH_CUPS=on (CUPS printer redirection),
+      WITH_PCSC=on (smart card reader redirection), WITH_JPEG (libjpeg support).
+  * debian/libfreerdp1.symbols:
+    + Update symbols file for latest Git snapshot.
+  * lintian:
+    + Add overrides file for libfreerdp-plugins-standard, the package
+      erroneously triggers debhelper's makeshlibs.
+    + Ignore a very long file name in bin:package
+      libfreerdp-plugins-standard-dbg.
+    + Update libfreerdp1 (package-name-doesnt-match-sonames) override. Library
+      names have changed.
 
- -- Mike Gabriel <sunweaver@debian.org>  Fri, 08 Aug 2014 14:04:45 +0200
+ -- Mike Gabriel <sunweaver@debian.org>  Fri, 08 Aug 2014 18:29:47 +0200
 
 freerdp (1.1.0~beta1+git20130629-1) experimental; urgency=low
 
