@@ -328,7 +328,7 @@ libfreerdp-codec.so.1.1 libfreerdp1 #MINVER#
  nsc_context_new@Base 1.1.0~beta1+git20130629
  nsc_context_set_pixel_format@Base 1.1.0~beta1+git20130629
  nsc_encode@Base 1.1.0~beta1+git20130629
- nsc_init_sse2@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)nsc_init_sse2@Base 1.1.0~beta1+git20130629
  nsc_process_message@Base 1.1.0~beta1+git20130629
  rdpsnd_compute_audio_time_length@Base 1.1.0~beta1+git20130629
  rdpsnd_free_audio_formats@Base 1.1.0~beta1+git20130629
@@ -349,7 +349,7 @@ libfreerdp-codec.so.1.1 libfreerdp1 #MINVER#
  rfx_dwt_2d_decode@Base 1.1.0~beta1+git20130629
  rfx_dwt_2d_encode@Base 1.1.0~beta1+git20130629
  rfx_encode_rgb@Base 1.1.0~beta1+git20130629
- rfx_init_sse2@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)rfx_init_sse2@Base 1.1.0~beta1+git20130629
  rfx_message_free@Base 1.1.0~beta1+git20130629
  rfx_message_get_rect@Base 1.1.0~beta1+git20130629
  rfx_message_get_rect_count@Base 1.1.0~beta1+git20130629
@@ -1777,21 +1777,21 @@ libfreerdp-primitives.so.1.1 libfreerdp1 #MINVER#
  primitives_init_shift_opt@Base 1.1.0~beta1+git20130629
  primitives_init_sign@Base 1.1.0~beta1+git20130629
  primitives_init_sign_opt@Base 1.1.0~beta1+git20130629
- sse2_RGBToRGB_16s8u_P3AC4R@Base 1.1.0~beta1+git20130629
- sse2_RGBToYCbCr_16s16s_P3P3@Base 1.1.0~beta1+git20130629
- sse2_alphaComp_argb@Base 1.1.0~beta1+git20130629
- sse2_lShiftC_16s@Base 1.1.0~beta1+git20130629
- sse2_lShiftC_16u@Base 1.1.0~beta1+git20130629
- sse2_rShiftC_16s@Base 1.1.0~beta1+git20130629
- sse2_rShiftC_16u@Base 1.1.0~beta1+git20130629
- sse2_set_32s@Base 1.1.0~beta1+git20130629
- sse2_set_32u@Base 1.1.0~beta1+git20130629
- sse2_set_8u@Base 1.1.0~beta1+git20130629
- sse2_yCbCrToRGB_16s16s_P3P3@Base 1.1.0~beta1+git20130629
- sse3_add_16s@Base 1.1.0~beta1+git20130629
- sse3_andC_32u@Base 1.1.0~beta1+git20130629
- sse3_orC_32u@Base 1.1.0~beta1+git20130629
- ssse3_sign_16s@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse2_RGBToRGB_16s8u_P3AC4R@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse2_RGBToYCbCr_16s16s_P3P3@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse2_alphaComp_argb@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse2_lShiftC_16s@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse2_lShiftC_16u@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse2_rShiftC_16s@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse2_rShiftC_16u@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse2_set_32s@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse2_set_32u@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse2_set_8u@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse2_yCbCrToRGB_16s16s_P3P3@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse3_add_16s@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse3_andC_32u@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)sse3_orC_32u@Base 1.1.0~beta1+git20130629
+ (arch=!ppc64el)ssse3_sign_16s@Base 1.1.0~beta1+git20130629
 libfreerdp-rail.so.1.1 libfreerdp1 #MINVER#
  icon_cache_free@Base 1.1.0~beta1+git20130629
  icon_cache_get@Base 1.1.0~beta1+git20130629
