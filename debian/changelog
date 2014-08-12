@@ -1,3 +1,10 @@
+freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-2) unstable; urgency=medium
+
+  * debian/libfreerdp1.symbols:
+    + Fix FTBFS on ppc64el architectures. (Closes: #757878).
+
+ -- Mike Gabriel <sunweaver@debian.org>  Tue, 12 Aug 2014 00:34:25 +0200
+
 freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-1) unstable; urgency=medium
 
   * New Git snapshot upload to unstable:
