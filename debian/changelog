@@ -1,3 +1,15 @@
+freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-3) UNRELEASED; urgency=medium
+
+  [ Sebastian Ramacher ]
+  * debian/patches/1001_hide-internal-symbols.patch: Hide internal symbols.
+    They do not need to be part of the public ABI. (Closes: #758155)
+  * debian/patches/1002_update-pkg-config-file.patch: Add missing
+    -lfreerdp-client to pkg-config file. (Closes: #758257)
+  * debian/rules: Build with -DARM_FP_ABI=hard on armhf.
+  * debian/libfreerdp1.symbols: Remove internal symbols.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Sun, 17 Aug 2014 13:04:04 +0200
+
 freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-2) unstable; urgency=medium
 
   * debian/libfreerdp1.symbols:

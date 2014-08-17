@@ -7,6 +7,13 @@ export LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
 
 NULL =
 
+DEB_HOST_ARCH=$(shell dpkg-architecture -qDEB_HOST_ARCH)
+ifneq (,$(filter armhf,$(DEB_HOST_ARCH)))
+ARM_FLOAT_ABI = -DARM_FP_ABI=hard
+else
+ARM_FLOAT_ABI =
+endif
+
 %:
 	dh ${@}
 
@@ -17,6 +24,7 @@ override_dh_auto_configure:
 	                     -DWITH_CUPS=on \
 	                     -DWITH_PCSC=on \
 	                     -DWITH_JPEG=on \
+	                     $(ARM_FLOAT_ABI) \
 	                     $(NULL)
 
 override_dh_install:
