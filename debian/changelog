@@ -1,4 +1,4 @@
-freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-3) UNRELEASED; urgency=medium
+freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-3) unstable; urgency=medium
 
   [ Sebastian Ramacher ]
   * debian/patches/1001_hide-internal-symbols.patch: Hide internal symbols.
@@ -8,7 +8,12 @@ freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-3) UNRELEASED; urgency=medium
   * debian/rules: Build with -DARM_FP_ABI=hard on armhf.
   * debian/libfreerdp1.symbols: Remove internal symbols.
 
- -- Sebastian Ramacher <sramacher@debian.org>  Sun, 17 Aug 2014 13:04:04 +0200
+  [ Mike Gabriel ]
+  * debian/patches:
+    + Add 2001_detect-ffmpeg-on-Debian.patch. Facilitate building FreeRDP with
+      FFmpeg in Debian. (Closes: #758338).
+
+ -- Mike Gabriel <sunweaver@debian.org>  Sun, 17 Aug 2014 22:21:27 +0200
 
 freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-2) unstable; urgency=medium
 
