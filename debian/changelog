@@ -1,3 +1,18 @@
+freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-4) unstable; urgency=medium
+
+  * debian/patches:
+    + Add 1003_fix-header-inclusion.patch. Make sure that winpr headers are
+      complete (esp. cmake-generated config.h). (Closes: #759881).
+    + Refresh 2001_detect-ffmpeg-on-Debian.patch.
+    + Add 0001_handle-user@corp.net-username-correctly.patch. Do not break
+      up the name for '@'; both credSSP and the ClientInfo PDU expect
+      'user@corp.net' to be transmitted as username 'user@corp.net', domain
+      empty.
+  * debian/watch:
+    + Fix syntax error.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Sun, 24 Aug 2014 01:16:50 +0200
+
 freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-3) unstable; urgency=medium
 
   [ Sebastian Ramacher ]
