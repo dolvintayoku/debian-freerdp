@@ -3,9 +3,9 @@ Description: Use pkg-config to determine FFmpeg linker flags
 Author: Andreas Cadhalpun <Andreas.Cadhalpun@googlemail.com>
 Last-Update: <2014-08-11>
 
---- freerdp-1.0.2.orig/cmake/FindFFmpeg.cmake
-+++ freerdp-1.0.2/cmake/FindFFmpeg.cmake
-@@ -17,11 +17,13 @@ endif ( PKG_CONFIG_FOUND )
+--- a/cmake/FindFFmpeg.cmake
++++ b/cmake/FindFFmpeg.cmake
+@@ -17,11 +17,13 @@
  
  # avcodec
  find_path(AVCODEC_INCLUDE_DIR libavcodec/avcodec.h PATHS ${AVCODEC_INCLUDE_DIRS})
