@@ -30,6 +30,12 @@ override_dh_auto_configure:
 override_dh_install:
 	dh_install --fail-missing
 
+override_dh_clean:
+	rm -f include/version.h
+	rm -f config.h
+	rm -f winpr/include/winpr/config.h
+	dh_clean
+
 override_dh_strip:
 	dh_strip -pfreerdp-x11 --dbg-package=freerdp-x11-dbg
 	dh_strip -plibfreerdp1 --dbg-package=libfreerdp1-dbg
