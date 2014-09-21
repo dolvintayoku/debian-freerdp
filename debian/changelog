@@ -1,4 +1,9 @@
-freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-5) UNRELEASED; urgency=medium
+freerdp (1.1.0~git20140921.1.440916e+dfsg-1) UNRELEASED; urgency=medium
+
+  [ Mike Gabriel ]
+  * New Git snapshot upload to unstable:
+    - Obtained from stable-1.1 branch of http://github.com/FreeRDP/FreeRDP.
+      Using commit hash: 440916eae2e07463912d5fe507677e67096eb083.
 
   [ Sebastian Ramacher ]
   * Split shared libraries into separate packages to avoid breakage if the
