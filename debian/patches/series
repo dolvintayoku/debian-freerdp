@@ -1,4 +1,3 @@
-0001_handle-user@corp.net-username-correctly.patch
 1001_hide-internal-symbols.patch
 1002_update-pkg-config-file.patch
 1003_fix-header-inclusion.patch
