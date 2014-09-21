@@ -1,3 +1,14 @@
+freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-5) UNRELEASED; urgency=medium
+
+  [ Sebastian Ramacher ]
+  * Split shared libraries into separate packages to avoid breakage if the
+    SONAME changes are not done at the same time for every library. (Closes:
+    #757605)
+  * Ignore plugins when running dh_makeshlibs to fix lintian warnings and
+    errors in libfreerdp-plugins-standard.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Tue, 26 Aug 2014 20:47:30 +0200
+
 freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-4) unstable; urgency=medium
 
   * debian/patches:

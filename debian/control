@@ -52,23 +52,639 @@ Description: RDP client for Windows Terminal Services
  .
  This package contains the X11 based client.
 
-Package: libfreerdp1
+Package: libfreerdp-cache1.1
 Architecture: any
 Section: libs
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Multi-Arch: same
 Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (cache library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the cache shared library.
+
+Package: libfreerdp-client1.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (client library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the freerdp-client shared library.
+
+Package: libfreerdp-codec1.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (codec library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the freerdp-codec shared library.
+
+Package: libfreerdp-common1.1.0
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (common library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the freerdp-common shared library.
+
+Package: libfreerdp-core1.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (core library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the freerdp-core shared library.
+
+Package: libfreerdp-crypto1.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (freerdp-crypto library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the freerdp-crypto shared library.
+
+Package: libfreerdp-gdi1.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (GDI library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the freerdp-gdi shared library.
+
+Package: libfreerdp-locale1.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (locale library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the freerdp-locale shared library.
+
+Package: libfreerdp-primitives1.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (primitives library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the freerdp-primitives shared library.
+
+Package: libfreerdp-rail1.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (rail library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the freerdp-rail shared library.
+
+Package: libfreerdp-utils1.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (freerdp-utils library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the freerdp-utils shared library.
+
+Package: libwinpr-asn1-0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (ASN1 library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-asn1 shared library.
+
+Package: libwinpr-bcrypt0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (bcrypt library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-bcrypt shared library.
+
+Package: libwinpr-credentials0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (credentials library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-credentials shared library.
+
+Package: libwinpr-credui0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (credeui library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-credeui shared library.
+
+Package: libwinpr-crt0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (crt library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-crt shared library.
+
+Package: libwinpr-crypto0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (crypto library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-crypto shared library.
+
+Package: libwinpr-dsparse0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (dsparse library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-dsparse shared library.
+
+Package: libwinpr-environment0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (environment library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-environment shared library.
+
+Package: libwinpr-error0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (error library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-error shared library.
+
+Package: libwinpr-file0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (file library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-file shared library.
+
+Package: libwinpr-handle0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (handle library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-handle shared library.
+
+Package: libwinpr-heap0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (heap library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-heap shared library.
+
+Package: libwinpr-input0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (input library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-input shared library.
+
+Package: libwinpr-interlocked0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (interlocked library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-interlocked shared library.
+
+Package: libwinpr-io0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (io library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-io shared library.
+
+Package: libwinpr-library0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
 Description: RDP client for Windows Terminal Services (library)
  FreeRDP is a client for Windows Terminal Services implementing the Remote
  Desktop Protocol (RDP).
  .
- This package contains the shared library.
+ This package contains the winor-library shared library.
+
+Package: libwinpr-path0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (path library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-path shared library.
+
+Package: libwinpr-pipe0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (pipe library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-pipe shared library.
+
+Package: libwinpr-pool0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (pool library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-pool shared library.
+
+Package: libwinpr-registry0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (registry library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-registry shared library.
+
+Package: libwinpr-rpc0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (RPC library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-rpc shared library.
+
+Package: libwinpr-sspi0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (sspi library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-sspi shared library.
+
+Package: libwinpr-sspicli0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (sspicli library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-sspicli shared library.
+
+Package: libwinpr-synch0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (synch library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-synch shared library.
+
+Package: libwinpr-sysinfo0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (sysinfo library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-sysinfo shared library.
+
+Package: libwinpr-thread0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (thread library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-thread shared library.
+
+Package: libwinpr-timezone0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (timezone library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-timezone shared library.
+
+Package: libwinpr-utils0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (utils library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-utils shared library.
+
+Package: libwinpr-winhttp0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (winhttp library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-winhttp shared library.
+
+Package: libwinpr-winsock0.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (winsock library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the winpr-winsock shared library.
+
+Package: libxfreerdp-client1.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Suggests: freerdp-x11
+Breaks: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Replaces: libfreerdp1 (<< 1.1.0~git20140809.1.b07a5c1+dfsg-4.1)
+Description: RDP client for Windows Terminal Services (xfreerdp-client library)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the xfreerdp-client shared library.
 
 Package: libfreerdp-plugins-standard
 Architecture: any
 Section: libs
-Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Multi-Arch: same
 Description: RDP client for Windows Terminal Services (plugins)
@@ -83,7 +699,49 @@ Package: libfreerdp-dev
 Section: libdevel
 Architecture: any
 Depends:
- ${misc:Depends}, libfreerdp1 (= ${binary:Version}),
+ ${misc:Depends},
+ libfreerdp-cache1.1 (= ${binary:Version}),
+ libfreerdp-client1.1 (= ${binary:Version}),
+ libfreerdp-codec1.1 (= ${binary:Version}),
+ libfreerdp-common1.1.0 (= ${binary:Version}),
+ libfreerdp-core1.1 (= ${binary:Version}),
+ libfreerdp-crypto1.1 (= ${binary:Version}),
+ libfreerdp-gdi1.1 (= ${binary:Version}),
+ libfreerdp-locale1.1 (= ${binary:Version}),
+ libfreerdp-primitives1.1 (= ${binary:Version}),
+ libfreerdp-rail1.1 (= ${binary:Version}),
+ libfreerdp-utils1.1 (= ${binary:Version}),
+ libwinpr-asn1-0.1 (= ${binary:Version}),
+ libwinpr-bcrypt0.1 (= ${binary:Version}),
+ libwinpr-credentials0.1 (= ${binary:Version}),
+ libwinpr-credui0.1 (= ${binary:Version}),
+ libwinpr-crt0.1 (= ${binary:Version}),
+ libwinpr-crypto0.1 (= ${binary:Version}),
+ libwinpr-dsparse0.1 (= ${binary:Version}),
+ libwinpr-environment0.1 (= ${binary:Version}),
+ libwinpr-error0.1 (= ${binary:Version}),
+ libwinpr-file0.1 (= ${binary:Version}),
+ libwinpr-handle0.1 (= ${binary:Version}),
+ libwinpr-heap0.1 (= ${binary:Version}),
+ libwinpr-input0.1 (= ${binary:Version}),
+ libwinpr-interlocked0.1 (= ${binary:Version}),
+ libwinpr-io0.1 (= ${binary:Version}),
+ libwinpr-library0.1 (= ${binary:Version}),
+ libwinpr-path0.1 (= ${binary:Version}),
+ libwinpr-pipe0.1 (= ${binary:Version}),
+ libwinpr-pool0.1 (= ${binary:Version}),
+ libwinpr-registry0.1 (= ${binary:Version}),
+ libwinpr-rpc0.1 (= ${binary:Version}),
+ libwinpr-sspi0.1 (= ${binary:Version}),
+ libwinpr-sspicli0.1 (= ${binary:Version}),
+ libwinpr-synch0.1 (= ${binary:Version}),
+ libwinpr-sysinfo0.1 (= ${binary:Version}),
+ libwinpr-thread0.1 (= ${binary:Version}),
+ libwinpr-timezone0.1 (= ${binary:Version}),
+ libwinpr-utils0.1 (= ${binary:Version}),
+ libwinpr-winhttp0.1 (= ${binary:Version}),
+ libwinpr-winsock0.1 (= ${binary:Version}),
+ libxfreerdp-client1.1 (= ${binary:Version}),
  libfreerdp-plugins-standard (= ${binary:Version})
 Description: RDP client for Windows Terminal Services (development)
  FreeRDP is a client for Windows Terminal Services implementing the Remote
@@ -103,18 +761,60 @@ Description: RDP client for Windows Terminal Services (debug)
  .
  This package contains the debug symbols of the xfreerdp executable.
 
-Package: libfreerdp1-dbg
+Package: libfreerdp-dbg
 Section: debug
 Priority: extra
 Architecture: any
 Multi-Arch: same
 Depends:
-  ${misc:Depends}, libfreerdp1 (= ${binary:Version}),
-Description: RDP client for Windows Terminal Services (library debug)
+ ${misc:Depends},
+ libfreerdp-cache1.1 (= ${binary:Version}),
+ libfreerdp-client1.1 (= ${binary:Version}),
+ libfreerdp-codec1.1 (= ${binary:Version}),
+ libfreerdp-common1.1.0 (= ${binary:Version}),
+ libfreerdp-core1.1 (= ${binary:Version}),
+ libfreerdp-crypto1.1 (= ${binary:Version}),
+ libfreerdp-gdi1.1 (= ${binary:Version}),
+ libfreerdp-locale1.1 (= ${binary:Version}),
+ libfreerdp-primitives1.1 (= ${binary:Version}),
+ libfreerdp-rail1.1 (= ${binary:Version}),
+ libfreerdp-utils1.1 (= ${binary:Version}),
+ libwinpr-asn1-0.1 (= ${binary:Version}),
+ libwinpr-bcrypt0.1 (= ${binary:Version}),
+ libwinpr-credentials0.1 (= ${binary:Version}),
+ libwinpr-credui0.1 (= ${binary:Version}),
+ libwinpr-crt0.1 (= ${binary:Version}),
+ libwinpr-crypto0.1 (= ${binary:Version}),
+ libwinpr-dsparse0.1 (= ${binary:Version}),
+ libwinpr-environment0.1 (= ${binary:Version}),
+ libwinpr-error0.1 (= ${binary:Version}),
+ libwinpr-file0.1 (= ${binary:Version}),
+ libwinpr-handle0.1 (= ${binary:Version}),
+ libwinpr-heap0.1 (= ${binary:Version}),
+ libwinpr-input0.1 (= ${binary:Version}),
+ libwinpr-interlocked0.1 (= ${binary:Version}),
+ libwinpr-io0.1 (= ${binary:Version}),
+ libwinpr-library0.1 (= ${binary:Version}),
+ libwinpr-path0.1 (= ${binary:Version}),
+ libwinpr-pipe0.1 (= ${binary:Version}),
+ libwinpr-pool0.1 (= ${binary:Version}),
+ libwinpr-registry0.1 (= ${binary:Version}),
+ libwinpr-rpc0.1 (= ${binary:Version}),
+ libwinpr-sspi0.1 (= ${binary:Version}),
+ libwinpr-sspicli0.1 (= ${binary:Version}),
+ libwinpr-synch0.1 (= ${binary:Version}),
+ libwinpr-sysinfo0.1 (= ${binary:Version}),
+ libwinpr-thread0.1 (= ${binary:Version}),
+ libwinpr-timezone0.1 (= ${binary:Version}),
+ libwinpr-utils0.1 (= ${binary:Version}),
+ libwinpr-winhttp0.1 (= ${binary:Version}),
+ libwinpr-winsock0.1 (= ${binary:Version}),
+ libxfreerdp-client1.1 (= ${binary:Version})
+Description: RDP client for Windows Terminal Services (debug symbols)
  FreeRDP is a client for Windows Terminal Services implementing the Remote
  Desktop Protocol (RDP).
  .
- This package contains the debug symbols of libfreerdp1.
+ This package contains the debug symbols of the shared libraries.
 
 Package: libfreerdp-plugins-standard-dbg
 Section: debug
