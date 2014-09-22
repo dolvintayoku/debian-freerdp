@@ -14,37 +14,91 @@ else
 ARM_FLOAT_ABI =
 endif
 
-%:
-	dh ${@}
+include /usr/share/cdbs/1/class/cmake.mk
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/rules/utils.mk
 
-override_dh_auto_configure:
-	dh_auto_configure -- -DWITH_PULSE=ON \
-	                     -DWITH_CHANNELS=ON \
-	                     -DSTATIC_CHANNELS=off \
-	                     -DWITH_CUPS=on \
-	                     -DWITH_PCSC=on \
-	                     -DWITH_JPEG=on \
-	                     $(ARM_FLOAT_ABI) \
-	                     $(NULL)
+DEB_DH_INSTALL_ARGS += --fail-missing
 
-override_dh_install:
-	dh_install --fail-missing
+DEB_CMAKE_EXTRA_FLAGS :=  -DCMAKE_INSTALL_INCLUDEDIR=include/$(shell dpkg-architecture -qDEB_BUILD_MULTIARCH) \
+                          -DBUILD_TESTING=ON \
+                          -DWITH_PULSE=ON \
+                          -DWITH_GSTREAMER=ON \
+                          -DWITH_CHANNELS=ON \
+                          -DSTATIC_CHANNELS=off \
+                          -DWITH_CUPS=on \
+                          -DWITH_PCSC=on \
+                          -DWITH_JPEG=on \
+                          $(ARM_FLOAT_ABI) \
+                          $(NULL)
 
-override_dh_clean:
+DEB_MAKE_CHECK_TARGET := test
+
+DEB_DH_MAKESHLIBS_ARGS_libfreerdp-plugins-standard = -X/freerdp/ -V -- -c4
+
+common-install-indep:: remove-cruft tweak-install
+common-install-arch:: remove-cruft tweak-install
+
+DEB_DH_STRIP_ARGS_libwinpr-asn1-0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-bcrypt0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-credentials0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-credui0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-crt0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-crypto0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-dsparse0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-environment0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-error0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-file0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-handle0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-heap0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-input0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-interlocked0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-io0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-library0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-path0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-pipe0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-pool0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-registry0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-rpc0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-sspi0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-sspicli0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-synch0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-sysinfo0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-thread0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-timezone0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-utils0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-winhttp0.1 = --dbg-package=libwinpr-dbg
+DEB_DH_STRIP_ARGS_libwinpr-winsock0.1 = --dbg-package=libwinpr-dbg
+
+DEB_DH_STRIP_ARGS_libfreerdp-cache1.1 = --dbg-package=libfreerdp-dbg
+DEB_DH_STRIP_ARGS_libfreerdp-client1.1 = --dbg-package=libfreerdp-dbg
+DEB_DH_STRIP_ARGS_libfreerdp-codec1.1 = --dbg-package=libfreerdp-dbg
+DEB_DH_STRIP_ARGS_libfreerdp-common1.1.0 = --dbg-package=libfreerdp-dbg
+DEB_DH_STRIP_ARGS_libfreerdp-core1.1 = --dbg-package=libfreerdp-dbg
+DEB_DH_STRIP_ARGS_libfreerdp-crypto1.1 = --dbg-package=libfreerdp-dbg
+DEB_DH_STRIP_ARGS_libfreerdp-gdi1.1 = --dbg-package=libfreerdp-dbg
+DEB_DH_STRIP_ARGS_libfreerdp-locale1.1 = --dbg-package=libfreerdp-dbg
+DEB_DH_STRIP_ARGS_libfreerdp-primitives1.1 = --dbg-package=libfreerdp-dbg
+DEB_DH_STRIP_ARGS_libfreerdp-rail1.1 = --dbg-package=libfreerdp-dbg
+DEB_DH_STRIP_ARGS_libfreerdp-utils1.1 = --dbg-package=libfreerdp-dbg
+
+DEB_DH_STRIP_ARGS_libfreerdp-plugins-standard = --dbg-package=libfreerdp-plugins-standard-dbg
+
+DEB_DH_STRIP_ARGS_freerdp-x11 = --dbg-package=freerdp-x11-dbg
+DEB_DH_STRIP_ARGS_libxfreerdp-client1.1 = --dbg-package=libxfreerdp-client-dbg
+
+remove-cruft::
+	rm -f debian/tmp/usr/lib/$(shell dpkg-architecture -qDEB_BUILD_MULTIARCH)/libwinpr-makecert-tool.a
+	rm -f debian/tmp/usr/lib/$(shell dpkg-architecture -qDEB_BUILD_MULTIARCH)/freerdp/cliprdr-client.a
+
+tweak-install::
+	@echo "Nothing to tweak after installation."
+
+clean::
 	rm -f include/version.h
 	rm -f config.h
-	rm -f winpr/include/winpr/config.h
-	dh_clean
 
-override_dh_strip:
-	dh_strip -pfreerdp-x11 --dbg-package=freerdp-x11-dbg
-	dh_strip -plibfreerdp-plugins-standard --dbg-package=libfreerdp-plugins-standard-dbg
-	dh_strip --remaining-packages --dbg-package=libfreerdp-dbg
-
-override_dh_makeshlibs:
-	dh_makeshlibs -X/freerdp/ -V -- -c4
-
-PKD   = $(abspath $(dir $(MAKEFILE_LIST)))
+PKD   = $(word 1,$(abspath $(dir $(MAKEFILE_LIST))))
 PKG   = $(word 2,$(shell dpkg-parsechangelog -l$(PKD)/changelog | grep ^Source))
 UVER  = $(shell dpkg-parsechangelog -l$(PKD)/changelog | perl -ne 'print $$1 if m{^Version:\s+(?:\d+:)?(\d.*)(?:\-\d+.*)};')
 DTYPE = +dfsg
