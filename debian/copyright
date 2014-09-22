@@ -356,6 +356,8 @@ Files: channels/client/addin.c
  winpr/libwinpr/interlocked/interlocked.c
  winpr/libwinpr/io/io.c
  winpr/libwinpr/library/library.c
+ winpr/libwinpr/library/test/TestLibraryA/CMakeLists.txt
+ winpr/libwinpr/library/test/TestLibraryB/CMakeLists.txt
  winpr/libwinpr/path/path.c
  winpr/libwinpr/path/shell.c
  winpr/libwinpr/pipe/pipe.c
@@ -454,6 +456,112 @@ Files: channels/client/addin.c
  winpr/tools/makecert/cli/main.c
  winpr/tools/makecert/makecert.c
  winpr/tools/makecert/makecert.h
+ channels/cliprdr/CMakeLists.txt
+ channels/cliprdr/client/CMakeLists.txt
+ channels/smartcard/CMakeLists.txt
+ channels/smartcard/client/CMakeLists.txt
+ channels/drive/CMakeLists.txt
+ channels/drive/client/CMakeLists.txt
+ channels/tsmf/CMakeLists.txt
+ channels/tsmf/client/ffmpeg/CMakeLists.txt
+ channels/tsmf/client/alsa/CMakeLists.txt
+ channels/tsmf/client/pulse/CMakeLists.txt
+ channels/tsmf/client/CMakeLists.txt
+ channels/rdpei/CMakeLists.txt
+ channels/rdpei/client/CMakeLists.txt
+ channels/sample/CMakeLists.txt
+ channels/sample/client/CMakeLists.txt
+ channels/drdynvc/CMakeLists.txt
+ channels/drdynvc/client/CMakeLists.txt
+ channels/echo/CMakeLists.txt
+ channels/echo/client/CMakeLists.txt
+ channels/rdpdr/CMakeLists.txt
+ channels/rdpdr/client/CMakeLists.txt
+ channels/rail/CMakeLists.txt
+ channels/rail/client/CMakeLists.txt
+ channels/parallel/CMakeLists.txt
+ channels/parallel/client/CMakeLists.txt
+ channels/rdpsnd/server/CMakeLists.txt
+ channels/rdpsnd/CMakeLists.txt
+ channels/rdpsnd/client/winmm/CMakeLists.txt
+ channels/rdpsnd/client/alsa/CMakeLists.txt
+ channels/rdpsnd/client/pulse/CMakeLists.txt
+ channels/rdpsnd/client/CMakeLists.txt
+ channels/serial/CMakeLists.txt
+ channels/serial/client/CMakeLists.txt
+ channels/printer/CMakeLists.txt
+ channels/printer/client/CMakeLists.txt
+ channels/urbdrc/CMakeLists.txt
+ channels/server/CMakeLists.txt
+ channels/audin/server/CMakeLists.txt
+ channels/audin/CMakeLists.txt
+ channels/audin/client/alsa/CMakeLists.txt
+ channels/audin/client/pulse/CMakeLists.txt
+ channels/audin/client/CMakeLists.txt
+ channels/CMakeLists.txt
+ channels/client/CMakeLists.txt
+ client/DirectFB/CMakeLists.txt
+ client/common/CMakeLists.txt
+ client/Sample/CMakeLists.txt
+ client/CMakeLists.txt
+ client/X11/cli/CMakeLists.txt
+ client/X11/CMakeLists.txt
+ libfreerdp/crypto/CMakeLists.txt
+ libfreerdp/common/CMakeLists.txt
+ libfreerdp/core/CMakeLists.txt
+ libfreerdp/locale/CMakeLists.txt
+ libfreerdp/gdi/CMakeLists.txt
+ libfreerdp/utils/CMakeLists.txt
+ libfreerdp/rail/CMakeLists.txt
+ libfreerdp/codec/CMakeLists.txt
+ libfreerdp/cache/CMakeLists.txt
+ libfreerdp/CMakeLists.txt
+ server/common/CMakeLists.txt
+ server/Sample/CMakeLists.txt
+ server/Windows/cli/CMakeLists.txt
+ server/Windows/CMakeLists.txt
+ server/Mac/CMakeLists.txt
+ server/CMakeLists.txt
+ server/X11/cli/CMakeLists.txt
+ server/X11/CMakeLists.txt
+ third-party/CMakeLists.txt
+ winpr/tools/hash/CMakeLists.txt
+ winpr/tools/makecert/cli/CMakeLists.txt
+ winpr/tools/makecert/CMakeLists.txt
+ winpr/tools/CMakeLists.txt
+ winpr/libwinpr/winhttp/CMakeLists.txt
+ winpr/libwinpr/library/CMakeLists.txt
+ winpr/libwinpr/crypto/CMakeLists.txt
+ winpr/libwinpr/timezone/CMakeLists.txt
+ winpr/libwinpr/error/CMakeLists.txt
+ winpr/libwinpr/thread/CMakeLists.txt
+ winpr/libwinpr/synch/CMakeLists.txt
+ winpr/libwinpr/winsock/CMakeLists.txt
+ winpr/libwinpr/dsparse/CMakeLists.txt
+ winpr/libwinpr/sspicli/CMakeLists.txt
+ winpr/libwinpr/credentials/CMakeLists.txt
+ winpr/libwinpr/credui/CMakeLists.txt
+ winpr/libwinpr/sspi/CMakeLists.txt
+ winpr/libwinpr/bcrypt/CMakeLists.txt
+ winpr/libwinpr/io/CMakeLists.txt
+ winpr/libwinpr/environment/CMakeLists.txt
+ winpr/libwinpr/interlocked/CMakeLists.txt
+ winpr/libwinpr/path/CMakeLists.txt
+ winpr/libwinpr/utils/CMakeLists.txt
+ winpr/libwinpr/asn1/CMakeLists.txt
+ winpr/libwinpr/input/CMakeLists.txt
+ winpr/libwinpr/sysinfo/CMakeLists.txt
+ winpr/libwinpr/registry/CMakeLists.txt
+ winpr/libwinpr/pool/CMakeLists.txt
+ winpr/libwinpr/heap/CMakeLists.txt
+ winpr/libwinpr/handle/CMakeLists.txt
+ winpr/libwinpr/pipe/CMakeLists.txt
+ winpr/libwinpr/crt/CMakeLists.txt
+ winpr/libwinpr/CMakeLists.txt
+ winpr/libwinpr/file/CMakeLists.txt
+ winpr/libwinpr/rpc/CMakeLists.txt
+ winpr/include/CMakeLists.txt
+ winpr/CMakeLists.txt
 Copyright: 2009, Marc-Andre Moreau <marcandre.moreau@gmail.com>
   2009-2012, Marc-Andre Moreau <marcandre.moreau@gmail.com>
   2010, Marc-Andre Moreau <marcandre.moreau@gmail.com>
@@ -466,124 +574,72 @@ Copyright: 2009, Marc-Andre Moreau <marcandre.moreau@gmail.com>
   2013, Marc-Andre Moreau <marcandre.moreau@gmail.com>
 License: Apache-2.0
 
-Files: ChangeLog
- LICENSE
- README
- CMakeLists.txt
- channels/CMakeLists.txt
- channels/audin/CMakeLists.txt
- channels/audin/ChannelOptions.cmake
- channels/audin/client/CMakeLists.txt
- channels/audin/client/alsa/CMakeLists.txt
- channels/audin/client/pulse/CMakeLists.txt
- channels/audin/server/CMakeLists.txt
- channels/client/.gitignore
- channels/client/CMakeLists.txt
- channels/cliprdr/CMakeLists.txt
- channels/cliprdr/ChannelOptions.cmake
- channels/cliprdr/client/CMakeLists.txt
- channels/cliprdr/client/module.def
- channels/drdynvc/CMakeLists.txt
- channels/drdynvc/ChannelOptions.cmake
- channels/drdynvc/client/CMakeLists.txt
- channels/drive/CMakeLists.txt
- channels/drive/ChannelOptions.cmake
- channels/drive/client/CMakeLists.txt
- channels/drive/client/module.def
- channels/echo/CMakeLists.txt
- channels/echo/ChannelOptions.cmake
- channels/echo/client/CMakeLists.txt
- channels/parallel/CMakeLists.txt
- channels/parallel/ChannelOptions.cmake
- channels/parallel/client/CMakeLists.txt
- channels/printer/CMakeLists.txt
- channels/printer/ChannelOptions.cmake
- channels/printer/client/CMakeLists.txt
- channels/rail/CMakeLists.txt
- channels/rail/ChannelOptions.cmake
- channels/rail/client/CMakeLists.txt
- channels/rdpdr/CMakeLists.txt
- channels/rdpdr/ChannelOptions.cmake
- channels/rdpdr/client/CMakeLists.txt
- channels/rdpei/CMakeLists.txt
- channels/rdpei/ChannelOptions.cmake
- channels/rdpei/client/CMakeLists.txt
- channels/rdpsnd/CMakeLists.txt
- channels/rdpsnd/ChannelOptions.cmake
- channels/rdpsnd/client/CMakeLists.txt
- channels/rdpsnd/client/alsa/CMakeLists.txt
- channels/rdpsnd/client/mac/CMakeLists.txt
- channels/rdpsnd/client/pulse/CMakeLists.txt
- channels/rdpsnd/client/winmm/CMakeLists.txt
- channels/rdpsnd/server/CMakeLists.txt
- channels/sample/CMakeLists.txt
- channels/sample/ChannelOptions.cmake
- channels/sample/client/CMakeLists.txt
- channels/sample/client/readme.txt
- channels/serial/CMakeLists.txt
- channels/serial/ChannelOptions.cmake
- channels/serial/client/CMakeLists.txt
- channels/server/CMakeLists.txt
- channels/smartcard/CMakeLists.txt
- channels/smartcard/ChannelOptions.cmake
- channels/smartcard/client/CMakeLists.txt
- channels/tsmf/CMakeLists.txt
- channels/tsmf/ChannelOptions.cmake
- channels/tsmf/client/CMakeLists.txt
- channels/tsmf/client/alsa/CMakeLists.txt
- channels/tsmf/client/ffmpeg/CMakeLists.txt
- channels/tsmf/client/gstreamer/CMakeLists.txt
- channels/tsmf/client/pulse/CMakeLists.txt
- channels/urbdrc/CMakeLists.txt
- channels/urbdrc/ChannelOptions.cmake
- channels/urbdrc/client/CMakeLists.txt
- channels/urbdrc/client/libusb/CMakeLists.txt
- ci/cmake-preloads/config-android.txt
- ci/cmake-preloads/config-debian-squeeze.txt
- ci/cmake-preloads/config-ios.txt
- ci/cmake-preloads/config-macosx.txt
- ci/cmake-preloads/config-ubuntu-1204.txt
- ci/cmake-preloads/config-windows.txt
- client/.gitignore
- client/CMakeLists.txt
- client/DirectFB/CMakeLists.txt
- client/Sample/CMakeLists.txt
- client/X11/.gitignore
- client/X11/CMakeLists.txt
- client/X11/cli/.gitignore
- client/X11/cli/CMakeLists.txt
- client/X11/xfreerdp-channels.1.xml
- client/X11/xfreerdp-examples.1.xml
- client/X11/xfreerdp.1.xml.in
- client/common/CMakeLists.txt
- client/common/module.def
- client/common/test/.gitignore
- client/common/test/CMakeLists.txt
- cmake/AndroidToolchain.cmake
- cmake/AutoVersioning.cmake
- cmake/CheckCmakeCompat.cmake
- cmake/ComplexLibrary.cmake
- cmake/ConfigOptions.cmake
+Files: cmake/AndroidToolchain.cmake
+Copyright: 2010-2011, Ethan Rublee
+ 2011-2013, Andrey Kamaev
+License: BSD-3-clause
+
+Files: cmake/CheckCmakeCompat.cmake
  cmake/ConfigOptionsAndroid.cmake
- cmake/ConfigOptionsiOS.cmake
- cmake/FindDBus.cmake
- cmake/FindDbusGlib.cmake
- cmake/FindDirectFB.cmake
- cmake/FindDocBookXSL.cmake
- cmake/FindFFmpeg.cmake
- cmake/FindFeature.cmake
- cmake/FindGstreamer.cmake
- cmake/FindIPP.cmake
- cmake/FindNPP.cmake
- cmake/FindOpenSSL.cmake
- cmake/FindPAM.cmake
- cmake/FindPCSC.cmake
- cmake/FindPulse.cmake
- cmake/FindUDev.cmake
- cmake/FindUUID.cmake
+Copyright: 2013, Thinstuff Technologies GmbH
+ 2013, Bernhard Miklautz <bmiklautz@thinstuff.at>
+ 2012, Bernhard Miklautz <bmiklautz@thinstuff.at>
+License: Apache-2.0
+
+Files: cmake/ConfigOptionsiOS.cmake
+Copyright: 2013, Thinstuff Technologies GmbH
+ 2013, Martin Fleisz <mfleisz@thinstuff.at>
+License: Apache-2.0
+
+Files: cmake/FindDBus.cmake
+Copyright: 2006, Alexander Neundorf <neundorf@kde.org>
+ 2008, Kevin Kofler <kevin.kofler@chello.at>
+License: BSD-3-clause
+Comment:
+ Referred to as the "New BSD license".
+
+Files: cmake/FindDbusGlib.cmake
+Copyright: 2013, Thinstuff Technologies GmbH
+ 2013, Armin Novak <anovak@thinstuff.at>
+License: Apache-2.0
+
+Files: cmake/FindDocBookXSL.cmake
+Copyright: 2010, Luigi Toscano <luigi.toscano@tiscali.it>
+License: BSD-3-clause
+Comment:
+ Referred to as the "New BSD license".
+
+Files: cmake/FindIPP.cmake
+Copyright: OpenCV project
+License: BSD-3-clause
+Comment:
+ This cmake script is taken from OpenCV project (BSD license).
+ .
+ License looked-up: OpenCV is licensed under BSD-3-clause.
+
+Files: cmake/FindNPP.cmake
+Copyright: Anatoly Baksheev, Itseez Ltd.
+License: Expat
+
+Files: cmake/FindOpenSSL.cmake
+Copyright: 2006-2009, Kitware, Inc.
+ 2006, Alexander Neundorf <neundorf@kde.org>
+ 2009-2011, Mathieu Malaterre <mathieu.malaterre@gmail.com>
+License: BSD-3-clause
+Comment:
+ Distributed under the OSI-approved BSD License, i.e.
+ BSD-3-clause.
+
+Files: cmake/FindUDev.cmake
+Copyright: 2011, Petr Vanek <petr@scribus.info>
+License: BSD-3-clause
+Comment:
+ Redistribution and use is allowed according to the terms of the BSD
+ license.
+
+Files:  cmake/FindDirectFB.cmake
  cmake/FindX11.cmake
  cmake/FindXKBFile.cmake
- cmake/FindXRandR.cmake
  cmake/FindXShm.cmake
  cmake/FindXTest.cmake
  cmake/FindXcursor.cmake
@@ -592,23 +648,101 @@ Files: ChangeLog
  cmake/FindXfixes.cmake
  cmake/FindXi.cmake
  cmake/FindXinerama.cmake
- cmake/FindXmlto.cmake
- cmake/FindXrender.cmake
  cmake/FindXv.cmake
+Copyright:  2011, O.S. Systems Software Ltda.
+ 2011, Otavio Salvador <otavio@ossystems.com.br>
+ 2011, Marc-Andre Moreau <marcandre.moreau@gmail.com>
+License: Apache-2.0
+
+Files: cmake/FindXmlto.cmake
+Copyright: 2011, Nils Andresen <nils@nils-andresen.de>
+License: Apache-2.0
+
+Files: cmake/FindXrender.cmake
+Copyright: 2013, Corey Clayton <can.of.tuna@gmail.com>
+License: Apache-2.0
+
+Files: cmake/FindUUID.cmake
  cmake/Findlibusb-1.0.cmake
- cmake/GNUInstallDirsWrapper.cmake
- cmake/GetGitRevisionDescription.cmake
- cmake/GetGitRevisionDescription.cmake.in
- cmake/MSVCRuntime.cmake
- cmake/MergeStaticLibs.cmake
- cmake/compat_2.8.2/FindPkgConfig.cmake
+Copyright: 2006, Andreas Schneider <mail@cynapses.org>
+License: BSD-3-clause
+Comment:
+ Referred to as the "New BSD license".
+
+Files: cmake/FindXRandR.cmake
+Copyright: 2012, Alam Arias <Alam.GBC@gmail.com>
+License: Apache-2.0
+
+Files: cmake/compat_2.8.2/FindPkgConfig.cmake
  cmake/compat_2.8.3/CMakeParseArguments.cmake
  cmake/compat_2.8.3/FindPackageHandleStandardArgs.cmake
  cmake/compat_2.8.6/FeatureSummary.cmake
+Copyright: 2006-2009 Kitware, Inc.
+ 2006, Enrico Scholz <enrico.scholz@informatik.tu-chemnitz.de>
+ 2007-2009, Kitware, Inc.
+ 2010, Alexander Neundorf <neundorf@kde.org>
+License: BSD-3-clause
+
+Files: cmake/GetGitRevisionDescription.cmake
+ cmake/GetGitRevisionDescription.cmake.in
+Copyright:  2009-2010, Ryan Pavlik <rpavlik@iastate.edu>
+License: Boost-1.0
+
+Files: cmake/MergeStaticLibs.cmake
+Copyright: 2012, Modelon, AB
+License: BSD-3-clause
+
+Files: ChangeLog
+ LICENSE
+ README
+ channels/audin/ChannelOptions.cmake
+ channels/client/.gitignore
+ channels/cliprdr/ChannelOptions.cmake
+ channels/cliprdr/client/module.def
+ channels/drdynvc/ChannelOptions.cmake
+ channels/drive/ChannelOptions.cmake
+ channels/drive/client/module.def
+ channels/echo/ChannelOptions.cmake
+ channels/parallel/ChannelOptions.cmake
+ channels/printer/ChannelOptions.cmake
+ channels/rail/ChannelOptions.cmake
+ channels/rdpdr/ChannelOptions.cmake
+ channels/rdpei/ChannelOptions.cmake
+ channels/rdpsnd/ChannelOptions.cmake
+ channels/sample/ChannelOptions.cmake
+ channels/sample/client/readme.txt
+ channels/serial/ChannelOptions.cmake
+ channels/smartcard/ChannelOptions.cmake
+ channels/tsmf/ChannelOptions.cmake
+ channels/urbdrc/ChannelOptions.cmake
+ ci/cmake-preloads/config-android.txt
+ ci/cmake-preloads/config-debian-squeeze.txt
+ ci/cmake-preloads/config-ios.txt
+ ci/cmake-preloads/config-macosx.txt
+ ci/cmake-preloads/config-ubuntu-1204.txt
+ ci/cmake-preloads/config-windows.txt
+ client/.gitignore
+ client/X11/.gitignore
+ client/X11/cli/.gitignore
+ client/X11/xfreerdp-channels.1.xml
+ client/X11/xfreerdp-examples.1.xml
+ client/X11/xfreerdp.1.xml.in
+ client/common/module.def
+ client/common/test/CMakeLists.txt
+ client/common/test/.gitignore
+ cmake/ComplexLibrary.cmake
+ cmake/ConfigOptions.cmake
+ cmake/FindFFmpeg.cmake
+ cmake/FindFeature.cmake
+ cmake/FindGstreamer.cmake
+ cmake/FindPAM.cmake
+ cmake/FindPCSC.cmake
+ cmake/FindPulse.cmake
+ cmake/GNUInstallDirsWrapper.cmake
+ cmake/MSVCRuntime.cmake
  cmake/iOSToolchain.cmake
  cmake/today.cmake
  config.h.in
- cunit/CMakeLists.txt
  docs/Doxyfile
  docs/FreeRDP.vsd
  docs/README.android
@@ -617,25 +751,14 @@ Files: ChangeLog
  external/README
  freerdp.pc.in
  freerdp.spec
- include/CMakeLists.txt
  include/freerdp/version.h.in
- libfreerdp/CMakeLists.txt
- libfreerdp/cache/CMakeLists.txt
- libfreerdp/codec/CMakeLists.txt
  libfreerdp/codec/codec_internal.h
- libfreerdp/common/CMakeLists.txt
- libfreerdp/core/CMakeLists.txt
- libfreerdp/crypto/CMakeLists.txt
- libfreerdp/gdi/CMakeLists.txt
- libfreerdp/gdi/test/.gitignore
  libfreerdp/gdi/test/CMakeLists.txt
- libfreerdp/locale/CMakeLists.txt
+ libfreerdp/gdi/test/.gitignore
  libfreerdp/primitives/CMakeLists.txt
  libfreerdp/primitives/README.txt
- libfreerdp/primitives/test/.gitignore
  libfreerdp/primitives/test/CMakeLists.txt
- libfreerdp/rail/CMakeLists.txt
- libfreerdp/utils/CMakeLists.txt
+ libfreerdp/primitives/test/.gitignore
  resources/FreeRDP-fav.ico
  resources/FreeRDP.ico
  resources/FreeRDP_Icon.png
@@ -650,159 +773,66 @@ Files: ChangeLog
  resources/FreeRDP_Logo_Icon.svg
  resources/FreeRDP_OSX.icns
  scripts/.gitignore
- scripts/OpenSSL-DownloadAndBuild.command
  scripts/OpenSSL-iFreeRDP.diff
  scripts/regenerate_jni_headers.sh.cmake
  server/.gitignore
- server/CMakeLists.txt
  server/Mac/.gitignore
- server/Mac/CMakeLists.txt
  server/Mac/server.crt
  server/Mac/server.key
- server/Sample/CMakeLists.txt
  server/Sample/rfx_test.pcap
  server/Sample/server.crt
  server/Sample/server.key
  server/Sample/test_icon.ppm
- server/Windows/CMakeLists.txt
- server/Windows/cli/CMakeLists.txt
  server/Windows/server.crt
  server/Windows/server.key
- server/X11/CMakeLists.txt
- server/X11/cli/CMakeLists.txt
  server/X11/rfx_test.pcap
  server/X11/server.crt
  server/X11/server.key
- server/common/CMakeLists.txt
  server/common/module.def
  third-party/.gitignore
- third-party/CMakeLists.txt
  winpr/.gitignore
- winpr/CMakeLists.txt
- winpr/include/CMakeLists.txt
- winpr/libwinpr/CMakeLists.txt
- winpr/libwinpr/asn1/CMakeLists.txt
- winpr/libwinpr/asn1/ModuleOptions.cmake
  winpr/libwinpr/asn1/module.def
  winpr/libwinpr/asn1/test/.gitignore
- winpr/libwinpr/asn1/test/CMakeLists.txt
- winpr/libwinpr/bcrypt/CMakeLists.txt
- winpr/libwinpr/bcrypt/ModuleOptions.cmake
- winpr/libwinpr/credentials/CMakeLists.txt
- winpr/libwinpr/credentials/ModuleOptions.cmake
  winpr/libwinpr/credentials/module.def
- winpr/libwinpr/credui/CMakeLists.txt
- winpr/libwinpr/credui/ModuleOptions.cmake
  winpr/libwinpr/credui/module.def
  winpr/libwinpr/credui/test/.gitignore
- winpr/libwinpr/credui/test/CMakeLists.txt
- winpr/libwinpr/crt/CMakeLists.txt
- winpr/libwinpr/crt/ModuleOptions.cmake
  winpr/libwinpr/crt/module.def
  winpr/libwinpr/crt/test/.gitignore
- winpr/libwinpr/crt/test/CMakeLists.txt
- winpr/libwinpr/crypto/CMakeLists.txt
- winpr/libwinpr/crypto/ModuleOptions.cmake
  winpr/libwinpr/crypto/module.def
  winpr/libwinpr/crypto/test/.gitignore
- winpr/libwinpr/crypto/test/CMakeLists.txt
- winpr/libwinpr/dsparse/CMakeLists.txt
- winpr/libwinpr/dsparse/ModuleOptions.cmake
  winpr/libwinpr/dsparse/module.def
  winpr/libwinpr/dsparse/test/.gitignore
- winpr/libwinpr/dsparse/test/CMakeLists.txt
- winpr/libwinpr/environment/CMakeLists.txt
- winpr/libwinpr/environment/ModuleOptions.cmake
  winpr/libwinpr/environment/module.def
- winpr/libwinpr/error/CMakeLists.txt
- winpr/libwinpr/error/ModuleOptions.cmake
  winpr/libwinpr/error/module.def
- winpr/libwinpr/file/CMakeLists.txt
- winpr/libwinpr/file/ModuleOptions.cmake
  winpr/libwinpr/file/test/.gitignore
- winpr/libwinpr/file/test/CMakeLists.txt
- winpr/libwinpr/handle/CMakeLists.txt
- winpr/libwinpr/handle/ModuleOptions.cmake
  winpr/libwinpr/handle/module.def
- winpr/libwinpr/heap/CMakeLists.txt
- winpr/libwinpr/heap/ModuleOptions.cmake
  winpr/libwinpr/heap/module.def
- winpr/libwinpr/input/CMakeLists.txt
  winpr/libwinpr/input/ModuleOptions.cmake
- winpr/libwinpr/interlocked/CMakeLists.txt
- winpr/libwinpr/interlocked/ModuleOptions.cmake
  winpr/libwinpr/interlocked/module.def
  winpr/libwinpr/interlocked/module_5.1.def
  winpr/libwinpr/interlocked/test/.gitignore
- winpr/libwinpr/interlocked/test/CMakeLists.txt
- winpr/libwinpr/io/CMakeLists.txt
- winpr/libwinpr/io/ModuleOptions.cmake
  winpr/libwinpr/io/module.def
  winpr/libwinpr/io/test/.gitignore
- winpr/libwinpr/io/test/CMakeLists.txt
- winpr/libwinpr/library/CMakeLists.txt
- winpr/libwinpr/library/ModuleOptions.cmake
  winpr/libwinpr/library/module.def
  winpr/libwinpr/library/test/.gitignore
- winpr/libwinpr/library/test/CMakeLists.txt
- winpr/libwinpr/library/test/TestLibraryA/CMakeLists.txt
  winpr/libwinpr/library/test/TestLibraryA/module.def
- winpr/libwinpr/library/test/TestLibraryB/CMakeLists.txt
  winpr/libwinpr/library/test/TestLibraryB/module.def
- winpr/libwinpr/path/CMakeLists.txt
- winpr/libwinpr/path/ModuleOptions.cmake
  winpr/libwinpr/path/test/.gitignore
- winpr/libwinpr/path/test/CMakeLists.txt
- winpr/libwinpr/pipe/CMakeLists.txt
- winpr/libwinpr/pipe/ModuleOptions.cmake
  winpr/libwinpr/pipe/module.def
  winpr/libwinpr/pipe/test/.gitignore
- winpr/libwinpr/pipe/test/CMakeLists.txt
- winpr/libwinpr/pool/CMakeLists.txt
- winpr/libwinpr/pool/ModuleOptions.cmake
  winpr/libwinpr/pool/module.def
  winpr/libwinpr/pool/test/.gitignore
- winpr/libwinpr/pool/test/CMakeLists.txt
- winpr/libwinpr/registry/CMakeLists.txt
- winpr/libwinpr/registry/ModuleOptions.cmake
  winpr/libwinpr/registry/module.def
- winpr/libwinpr/rpc/CMakeLists.txt
- winpr/libwinpr/rpc/ModuleOptions.cmake
  winpr/libwinpr/rpc/module.def
- winpr/libwinpr/sspi/CMakeLists.txt
- winpr/libwinpr/sspi/ModuleOptions.cmake
  winpr/libwinpr/sspi/module.def
  winpr/libwinpr/sspi/test/.gitignore
- winpr/libwinpr/sspi/test/CMakeLists.txt
- winpr/libwinpr/sspicli/CMakeLists.txt
- winpr/libwinpr/sspicli/ModuleOptions.cmake
- winpr/libwinpr/synch/CMakeLists.txt
- winpr/libwinpr/synch/ModuleOptions.cmake
  winpr/libwinpr/synch/test/.gitignore
- winpr/libwinpr/synch/test/CMakeLists.txt
- winpr/libwinpr/sysinfo/CMakeLists.txt
- winpr/libwinpr/sysinfo/ModuleOptions.cmake
  winpr/libwinpr/sysinfo/module.def
  winpr/libwinpr/sysinfo/test/.gitignore
- winpr/libwinpr/sysinfo/test/CMakeLists.txt
- winpr/libwinpr/thread/CMakeLists.txt
- winpr/libwinpr/thread/ModuleOptions.cmake
  winpr/libwinpr/thread/module.def
- winpr/libwinpr/timezone/CMakeLists.txt
- winpr/libwinpr/timezone/ModuleOptions.cmake
- winpr/libwinpr/utils/CMakeLists.txt
  winpr/libwinpr/utils/ModuleOptions.cmake
  winpr/libwinpr/utils/test/.gitignore
- winpr/libwinpr/utils/test/CMakeLists.txt
- winpr/libwinpr/winhttp/CMakeLists.txt
- winpr/libwinpr/winhttp/ModuleOptions.cmake
- winpr/libwinpr/winsock/CMakeLists.txt
- winpr/libwinpr/winsock/ModuleOptions.cmake
- winpr/tools/CMakeLists.txt
- winpr/tools/hash/CMakeLists.txt
  winpr/tools/makecert/.gitignore
- winpr/tools/makecert/CMakeLists.txt
- winpr/tools/makecert/cli/CMakeLists.txt
  channels/sample/client/server_chan_test.cpp
  client/X11/generate_argument_docbook.c
  client/common/test/TestClientChannels.c
@@ -913,6 +943,52 @@ Files: ChangeLog
  winpr/libwinpr/utils/test/TestPubSub.c
  winpr/libwinpr/utils/test/TestQueue.c
  winpr/libwinpr/utils/test/TestStreamPool.c
+ winpr/libwinpr/winhttp/ModuleOptions.cmake
+ winpr/libwinpr/library/ModuleOptions.cmake
+ winpr/libwinpr/crypto/ModuleOptions.cmake
+ winpr/libwinpr/timezone/ModuleOptions.cmake
+ winpr/libwinpr/error/ModuleOptions.cmake
+ winpr/libwinpr/thread/ModuleOptions.cmake
+ winpr/libwinpr/synch/ModuleOptions.cmake
+ winpr/libwinpr/winsock/ModuleOptions.cmake
+ winpr/libwinpr/dsparse/ModuleOptions.cmake
+ winpr/libwinpr/sspicli/ModuleOptions.cmake
+ winpr/libwinpr/credentials/ModuleOptions.cmake
+ winpr/libwinpr/credui/ModuleOptions.cmake
+ winpr/libwinpr/sspi/ModuleOptions.cmake
+ winpr/libwinpr/bcrypt/ModuleOptions.cmake
+ winpr/libwinpr/io/ModuleOptions.cmake
+ winpr/libwinpr/environment/ModuleOptions.cmake
+ winpr/libwinpr/interlocked/ModuleOptions.cmake
+ winpr/libwinpr/path/ModuleOptions.cmake
+ winpr/libwinpr/utils/ModuleOptions.cmake
+ winpr/libwinpr/asn1/ModuleOptions.cmake
+ winpr/libwinpr/input/ModuleOptions.cmake
+ winpr/libwinpr/sysinfo/ModuleOptions.cmake
+ winpr/libwinpr/registry/ModuleOptions.cmake
+ winpr/libwinpr/pool/ModuleOptions.cmake
+ winpr/libwinpr/heap/ModuleOptions.cmake
+ winpr/libwinpr/handle/ModuleOptions.cmake
+ winpr/libwinpr/pipe/ModuleOptions.cmake
+ winpr/libwinpr/crt/ModuleOptions.cmake
+ winpr/libwinpr/file/ModuleOptions.cmake
+ winpr/libwinpr/rpc/ModuleOptions.cmake
+ winpr/libwinpr/library/test/CMakeLists.txt
+ winpr/libwinpr/crypto/test/CMakeLists.txt
+ winpr/libwinpr/synch/test/CMakeLists.txt
+ winpr/libwinpr/dsparse/test/CMakeLists.txt
+ winpr/libwinpr/credui/test/CMakeLists.txt
+ winpr/libwinpr/sspi/test/CMakeLists.txt
+ winpr/libwinpr/io/test/CMakeLists.txt
+ winpr/libwinpr/interlocked/test/CMakeLists.txt
+ winpr/libwinpr/path/test/CMakeLists.txt
+ winpr/libwinpr/utils/test/CMakeLists.txt
+ winpr/libwinpr/asn1/test/CMakeLists.txt
+ winpr/libwinpr/sysinfo/test/CMakeLists.txt
+ winpr/libwinpr/pool/test/CMakeLists.txt
+ winpr/libwinpr/pipe/test/CMakeLists.txt
+ winpr/libwinpr/crt/test/CMakeLists.txt
+ winpr/libwinpr/file/test/CMakeLists.txt
 Copyright: *No copyright*
 License: Apache-2.0
 Comment:
@@ -939,6 +1015,7 @@ Files: channels/audin/client/alsa/audin_alsa.c
  channels/tsmf/client/alsa/tsmf_alsa.c
  channels/tsmf/client/ffmpeg/tsmf_ffmpeg.c
  channels/tsmf/client/pulse/tsmf_pulse.c
+ channels/tsmf/client/gstreamer/CMakeLists.txt
  channels/tsmf/client/tsmf_audio.c
  channels/tsmf/client/tsmf_audio.h
  channels/tsmf/client/tsmf_codec.h
@@ -1078,10 +1155,12 @@ Copyright: 2010-2011, Vic Lee
   2012, Marc-Andre Moreau <marcandre.moreau@gmail.com>
 License: Apache-2.0
 
-Files: channels/urbdrc/client/data_transfer.c
+Files: channels/urbdrc/client/CMakeLists.txt
+ channels/urbdrc/client/data_transfer.c
  channels/urbdrc/client/data_transfer.h
  channels/urbdrc/client/isoch_queue.c
  channels/urbdrc/client/isoch_queue.h
+ channels/urbdrc/client/libusb/CMakeLists.txt
  channels/urbdrc/client/libusb/libusb_udevice.c
  channels/urbdrc/client/libusb/libusb_udevice.h
  channels/urbdrc/client/libusb/libusb_udevman.c
@@ -1424,6 +1503,38 @@ Files: channels/drive/client/dirent.h
 Copyright: 2006, Toni Ronkko
 License: MIT/X11~BSD-like
 
+Files: cmake/AutoVersioning.cmake
+Copyright: 2011, O.S. Systems Software Ltda.
+ 2011, Otavio Salvador <otavio@ossystems.com.br>
+License: Apache-2.0
+
+Files: CMakeLists.txt
+ cunit/CMakeLists.txt
+ include/CMakeLists.txt
+Copyright: 2011, O.S. Systems Software Ltda.
+ 2011, Otavio Salvador <otavio@ossystems.com.br>
+ 2011, Marc-Andre Moreau <marcandre.moreau@gmail.com>
+ 2012, HP Development Company, LLC
+License: Apache-2.0
+
+Files: cmake/FindDirectFB.cmake
+Copyright: 2011, O.S. Systems Software Ltda.
+ 2011, Otavio Salvador <otavio@ossystems.com.br>
+ 2011, Marc-Andre Moreau <marcandre.moreau@gmail.com>
+License: Apache-2.0
+
+Files: channels/rdpsnd/client/mac/CMakeLists.txt
+Copyright: 2012, Laxmikant Rashinkar <LK.Rashinkar@gmail.com>
+ 2012, Marc-Andre Moreau <marcandre.moreau@gmail.com>
+ 2013, Corey Clayton <can.of.tuna@gmail.com>
+License: Apache-2.0
+
+Files: channels/tsmf/client/CMakeLists.txt
+Copyright: 2012, Marc-Andre Moreau <marcandre.moreau@gmail.com>
+ 2012, Hewlett-Packard Development Company, L.P.
+License: Apache-2.0
+
+
 Files: debian/*
 Copyright: 2013-2014, Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
            2014, Sebastian Ramacher <sramacher@debian.org>
@@ -1491,3 +1602,72 @@ License: UNICODE
  Unicode Standard, and to make copies of this file in any form
  for internal or external distribution as long as this notice
  remains attached.
+
+License: BSD-3-clause
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ .
+ 1.  Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+ .
+ 2.  Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions and the following disclaimer in the documentation
+     and/or other materials provided with the distribution.
+ .
+ 3.  The name of the copyright holders may be used to endorse or promote
+     products derived from this software without specific prior written
+     permission.
+ .
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ POSSIBILITY OF SUCH DAMAGE.
+
+License: Expat
+ Permission is hereby granted, free of charge, to any person obtaining a copy of
+ this software and associated documentation files (the "Software"), to deal in
+ the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ of the Software, and to permit persons to whom the Software is furnished to do
+ so, subject to the following conditions:
+ .
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE. 
+
+License: Boost-1.0
+ Permission is hereby granted, free of charge, to any person or organization
+ obtaining a copy of the software and accompanying documentation covered by
+ this license (the "Software") to use, reproduce, display, distribute,
+ execute, and transmit the Software, and to prepare derivative works of the
+ Software, and to permit third-parties to whom the Software is furnished to
+ do so, all subject to the following:
+ .
+ The copyright notices in the Software and this entire statement, including
+ the above license grant, this restriction and the following disclaimer,
+ must be included in all copies of the Software, in whole or in part, and
+ all derivative works of the Software, unless such copies or derivative
+ works are solely in the form of machine-executable object code generated by
+ a source language processor.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+ SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ DEALINGS IN THE SOFTWARE.
