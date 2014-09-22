@@ -1,4 +1,4 @@
-freerdp (1.1.0~git20140921.1.440916e+dfsg1-1) UNRELEASED; urgency=medium
+freerdp (1.1.0~git20140921.1.440916e+dfsg1-1) unstable; urgency=medium
 
   [ Mike Gabriel ]
   * New Git snapshot upload to unstable:
@@ -46,7 +46,7 @@ freerdp (1.1.0~git20140921.1.440916e+dfsg1-1) UNRELEASED; urgency=medium
   * Ignore plugins when running dh_makeshlibs to fix lintian warnings and
     errors in libfreerdp-plugins-standard.
 
- -- Mike Gabriel <sunweaver@debian.org>  Mon, 22 Sep 2014 15:31:16 +0200
+ -- Mike Gabriel <sunweaver@debian.org>  Mon, 22 Sep 2014 21:40:55 +0200
 
 freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-4) unstable; urgency=medium
 
