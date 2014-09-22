@@ -133,6 +133,7 @@ $(PKG)_$(VER)$(DTYPE).orig.tar.xz: $(info I: GIT Revision=$(UREV))
 	        client/iOS/ \
 	        client/Mac/ \
 	        client/Windows/ \
+	        scripts/OpenSSL-DownloadAndBuild.command \
 	    && $(RM) -r .git .git*
 	@echo "# Packing..."
 	find -L "$(PKG)-$(VER)" -xdev -type f -print | sort \
