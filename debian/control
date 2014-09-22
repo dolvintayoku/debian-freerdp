@@ -37,7 +37,7 @@ Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Recommends: libfreerdp-plugins-standard
 Provides: freerdp
-Description: RDP client for Windows Terminal Services
+Description: RDP client for Windows Terminal Services (X11 client)
  FreeRDP is a client for Windows Terminal Services implementing the Remote
  Desktop Protocol (RDP).
  .
@@ -227,9 +227,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (ASN1 library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (ASN1 library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-asn1 shared library.
 
@@ -242,9 +248,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (bcrypt library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (bcrypt library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-bcrypt shared library.
 
@@ -257,9 +269,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (credentials library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (credentials library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-credentials shared library.
 
@@ -272,9 +290,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (credeui library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (credeui library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-credeui shared library.
 
@@ -287,9 +311,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (crt library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (crt library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-crt shared library.
 
@@ -302,9 +332,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (crypto library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (crypto library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-crypto shared library.
 
@@ -317,9 +353,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (dsparse library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (dsparse library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-dsparse shared library.
 
@@ -332,9 +374,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (environment library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (environment library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-environment shared library.
 
@@ -347,9 +395,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (error library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (error library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-error shared library.
 
@@ -362,9 +416,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (file library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (file library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-file shared library.
 
@@ -377,9 +437,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (handle library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (handle library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-handle shared library.
 
@@ -392,9 +458,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (heap library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (heap library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-heap shared library.
 
@@ -407,9 +479,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (input library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (input library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-input shared library.
 
@@ -422,9 +500,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (interlocked library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (interlocked library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-interlocked shared library.
 
@@ -437,9 +521,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (io library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (io library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-io shared library.
 
@@ -452,9 +542,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winor-library shared library.
 
@@ -467,9 +563,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (path library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (path library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-path shared library.
 
@@ -482,9 +584,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (pipe library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (pipe library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-pipe shared library.
 
@@ -497,9 +605,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (pool library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (pool library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-pool shared library.
 
@@ -512,9 +626,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (registry library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (registry library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-registry shared library.
 
@@ -527,9 +647,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (RPC library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (RPC library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-rpc shared library.
 
@@ -542,9 +668,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (sspi library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (sspi library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-sspi shared library.
 
@@ -557,9 +689,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (sspicli library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (sspicli library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-sspicli shared library.
 
@@ -572,9 +710,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (synch library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (synch library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-synch shared library.
 
@@ -587,9 +731,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (sysinfo library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (sysinfo library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-sysinfo shared library.
 
@@ -602,9 +752,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (thread library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (thread library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-thread shared library.
 
@@ -617,9 +773,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (timezone library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (timezone library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-timezone shared library.
 
@@ -632,9 +794,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (utils library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (utils library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-utils shared library.
 
@@ -647,9 +815,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (winhttp library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (winhttp library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-winhttp shared library.
 
@@ -662,9 +836,15 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (winsock library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Description: Windows Portable Runtime library (winsock library)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the winpr-winsock shared library.
 
@@ -685,9 +865,9 @@ Description: RDP client for Windows Terminal Services (xfreerdp-client library)
 
 Package: libfreerdp-plugins-standard
 Architecture: any
+Multi-Arch: same
 Section: libs
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Multi-Arch: same
 Description: RDP client for Windows Terminal Services (plugins)
  FreeRDP is a client for Windows Terminal Services implementing the Remote
  Desktop Protocol (RDP).
@@ -699,8 +879,10 @@ Description: RDP client for Windows Terminal Services (plugins)
 Package: libfreerdp-dev
 Section: libdevel
 Architecture: any
+Multi-Arch: same
 Depends:
  ${misc:Depends},
+ libwinpr-dev (= ${binary:Version}),
  libfreerdp-cache1.1 (= ${binary:Version}),
  libfreerdp-client1.1 (= ${binary:Version}),
  libfreerdp-codec1.1 (= ${binary:Version}),
@@ -712,6 +894,19 @@ Depends:
  libfreerdp-primitives1.1 (= ${binary:Version}),
  libfreerdp-rail1.1 (= ${binary:Version}),
  libfreerdp-utils1.1 (= ${binary:Version}),
+ libxfreerdp-client1.1 (= ${binary:Version}),
+Description: RDP client for Windows Terminal Services (development files)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the FreeRDP development files.
+
+Package: libwinpr-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends:
+ ${misc:Depends},
  libwinpr-asn1-0.1 (= ${binary:Version}),
  libwinpr-bcrypt0.1 (= ${binary:Version}),
  libwinpr-credentials0.1 (= ${binary:Version}),
@@ -742,11 +937,17 @@ Depends:
  libwinpr-utils0.1 (= ${binary:Version}),
  libwinpr-winhttp0.1 (= ${binary:Version}),
  libwinpr-winsock0.1 (= ${binary:Version}),
- libxfreerdp-client1.1 (= ${binary:Version}),
- libfreerdp-plugins-standard (= ${binary:Version})
-Description: RDP client for Windows Terminal Services (development)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Breaks: libfreerdp-dev (<< 1.1.0~git20140921.1.440916e+dfsg-1)
+Replaces: libfreerdp-dev (<< 1.1.0~git20140921.1.440916e+dfsg-1)
+Description: Windows Portable Runtime library (development files)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
  This package contains the development files.
 
@@ -755,12 +956,30 @@ Section: debug
 Priority: extra
 Architecture: any
 Depends:
- ${misc:Depends}, freerdp-x11 (= ${binary:Version}),
-Description: RDP client for Windows Terminal Services (debug)
+ ${misc:Depends},
+ freerdp-x11 (= ${binary:Version}),
+Description: RDP client for Windows Terminal Services (X11 client, debug symbols)
  FreeRDP is a client for Windows Terminal Services implementing the Remote
  Desktop Protocol (RDP).
  .
  This package contains the debug symbols of the xfreerdp executable.
+
+Package: libxfreerdp-client-dbg
+Section: debug
+Priority: extra
+Multi-Arch: same
+Architecture: any
+Depends:
+ ${misc:Depends},
+ libxfreerdp-client1.1 (= ${binary:Version}),
+Suggests: freerdp-x11
+Breaks: libfreerdp1-dbg (<< 1.1.0~git20140921.1.440916e+dfsg-1)
+Replaces: libfreerdp1-dbg (<< 1.1.0~git20140921.1.440916e+dfsg-1)
+Description: RDP client for Windows Terminal Services (xfreerdp-client debug symbols)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the xfreerdp-client debug symbols.
 
 Package: libfreerdp-dbg
 Section: debug
@@ -780,6 +999,21 @@ Depends:
  libfreerdp-primitives1.1 (= ${binary:Version}),
  libfreerdp-rail1.1 (= ${binary:Version}),
  libfreerdp-utils1.1 (= ${binary:Version}),
+Breaks: libfreerdp1-dbg (<< 1.1.0~git20140921.1.440916e+dfsg-1)
+Replaces: libfreerdp1-dbg (<< 1.1.0~git20140921.1.440916e+dfsg-1)
+Description: RDP client for Windows Terminal Services (debug symbols)
+ FreeRDP is a client for Windows Terminal Services implementing the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the debug symbols of the FreeRDP shared libraries.
+
+Package: libwinpr-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Multi-Arch: same
+Depends:
+ ${misc:Depends},
  libwinpr-asn1-0.1 (= ${binary:Version}),
  libwinpr-bcrypt0.1 (= ${binary:Version}),
  libwinpr-credentials0.1 (= ${binary:Version}),
@@ -811,11 +1045,19 @@ Depends:
  libwinpr-winhttp0.1 (= ${binary:Version}),
  libwinpr-winsock0.1 (= ${binary:Version}),
  libxfreerdp-client1.1 (= ${binary:Version})
-Description: RDP client for Windows Terminal Services (debug symbols)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
- Desktop Protocol (RDP).
+Breaks: libfreerdp1-dbg (<< 1.1.0~git20140921.1.440916e+dfsg-1)
+Replaces: libfreerdp1-dbg (<< 1.1.0~git20140921.1.440916e+dfsg-1)
+Description: Windows Portable Runtime library (debug symbols)
+ WinPR is a spin-off project of FreeRDP which aims at providing a portable
+ implementation of important portions of the Windows API. Just like FreeRDP,
+ WinPR is released under the Apache license. Unlike Wine, WinPR does not provide
+ binary compatibility, and does not require applications to be built for
+ Windows. Instead, WinPR provides API compatibility for applications targeting
+ non-Windows environments. When on Windows, the original native API is being
+ used instead of the equivalent WinPR implementation, without having to modify
+ the code using it.
  .
- This package contains the debug symbols of the shared libraries.
+ This package contains the debug symbols of the WinPR shared libraries.
 
 Package: libfreerdp-plugins-standard-dbg
 Section: debug
@@ -823,7 +1065,8 @@ Priority: extra
 Architecture: any
 Multi-Arch: same
 Depends:
-  ${misc:Depends}, libfreerdp-plugins-standard (= ${binary:Version}),
+ ${misc:Depends},
+ libfreerdp-plugins-standard (= ${binary:Version}),
 Description: RDP client for Windows Terminal Services (plugins debug)
  FreeRDP is a client for Windows Terminal Services implementing the Remote
  Desktop Protocol (RDP).
