@@ -732,13 +732,6 @@ Files: ChangeLog
  client/common/test/.gitignore
  cmake/ComplexLibrary.cmake
  cmake/ConfigOptions.cmake
-<<<<<<< Updated upstream
-=======
- cmake/FindDBus.cmake
- cmake/FindDbusGlib.cmake
- cmake/FindDirectFB.cmake
- cmake/FindDocBookXSL.cmake
->>>>>>> Stashed changes
  cmake/FindFFmpeg.cmake
  cmake/FindFeature.cmake
  cmake/FindGstreamer.cmake
