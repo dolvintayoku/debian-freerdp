@@ -39,18 +39,20 @@ Depends: ${misc:Depends}, ${shlibs:Depends}
 Recommends: libfreerdp-plugins-standard
 Provides: freerdp
 Description: RDP client for Windows Terminal Services (X11 client)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
- Currently, the following Windows Versions are supported:
+ Currently, the FreeRDP client supports the following Windows Versions:
  .
   * Windows NT Server
   * Windows 2000 Terminal Server
   * Windows XP
   * Windows 2003 Server
   * Windows Vista
-  * Windows 2008 Server
+  * Windows 2008/2008r2/2011SBS Server
   * Windows 7
+  * Windows 2012 Server
+  * Windows 8
  .
  This package contains the X11 based client.
 
@@ -63,8 +65,8 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (cache library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (cache library)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the cache shared library.
@@ -78,8 +80,8 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (client library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (client library)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the freerdp-client shared library.
@@ -93,8 +95,8 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (codec library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (codec library)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the freerdp-codec shared library.
@@ -108,8 +110,8 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (common library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (common library)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the freerdp-common shared library.
@@ -123,8 +125,8 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (core library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (core library)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the freerdp-core shared library.
@@ -138,8 +140,8 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (freerdp-crypto library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (freerdp-crypto library)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the freerdp-crypto shared library.
@@ -153,8 +155,8 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (GDI library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (GDI library)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the freerdp-gdi shared library.
@@ -168,8 +170,8 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (locale library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (locale library)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the freerdp-locale shared library.
@@ -183,8 +185,8 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (primitives library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (primitives library)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the freerdp-primitives shared library.
@@ -198,8 +200,8 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (rail library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (rail library)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the freerdp-rail shared library.
@@ -213,8 +215,8 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (freerdp-utils library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (freerdp-utils library)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the freerdp-utils shared library.
@@ -858,8 +860,8 @@ Multi-Arch: same
 Suggests: freerdp-x11
 Breaks: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1 (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (xfreerdp-client library)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (xfreerdp-client library)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the xfreerdp-client shared library.
@@ -870,7 +872,7 @@ Multi-Arch: same
 Section: libs
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: RDP client for Windows Terminal Services (plugins)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the plugins available to the Channel Manager extending
@@ -896,8 +898,8 @@ Depends:
  libfreerdp-rail1.1 (= ${binary:Version}),
  libfreerdp-utils1.1 (= ${binary:Version}),
  libxfreerdp-client1.1 (= ${binary:Version}),
-Description: RDP client for Windows Terminal Services (development files)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (development files)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the FreeRDP development files.
@@ -960,7 +962,7 @@ Depends:
  ${misc:Depends},
  freerdp-x11 (= ${binary:Version}),
 Description: RDP client for Windows Terminal Services (X11 client, debug symbols)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the debug symbols of the xfreerdp executable.
@@ -977,7 +979,7 @@ Suggests: freerdp-x11
 Breaks: libfreerdp1-dbg (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1-dbg (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Description: RDP client for Windows Terminal Services (xfreerdp-client debug symbols)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the xfreerdp-client debug symbols.
@@ -1002,8 +1004,8 @@ Depends:
  libfreerdp-utils1.1 (= ${binary:Version}),
 Breaks: libfreerdp1-dbg (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1-dbg (<< 1.1.0~git20140921.1.440916e+dfsg-1)
-Description: RDP client for Windows Terminal Services (debug symbols)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+Description: Free Remote Desktop Protocol library (debug symbols)
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the debug symbols of the FreeRDP shared libraries.
@@ -1069,7 +1071,7 @@ Depends:
  ${misc:Depends},
  libfreerdp-plugins-standard (= ${binary:Version}),
 Description: RDP client for Windows Terminal Services (plugins debug)
- FreeRDP is a client for Windows Terminal Services implementing the Remote
+ FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
  .
  This package contains the debug symbols of libfreerdp-plugin-standard.
