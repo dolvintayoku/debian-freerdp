@@ -27,6 +27,7 @@ Build-Depends:
  xmlto,
  libavcodec-dev,
  libxi-dev,
+ libgstreamer-plugins-base0.10-dev,
 Standards-Version: 3.9.5
 Homepage: http://www.freerdp.com/
 Vcs-Browser: http://anonscm.debian.org/gitweb?p=collab-maint/freerdp.git
