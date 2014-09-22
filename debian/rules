@@ -22,6 +22,7 @@ DEB_DH_INSTALL_ARGS += --fail-missing
 
 DEB_CMAKE_EXTRA_FLAGS :=  -DCMAKE_INSTALL_INCLUDEDIR=include/$(shell dpkg-architecture -qDEB_BUILD_MULTIARCH) \
                           -DBUILD_TESTING=ON \
+                          -DWITH_SERVER=ON \
                           -DWITH_PULSE=ON \
                           -DWITH_GSTREAMER=ON \
                           -DWITH_CHANNELS=ON \
