@@ -80,12 +80,15 @@ DEB_DH_STRIP_ARGS_libfreerdp-gdi1.1 = --dbg-package=libfreerdp-dbg
 DEB_DH_STRIP_ARGS_libfreerdp-locale1.1 = --dbg-package=libfreerdp-dbg
 DEB_DH_STRIP_ARGS_libfreerdp-primitives1.1 = --dbg-package=libfreerdp-dbg
 DEB_DH_STRIP_ARGS_libfreerdp-rail1.1 = --dbg-package=libfreerdp-dbg
+DEB_DH_STRIP_ARGS_libfreerdp-server1.1 = --dbg-package=libfreerdp-dbg
 DEB_DH_STRIP_ARGS_libfreerdp-utils1.1 = --dbg-package=libfreerdp-dbg
 
 DEB_DH_STRIP_ARGS_libfreerdp-plugins-standard = --dbg-package=libfreerdp-plugins-standard-dbg
 
 DEB_DH_STRIP_ARGS_freerdp-x11 = --dbg-package=freerdp-x11-dbg
 DEB_DH_STRIP_ARGS_libxfreerdp-client1.1 = --dbg-package=libxfreerdp-client-dbg
+
+DEB_DH_STRIP_ARGS_libxfreerdp-server1.1 = --dbg-package=libxfreerdp-server-dbg
 
 remove-cruft::
 	rm -f debian/tmp/usr/lib/$(shell dpkg-architecture -qDEB_BUILD_MULTIARCH)/libwinpr-makecert-tool.a

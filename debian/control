@@ -206,6 +206,18 @@ Description: Free Remote Desktop Protocol library (rail library)
  .
  This package contains the freerdp-rail shared library.
 
+Package: libfreerdp-server1.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Description: Free Remote Desktop Protocol library (server library)
+ FreeRDP is a libre client/server implementation of the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the freerdp-server shared library.
+
 Package: libfreerdp-utils1.1
 Architecture: any
 Section: libs
@@ -866,6 +878,18 @@ Description: Free Remote Desktop Protocol library (xfreerdp-client library)
  .
  This package contains the xfreerdp-client shared library.
 
+Package: libxfreerdp-server1.1
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Description: Free Remote Desktop Protocol library (xfreerdp-server library)
+ FreeRDP is a libre client/server implementation of the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the xfreerdp-server shared library.
+
 Package: libfreerdp-plugins-standard
 Architecture: any
 Multi-Arch: same
@@ -896,8 +920,10 @@ Depends:
  libfreerdp-locale1.1 (= ${binary:Version}),
  libfreerdp-primitives1.1 (= ${binary:Version}),
  libfreerdp-rail1.1 (= ${binary:Version}),
+ libfreerdp-server1.1 (= ${binary:Version}),
  libfreerdp-utils1.1 (= ${binary:Version}),
  libxfreerdp-client1.1 (= ${binary:Version}),
+ libxfreerdp-server1.1  (= ${binary:Version}),
 Description: Free Remote Desktop Protocol library (development files)
  FreeRDP is a libre client/server implementation of the Remote
  Desktop Protocol (RDP).
@@ -984,6 +1010,20 @@ Description: RDP client for Windows Terminal Services (xfreerdp-client debug sym
  .
  This package contains the xfreerdp-client debug symbols.
 
+Package: libxfreerdp-server-dbg
+Section: debug
+Priority: extra
+Multi-Arch: same
+Architecture: any
+Depends:
+ ${misc:Depends},
+ libxfreerdp-server1.1 (= ${binary:Version}),
+Description: RDP client for Windows Terminal Services (xfreerdp-server debug symbols)
+ FreeRDP is a libre client/server implementation of the Remote
+ Desktop Protocol (RDP).
+ .
+ This package contains the xfreerdp-server debug symbols.
+
 Package: libfreerdp-dbg
 Section: debug
 Priority: extra
@@ -1001,6 +1041,7 @@ Depends:
  libfreerdp-locale1.1 (= ${binary:Version}),
  libfreerdp-primitives1.1 (= ${binary:Version}),
  libfreerdp-rail1.1 (= ${binary:Version}),
+ libfreerdp-server1.1 (= ${binary:Version}),
  libfreerdp-utils1.1 (= ${binary:Version}),
 Breaks: libfreerdp1-dbg (<< 1.1.0~git20140921.1.440916e+dfsg-1)
 Replaces: libfreerdp1-dbg (<< 1.1.0~git20140921.1.440916e+dfsg-1)
