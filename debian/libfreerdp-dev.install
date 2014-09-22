@@ -1,5 +1,5 @@
-usr/include
-usr/lib/*/*.so
-usr/lib/*/*.a
-usr/lib/*/freerdp/*.a
+usr/include/*/freerdp/*.h
+usr/include/*/freerdp/*/*.h
+usr/lib/*/libfreerdp-*.so
+usr/lib/*/libxfreerdp-client.so
 usr/lib/*/pkgconfig
