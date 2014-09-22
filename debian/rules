@@ -104,7 +104,7 @@ clean::
 PKD   = $(word 1,$(abspath $(dir $(MAKEFILE_LIST))))
 PKG   = $(word 2,$(shell dpkg-parsechangelog -l$(PKD)/changelog | grep ^Source))
 UVER  = $(shell dpkg-parsechangelog -l$(PKD)/changelog | perl -ne 'print $$1 if m{^Version:\s+(?:\d+:)?(\d.*)(?:\-\d+.*)};')
-DTYPE = +dfsg
+DTYPE = +dfsg1
 VER  ?= $(subst $(DTYPE),,$(UVER))
 
 UURL = git://github.com/FreeRDP/FreeRDP.git

@@ -1,9 +1,43 @@
-freerdp (1.1.0~git20140921.1.440916e+dfsg-1) UNRELEASED; urgency=medium
+freerdp (1.1.0~git20140921.1.440916e+dfsg1-1) UNRELEASED; urgency=medium
 
   [ Mike Gabriel ]
   * New Git snapshot upload to unstable:
     - Obtained from stable-1.1 branch of http://github.com/FreeRDP/FreeRDP.
       Using commit hash: 440916eae2e07463912d5fe507677e67096eb083.
+  * debian/control:
+    + Add B-D: cdbs.
+    + Add B-D: libgstreamer-plugins-base0.10-dev.
+    + Split out libwinpr-dev from libfreerdp-dev and libwinpr-dbg from
+      libwinpr-dbg from libfreerdp-dbg.
+    + Use more meaningful SYNOPSIS for libwinpr* packages.
+    + The lib*-dev packages are now Multi-Arch:same packages.
+  * debian/rules:
+    + Switch over to CDBS based packaging.
+    + Don't ship static library files.
+    + Enable unit tests.
+    + Split out libwinpr-dbg from libfreerdp-dbg.
+    + Enable multi-arch path for include directory.
+    + Add -DWITH_GSTREAMER as cmake flag.
+    + Set cmake's RPATH build settings correctly.
+    + Drop upstream script, that would force us to list MPL-2.0 in
+      debian/copyright.
+  * debian/lib*-dev.install:
+    + Reflect libwinpr-dev split-out in installation of development files.
+  * debian/patches:
+    + Drop 0001_handle-user@corp.net-username-correctly.patch. It is contained
+      in the latest upstream Git snapshot.
+    + Drop 1003_fix-header-inclusion.patch. More elegantly solved by upstream
+      in latest upstream Git snapshot.
+    + Add 1003_multi-arch-include-path.patch. Allow multi-arch compliant paths
+      in lib*-dev packages.
+  * debian/copyright:
+    + Add so far non-mentioned upstream source/cmake/helper files.
+    + Don't use blanks in short license names.
+    + Move UNICODE license text to end of file.
+    + Add license for debian/*.
+  * lintian:
+    + Tolerate too-long file name in libfreerdp-plugins-standard. Nothing we
+      can do about it at the moment.
 
   [ Sebastian Ramacher ]
   * Split shared libraries into separate packages to avoid breakage if the
@@ -12,7 +46,7 @@ freerdp (1.1.0~git20140921.1.440916e+dfsg-1) UNRELEASED; urgency=medium
   * Ignore plugins when running dh_makeshlibs to fix lintian warnings and
     errors in libfreerdp-plugins-standard.
 
- -- Mike Gabriel <sunweaver@debian.org>  Tue, 26 Aug 2014 20:47:30 +0200
+ -- Mike Gabriel <sunweaver@debian.org>  Mon, 22 Sep 2014 15:31:16 +0200
 
 freerdp (1.1.0~git20140809.1.b07a5c1+dfsg-4) unstable; urgency=medium
 
