@@ -3,4 +3,5 @@
 1003_multi-arch-include-path.patch
 1004_64-bit-architectures.patch
 1005_parse-buffer-endianess.patch
+1006_test-unicode-endianess.patch
 2001_detect-ffmpeg-on-Debian.patch
