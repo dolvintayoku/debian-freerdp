@@ -1,7 +1,8 @@
-freerdp (1.1.0~git20140921.1.440916e+dfsg1-1.1) UNRELEASED; urgency=medium
+freerdp (1.1.0~git20140921.1.440916e+dfsg1-1.1) unstable; urgency=medium
 
   [ Aurelien Jarno ]
-  * Fix testsuite issues:
+  * Non-maintainer upload.
+  * Fix testsuite issues (closes: #762591):
     - Add 1004_64-bit-architectures.patch to correctly support non-amd64
       64-bit architectures.
     - Add 1005_parse-buffer-endianess.patch to correctly parse RDP buffer
@@ -9,7 +10,7 @@ freerdp (1.1.0~git20140921.1.440916e+dfsg1-1.1) UNRELEASED; urgency=medium
     - Add 1006_test-unicode-endianess.patch to convert the expected
       results from native endian to little endian.
 
- -- Aurelien Jarno <aurel32@debian.org>  Sun, 28 Sep 2014 18:43:52 +0200
+ -- Aurelien Jarno <aurel32@debian.org>  Sun, 28 Sep 2014 18:51:09 +0200
 
 freerdp (1.1.0~git20140921.1.440916e+dfsg1-1) unstable; urgency=medium
 
