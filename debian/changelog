@@ -1,3 +1,12 @@
+freerdp (1.1.0~git20140921.1.440916e+dfsg1-1.1) UNRELEASED; urgency=medium
+
+  [ Aurelien Jarno ]
+  * Fix testsuite issues:
+    - Add 1004_64-bit-architectures.patch to correctly support non-amd64
+      64-bit architectures.
+
+ -- Aurelien Jarno <aurel32@debian.org>  Sun, 28 Sep 2014 18:43:52 +0200
+
 freerdp (1.1.0~git20140921.1.440916e+dfsg1-1) unstable; urgency=medium
 
   [ Mike Gabriel ]
