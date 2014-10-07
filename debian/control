@@ -21,6 +21,7 @@ Build-Depends:
  libxext-dev,
  libxkbfile-dev,
  libxinerama-dev,
+ libxrandr-dev,
  libxv-dev,
  libjpeg-dev,
  pkg-config,
