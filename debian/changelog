@@ -1,14 +1,14 @@
-freerdp (1.1.0~git20140921.1.440916e+dfsg1-2) UNRELEASED; urgency=medium
+freerdp (1.1.0~git20140921.1.440916e+dfsg1-2) unstable; urgency=medium
 
   * debian/control:
     + Add B-D: libxrandr-dev.
   * debian/patches:
-    + Add 1007_detect-more-architectures.patch. Detect more known architectures
-      more precisely.
+    + Add 1007_detect-arm-arch-correctly.patch. Detect arm architecture
+      correctly. (Closes: #758565).
     + Add 1008_gcc-fPIC-on-arm64.patch. Enable -fPIC linker option for arm64
       and armhf builds.
 
- -- Mike Gabriel <sunweaver@debian.org>  Tue, 07 Oct 2014 10:06:34 +0200
+ -- Mike Gabriel <sunweaver@debian.org>  Tue, 07 Oct 2014 22:42:23 +0200
 
 freerdp (1.1.0~git20140921.1.440916e+dfsg1-1.1) unstable; urgency=medium
 
