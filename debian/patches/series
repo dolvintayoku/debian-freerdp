@@ -4,6 +4,6 @@
 1004_64-bit-architectures.patch
 1005_parse-buffer-endianess.patch
 1006_test-unicode-endianess.patch
-1007_detect-more-architectures.patch
+1007_detect-arm-arch-correctly.patch
 1008_gcc-fPIC-on-arm64.patch
 2001_detect-ffmpeg-on-Debian.patch
