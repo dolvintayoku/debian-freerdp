@@ -1,5 +1,14 @@
+freerdp (1.1.0~git20140921.1.440916e+dfsg1-2.1) unstable; urgency=medium
+
+  [ Bernhard Miklautz ]
+  * Fix and improve command line parser (closes: #759361)
+    - Add patch 0001_fix-cmdline-parser.patch picked from upstream
+
+ -- Bernhard Miklautz <bernhard.miklautz@shacknet.at>  Thu, 12 Feb 2014 20:54:22 +0200
+
 freerdp (1.1.0~git20140921.1.440916e+dfsg1-2) unstable; urgency=medium
 
+  [ Mike Gabriel ]
   * debian/control:
     + Add B-D: libxrandr-dev.
   * debian/patches:

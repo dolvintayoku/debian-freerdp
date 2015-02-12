@@ -7,3 +7,4 @@
 1007_detect-arm-arch-correctly.patch
 1008_gcc-fPIC-on-arm64.patch
 2001_detect-ffmpeg-on-Debian.patch
+0001_fix-cmdline-parser.patch
