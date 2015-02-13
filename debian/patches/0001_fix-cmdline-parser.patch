@@ -1,6 +1,9 @@
-Command line parser fixes.
-The command line parser had serveral problems when old style syntax
-was used.
+Description: Command line parser fixes.
+Author: Bernhard Miklautz <bernhard.miklautz@shacknet.at>
+Abstract:
+ The command line parser had serveral problems when old style syntax
+ was used.
+
 diff --git a/client/common/cmdline.c b/client/common/cmdline.c
 index 3d0cc2d..34064ea 100644
 --- a/client/common/cmdline.c
