@@ -836,6 +836,7 @@ Files: ChangeLog
  channels/sample/client/server_chan_test.cpp
  client/X11/generate_argument_docbook.c
  client/common/test/TestClientChannels.c
+ client/common/test/TestClientCmdLine.c
  client/common/test/TestClientRdpFile.c
  libfreerdp/dummy.c
  libfreerdp/gdi/test/TestGdiRop3.c
