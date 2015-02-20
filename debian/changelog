@@ -1,14 +1,18 @@
-freerdp (1.1.0~git20140921.1.440916e+dfsg1-2.1) unstable; urgency=medium
+freerdp (1.1.0~git20140921.1.440916e+dfsg1-3) unstable; urgency=medium
 
   [ Bernhard Miklautz ]
-  * Fix and improve command line parser (closes: #759361)
-    - Add patch 0001_fix-cmdline-parser.patch picked from upstream
+  * debian/patches:
+    + Add patch 0001_fix-cmdline-parser.patch (picked from upstream).
+      Fix and improve command line parser. (Closes: #759361).
 
- -- Bernhard Miklautz <bernhard.miklautz@shacknet.at>  Thu, 12 Feb 2014 20:54:22 +0200
+  [ Mike Gabriel ]
+  * debian/copyright:
+    + Mention new file client/common/test/TestClientCmdLine.c.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Fri, 13 Feb 2015 05:30:13 +0100
 
 freerdp (1.1.0~git20140921.1.440916e+dfsg1-2) unstable; urgency=medium
 
-  [ Mike Gabriel ]
   * debian/control:
     + Add B-D: libxrandr-dev.
   * debian/patches:
