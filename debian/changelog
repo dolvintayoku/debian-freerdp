@@ -1,3 +1,16 @@
+freerdp (1.1.0~git20140921.1.440916e+dfsg1-4) unstable; urgency=medium
+
+  * debian/patches:
+    + Add 0002_handle-old-style-cmdline-options.patch. Command line detection
+      is run with dummy settings where not everything is allocated. Collections
+      (device, dynamic channel and static channel) didn't handle this case
+      properly. (Closes: #779312).
+    + Add 0003_copy-data-when-adding-glyph-to-cache.patch. Copy data when adding
+      glyph to cache. Fix double free or corruption inupdate_gdi_fast_glyph ->
+      glyph_cache_put -> _int_free (Closes: #740637).
+
+ -- Mike Gabriel <sunweaver@debian.org>  Tue, 10 Mar 2015 21:28:34 +0100
+
 freerdp (1.1.0~git20140921.1.440916e+dfsg1-3) unstable; urgency=medium
 
   [ Bernhard Miklautz ]
