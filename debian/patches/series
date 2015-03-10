@@ -8,3 +8,4 @@
 1008_gcc-fPIC-on-arm64.patch
 2001_detect-ffmpeg-on-Debian.patch
 0001_fix-cmdline-parser.patch
+0002_handle-old-style-cmdline-options.patch
