@@ -1,3 +1,9 @@
+freerdp (1.1.0~git20140921.1.440916e+dfsg1-6) unstable; urgency=low
+
+  * debian/patches: Add patch fixing #778650 (picked from upstream, adjusted)
+
+ -- Petr Vorel <petr.vorel@gmail.com>  Sun, 04 Oct 2015 21:4:04 +0200
+
 freerdp (1.1.0~git20140921.1.440916e+dfsg1-5) unstable; urgency=medium
 
   * debian/patches:
