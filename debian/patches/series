@@ -11,3 +11,4 @@
 0002_handle-old-style-cmdline-options.patch
 0003_copy-data-when-adding-glyph-to-cache.patch
 0004_build-cmake-3.1-compatibility.patch
+0005_bugfix-778650-release-keys-when-xfreerdp-is-unfocused-to-prevent-s.patch
